@@ -39,8 +39,8 @@ export class Transform {
     return node;
   }
 
-  static parseExpression(expr:string):AST.Node {
-    return esprima.parse(expr) as AST.Node;
+  static parseExpression<T extends AST.Node>(expr:string):T {
+    return esprima.parse(expr) as T;
   }
 
   static compileExpression(node:AST.Node):string {
