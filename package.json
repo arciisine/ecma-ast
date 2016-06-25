@@ -6,6 +6,7 @@
   "dependencies": {
     "@types/esprima": "^2.1.22-alpha",
     "@types/lodash": "^4.0.21-alpha",
+    "esprima": "^2.7.2",
     "lodash": "^4.13.1",
     "typescript": "^1.9.0-dev.20160625-1.0"
   },
