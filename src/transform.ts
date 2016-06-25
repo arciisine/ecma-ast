@@ -48,7 +48,7 @@ export class Transform {
   }
 
   static parse(fn:Function|string):AST.FunctionExpression {
-    let ast = (Transform.parseExpression(fn.toString()) as AST.BlockStatement).body[0];
+    let ast = Transform.parseExpression<AST.BlockStatement>(fn.toString()).body[0];
     return ast as AST.FunctionExpression;
   }
   
