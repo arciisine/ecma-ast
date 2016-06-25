@@ -37,7 +37,7 @@ export class Visitor {
     } else {
       let handler = [node.type, `${node.type}Start`].find(x => !!this.handlers[x]);
       if (handler) {        
-        return handler[node.type](node, this);
+        return this.handlers[node.type](node, this);
       }
     }
   }
