@@ -7,13 +7,13 @@ import * as escodegen from './escodegen';
 import {AST} from "./ast"
 import {Macro} from './macro';
 
-export interface Parent {
+export interface VisitParent {
   node:AST.Node|AST.Node[],
   key:string|number
 }
 
 export interface Transformer {
-  <T extends AST.Node>(node:T, parent:Parent, allParents?:Parent[]):T
+  <T extends AST.Node>(node:T, parent:VisitParent, allParents?:VisitParent[]):T
 }
 
 export interface Visitor { 
@@ -28,7 +28,7 @@ export class Transform {
     'handlers', 'handler', 'block', 'finalizer', 'test', 'object', 'property'
   ]
 
-  static visit<T extends AST.Node>(visitor:Visitor, node:T, parents:Parent[] = []):T {   
+  static visit<T extends AST.Node>(visitor:Visitor, node:T, parents:VisitParent[] = []):T {   
     node = visitor.process(node, parents[0], parents);
     Transform.NESTED_PROPERTIES.filter(p => !!node[p])
       .forEach(p => { 
@@ -81,13 +81,13 @@ export class Transform {
 
   static visitor(conf:{[key:string]:Transformer}) {
     let out = {
-      process : function<T extends AST.Node>(node:T, parent:Parent):AST.Node {
+      process : function<T extends AST.Node>(node:T, parent?:VisitParent, parents?:VisitParent[]):AST.Node {
         if (node['visited']) {
           return node;
         } else {
           node['visited'] = true;
           if (this[node['type'] as string]) {
-            let res = this[node['type'] as string](node, parent);
+            let res = this[node['type'] as string](node, parent, parents);
             return res || node; 
           } else {
             return node;
