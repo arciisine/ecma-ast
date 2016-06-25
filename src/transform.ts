@@ -46,6 +46,7 @@ export class Transform {
   
   static compile(node:AST.FunctionExpression, globals:any):Function {
     let genSym = Macro.genSymbol.toString();
+    genSym = 'function genSym ' + genSym.substring(genSym.indexOf('('))
     let src = `(function() {     
       var id_ = new Date().getTime();
       var genSymbol = ${genSym};
