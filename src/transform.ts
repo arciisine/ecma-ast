@@ -8,7 +8,7 @@ import {AST} from "./ast"
 import {Macro} from './macro';
 
 export interface Transformer {
-  <T extends AST.Node>(node:T):T
+  <T extends AST.Node>(node:T, parent?:AST.Node|AST.Node[], key?:string|number):T
 }
 
 export interface Visitor { 
@@ -23,8 +23,8 @@ export class Transform {
     'handlers', 'handler', 'block', 'finalizer', 'test', 'object', 'property'
   ]
 
-  static visit<T extends AST.Node>(visitor:Visitor, node:T, parent:AST.Node|[AST.Node] = null, key:string|number = null):T {   
-    node = visitor.process(node);   
+  static visit<T extends AST.Node>(visitor:Visitor, node:T, parent?:AST.Node|AST.Node[], key?:string|number):T {   
+    node = visitor.process(node, parent, key);   
     Transform.NESTED_PROPERTIES.filter(p => !!node[p])
       .forEach(p => { 
         let x = node[p];
@@ -67,13 +67,13 @@ export class Transform {
 
   static visitor(conf:{[key:string]:Transformer}) {
     let out = {
-      process : function<T extends AST.Node>(node:T):AST.Node {
+      process : function<T extends AST.Node>(node:T, parent:AST.Node):AST.Node {
         if (node['visited']) {
           return node;
         } else {
           node['visited'] = true;
           if (this[node['type'] as string]) {
-            let res = this[node['type'] as string](node);
+            let res = this[node['type'] as string](node, parent);
             return res || node; 
           } else {
             return node;
