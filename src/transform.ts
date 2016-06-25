@@ -38,10 +38,18 @@ export class Transform {
     if (parent) parent[key] = node;
     return node;
   }
-  
+
+  static parseExpression(expr:string):AST.Node {
+    return esprima.parse(expr) as AST.Node;
+  }
+
+  static compileExpression(node:AST.Node):string {
+    return escodegen.generate(node);
+  }
+
   static parse(fn:Function|string):AST.FunctionExpression {
-    let ast = <AST.FunctionExpression>(esprima.parse(fn.toString()) as any as AST.BlockStatement).body[0];
-    return ast;
+    let ast = (Transform.parseExpression(fn.toString()) as AST.BlockStatement).body[0];
+    return ast as AST.FunctionExpression;
   }
   
   static compile(node:AST.FunctionExpression, globals:any):Function {
@@ -51,7 +59,7 @@ export class Transform {
       var id_ = new Date().getTime();
       var genSymbol = ${genSym};
       ${Object.keys(globals || {}).map(k => `var ${k} = ${globals[k].toString()}`).join('\n')} 
-      return ${escodegen.generate(node)}; 
+      return ${Transform.compileExpression(node)}; 
     })()`;
     console.log(src);
     return eval(src);
