@@ -40,7 +40,8 @@ export class Transform {
   }
 
   static parseExpression<T extends AST.Node>(expr:string):T {
-    return esprima.parse(expr) as any as T;
+    let res =  (esprima.parse(expr) as any).body[0] as T;
+    return res;
   }
 
   static compileExpression(node:AST.Node):string {
