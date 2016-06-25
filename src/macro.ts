@@ -8,31 +8,31 @@ export class Macro {
     return "__gen"+parseInt(`${Math.random()*1000}`)+(id_++); 
   }
 
-  static Id = (name?:string):AST.Identifier => ({type:"Identifier", name:name||Macro.genSymbol()})
-  static Literal = (value:any):AST.Literal =>  ({type:"Literal",    value })
-	static Block = (...body):AST.BlockStatement => ({type:"BlockStatement", body:body.filter(x => !!x) })
-	static Expr = (n:AST.Node):AST.ExpressionStatement => ({type:"ExpressionStatement", expression:n})
-	static Continue = (label?:AST.Identifier):AST.ContinueStatement => ({type:"ContinueStatement", label})
-	static Noop = ():AST.Node => Macro.Block([])
+  static Id(name?:string):AST.Identifier { return {type:"Identifier", name:name||Macro.genSymbol()} }
+  static Literal(value:any):AST.Literal { return {type:"Literal",    value } }
+	static Block(...body):AST.BlockStatement {  return {type:"BlockStatement", body:body.filter(x => !!x) } }
+	static Expr(n:AST.Node):AST.ExpressionStatement { return {type:"ExpressionStatement", expression:n} }
+	static Continue(label?:AST.Identifier):AST.ContinueStatement { return {type:"ContinueStatement", label} }
+	static Noop():AST.Node { return Macro.Block([]) }
 
-	static Return = (e:AST.Expression):AST.ReturnStatement => ({type:"ReturnStatement", argument:e});
-	static Yield = (e:AST.Expression, delegate:boolean = false):AST.YieldExpression => {
+	static Return(e:AST.Expression):AST.ReturnStatement { return {type:"ReturnStatement", argument:e} }
+	static Yield(e:AST.Expression, delegate:boolean = false):AST.YieldExpression {
     return {type:"YieldExpression", argument:e, delegate} as AST.YieldExpression
   };
 
-	static Array = (size:number = 0):AST.ArrayPattern => {
+	static Array(size:number = 0):AST.ArrayPattern  {
     return {
       type: "ArrayPattern",
       elements: []
     };
   } 
 
-	static Throw = (e:AST.Expression):AST.ThrowStatement => {return {type:"ThrowStatement", argument:e}};
-  static Call = (src:AST.Identifier|AST.Expression, ...args):AST.CallExpression => {
+	static Throw(e:AST.Expression):AST.ThrowStatement {return {type:"ThrowStatement", argument:e}};
+  static Call(src:AST.Identifier|AST.Expression, ...args):AST.CallExpression {
     return {type:"CallExpression", callee:src, arguments:args.filter(x => !!x)}
   };
 
-	static Assign = (id:AST.Identifier, expr:AST.Expression, op:string = '='):AST.AssignmentExpression => {
+	static Assign(id:AST.Identifier, expr:AST.Expression, op:string = '='):AST.AssignmentExpression  {
     return {
       type : "AssignmentExpression",
       left : id,
@@ -41,7 +41,7 @@ export class Macro {
     };
   }
 
-	static GetProperty = (id:AST.Identifier, prop:AST.Identifier|string):AST.MemberExpression => {
+	static GetProperty(id:AST.Identifier, prop:AST.Identifier|string):AST.MemberExpression {
     return {
       type : "MemberExpression",
       computed : typeof prop !== 'string',
@@ -50,7 +50,7 @@ export class Macro {
     };
   }
   
-	static Vars = (...args):AST.VariableDeclaration => {
+	static Vars(...args):AST.VariableDeclaration {
     let kind:('var'|'const'|'let') = 'var';
     if (args[0] === 'var' || args[0] === 'let' || args[0] === 'const') {
       kind = args.shift();
@@ -64,7 +64,7 @@ export class Macro {
     return {type:"VariableDeclaration", kind, declarations: decls};
   }
 
-	static BinaryExpr = (id:AST.Identifier, op:string, val:AST.Expression):AST.BinaryExpression => {
+	static BinaryExpr(id:AST.Identifier, op:string, val:AST.Expression):AST.BinaryExpression {
     return {
       type : "BinaryExpression",
       left : id,
@@ -73,7 +73,7 @@ export class Macro {
     }
   }
 
-  static UnaryExpr = (op:string, val:AST.Expression):AST.UnaryExpression => {
+  static UnaryExpr(op:string, val:AST.Expression):AST.UnaryExpression {
     return {
       type : "UnaryExpression",    
       operator : op as any as AST.UnaryOperator,
@@ -82,15 +82,15 @@ export class Macro {
     }
   }
 
-  static Negate = (val:AST.Expression):AST.UnaryExpression => {
+  static Negate(val:AST.Expression):AST.UnaryExpression {
     return Macro.UnaryExpr("!", val);
   }
 
-  static Increment = (id:AST.Identifier, increment:number = 1):AST.AssignmentExpression => {
+  static Increment(id:AST.Identifier, increment:number = 1):AST.AssignmentExpression {
     return Macro.Assign(id, Macro.Literal(increment), '+=');
   }
 
-  static Labeled = (id:AST.Identifier, body:AST.Statement):AST.LabeledStatement => {
+  static Labeled(id:AST.Identifier, body:AST.Statement):AST.LabeledStatement {
     return {
       type : "LabeledStatement",
       label : id,
@@ -98,7 +98,7 @@ export class Macro {
     };
   }
 
-  static ForLoop = (id:AST.Identifier, init:AST.Expression, upto:AST.Expression, body:AST.Statement[], increment:number = 1):AST.ForStatement => {
+  static ForLoop(id:AST.Identifier, init:AST.Expression, upto:AST.Expression, body:AST.Statement[], increment:number = 1):AST.ForStatement {
     return {
       type : "ForStatement",
       init: Macro.Vars(id, init),
@@ -108,7 +108,7 @@ export class Macro {
     };
   }
 
-  static TryCatchFinally = (t:AST.Node[], c:AST.Node[] = [], f:AST.Node[] = []):AST.TryStatement => {
+  static TryCatchFinally(t:AST.Node[], c:AST.Node[] = [], f:AST.Node[] = []):AST.TryStatement {
     return {
       type : "TryStatement",
       block :  Macro.Block(...t),
@@ -120,7 +120,7 @@ export class Macro {
       finalizer : Macro.Block(...f)
     };
   }
-  static Func = (id:AST.Identifier, params:AST.Pattern[], body:AST.Node[], generator:boolean = false):AST.FunctionDeclaration => {
+  static Func(id:AST.Identifier, params:AST.Pattern[], body:AST.Node[], generator:boolean = false):AST.FunctionDeclaration {
     return {
       type : "FunctionDeclaration", 
       id,
@@ -131,7 +131,7 @@ export class Macro {
       expression:false
     };
   } 
-  static IfThen = (test:AST.Expression, body:AST.Node[], elseBody:AST.Node[] = []):AST.IfStatement => {
+  static IfThen(test:AST.Expression, body:AST.Node[], elseBody:AST.Node[] = []):AST.IfStatement {
     let res:any = {
       type : "IfStatement",
       test,
