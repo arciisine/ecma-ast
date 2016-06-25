@@ -3,10 +3,12 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "preserveConstEnums": true,
-    "module": "commonjs",
+    "module": "system",
     "moduleResolution": "node",
     "outDir": "dist/",
     "rootDir": "src/",
+    "outFile": "dist/index.js",
+    "declaration": true,
     "sourceMap": true,
     "target": "es6"
   }  

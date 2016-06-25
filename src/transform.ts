@@ -7,11 +7,11 @@ import * as escodegen from './escodegen';
 import {AST} from "./ast"
 import {Macro} from './macro';
 
-interface Transformer {
+export interface Transformer {
   <T extends AST.Node>(node:T):T
 }
 
-interface Visitor { 
+export interface Visitor { 
   process:Transformer
 }
 
