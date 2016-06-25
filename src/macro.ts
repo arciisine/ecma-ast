@@ -4,7 +4,7 @@ let id_:number = new Date().getTime()%10000;
 
 export class Macro {
 
-  static genSymbol = function genSymbol() {
+  static genSymbol() {
     return "__gen"+parseInt(`${Math.random()*1000}`)+(id_++); 
   }
 
