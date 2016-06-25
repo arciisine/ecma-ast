@@ -91,7 +91,7 @@ export class Transform {
 
   static visitor(conf:{[key:string]:Transformer}) {
     let out = {
-      process : function<T extends AST.Node>(node:T, parent?:VisitParent, parents?:VisitParent[]):AST.Node {
+      process : function<T extends AST.Node>(node:T, parents?:VisitParents):AST.Node {
         if (node['visited']) {
           return node;
         } else {
