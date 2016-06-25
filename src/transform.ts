@@ -12,8 +12,14 @@ export interface VisitParent {
   key:string|number
 }
 
+export class VisitParents extends Array<VisitParent> {
+  get top() {
+    return this[this.length-1];
+  }
+}
+
 export interface Transformer {
-  <T extends AST.Node>(node:T, parent:VisitParent, allParents?:VisitParent[]):T
+  <T extends AST.Node>(node:T, parents:VisitParents):T
 }
 
 export interface Visitor { 
@@ -28,8 +34,12 @@ export class Transform {
     'handlers', 'handler', 'block', 'finalizer', 'test', 'object', 'property'
   ]
 
-  static visit<T extends AST.Node>(visitor:Visitor, node:T, parents:VisitParent[] = []):T {   
-    node = visitor.process(node, parents[0], parents);
+  static visit<T extends AST.Node>(visitor:Visitor, node:T, parents:VisitParents = null):T {
+    if (parents === null) {
+      parents = new VisitParents();
+    }
+    
+    node = visitor.process(node, parents);
     Transform.NESTED_PROPERTIES.filter(p => !!node[p])
       .forEach(p => { 
         let x = node[p];
@@ -46,8 +56,8 @@ export class Transform {
         }
       });
 
-    if (parents.length) {
-      let parent = parents[parents.length-1];
+    if (parents.top) {
+      let parent = parents.top;
       parent.node[parent.key] = node;
     }
     return node;
