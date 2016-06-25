@@ -19,7 +19,7 @@ export class VisitParents extends Array<VisitParent> {
 }
 
 export interface Transformer {
-  <T extends AST.Node>(node:T, parents:VisitParents):T
+  <T extends AST.Node>(node:T, parents?:VisitParents):T
 }
 
 export interface Visitor { 
