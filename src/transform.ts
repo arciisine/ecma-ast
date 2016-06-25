@@ -49,10 +49,9 @@ export class Transform {
   }
 
   static parse(fn:Function|string):AST.FunctionExpression {
-    let ast = Transform.parseExpression<AST.BlockStatement>(fn.toString()).body[0];
-    return ast as AST.FunctionExpression;
+    return Transform.parseExpression<AST.FunctionExpression>(fn.toString());
   }
-  
+    
   static compile(node:AST.FunctionExpression, globals:any):Function {
     let genSym = Macro.genSymbol.toString();
     genSym = 'function genSym ' + genSym.substring(genSym.indexOf('('))
