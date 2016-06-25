@@ -7,6 +7,10 @@ import {AST} from "./ast"
 import {Macro} from './macro';
 import {Visitor, Handler} from './visitor';
 
+
+declare var global,window;
+let _global = global || window;
+
 export class Util {
   
   static parseExpression<T extends AST.Node>(expr:string):T {
@@ -38,5 +42,44 @@ export class Util {
     let ast = Util.parse(fn); 
     ast = new Visitor(handlers).exec(ast);
     return Util.compile(ast, globals);
+  }
+
+  static isPureFunction(fn:Function, globals:any = {}):boolean {
+    let found = {};
+    let readId = (p:AST.Pattern) => p.type === "Identifier" ? p['name'] : (p as AST.Identifier).name;
+
+    try {
+      new Visitor({
+        ArrowFunctionExpression : (x:AST.ArrowExpression) => {
+          x.params.forEach(p => {
+            found[readId(p)] = true;
+          })
+        },
+        FunctionDeclaration : (x:AST.FunctionDeclaration) => {
+          x.params.forEach(p => {
+            found[readId(p)] = true;
+          })
+        },
+        VariableDeclaration : (x:AST.VariableDeclaration) => {
+          x.declarations.forEach(d => {
+            found[readId(d.id)] = true
+          })
+        },
+        Identifier : (x:AST.Identifier, visitor:Visitor) => {
+          let parent = visitor.parent.node as AST.Node;
+          if (parent.type === 'MemberExpression') {
+            if (((parent as AST.MemberExpression).object as AST.Identifier).name != x.name) {
+              return;
+            }
+          } 
+          if (!found[x.name] && !_global[x.name] && !globals[x.name]) {
+            throw new Error(`Read before declare ${x.name}`); 
+          }
+        }
+      }).exec(Util.parse(fn));
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
