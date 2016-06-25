@@ -7,8 +7,13 @@ import * as escodegen from './escodegen';
 import {AST} from "./ast"
 import {Macro} from './macro';
 
+export interface Parent {
+  node:AST.Node|AST.Node[],
+  key:string|number
+}
+
 export interface Transformer {
-  <T extends AST.Node>(node:T, parent?:AST.Node|AST.Node[], key?:string|number):T
+  <T extends AST.Node>(node:T, parent:Parent, allParents?:Parent[]):T
 }
 
 export interface Visitor { 
@@ -23,19 +28,28 @@ export class Transform {
     'handlers', 'handler', 'block', 'finalizer', 'test', 'object', 'property'
   ]
 
-  static visit<T extends AST.Node>(visitor:Visitor, node:T, parent?:AST.Node|AST.Node[], key?:string|number):T {   
-    node = visitor.process(node, parent, key);   
+  static visit<T extends AST.Node>(visitor:Visitor, node:T, parents:Parent[] = []):T {   
+    node = visitor.process(node, parents[0], parents);
     Transform.NESTED_PROPERTIES.filter(p => !!node[p])
       .forEach(p => { 
         let x = node[p];
         if (Array.isArray(x)) {
-          x.forEach((y, i) => { Transform.visit(visitor, y, x, i); })
+          x.forEach((y, i) => { 
+            parents.push({node:x, key:i})
+            Transform.visit(visitor, y, parents);
+            parents.pop(); 
+          })
         } else if (typeof x !== 'string' && typeof x !== 'boolean' && typeof x !== 'number') {
-          Transform.visit(visitor, x, node, p);
+          parents.push({node, key:p})
+          Transform.visit(visitor, x, parents);
+          parents.pop();
         }
       });
 
-    if (parent) parent[key] = node;
+    if (parents.length) {
+      let parent = parents[parents.length-1];
+      parent.node[parent.key] = node;
+    }
     return node;
   }
 
@@ -67,7 +81,7 @@ export class Transform {
 
   static visitor(conf:{[key:string]:Transformer}) {
     let out = {
-      process : function<T extends AST.Node>(node:T, parent:AST.Node):AST.Node {
+      process : function<T extends AST.Node>(node:T, parent:Parent):AST.Node {
         if (node['visited']) {
           return node;
         } else {
