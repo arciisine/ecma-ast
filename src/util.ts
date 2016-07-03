@@ -18,15 +18,15 @@ export class Util {
     return escodegen.generate(node);
   }
 
-  static parse(fn:Function|string):AST.FunctionExpression {
-    let res = Util.parseExpression<AST.FunctionExpression>(fn.toString());
+  static parse(fn:Function|string):AST.ASTFunction {
+    let res = Util.parseExpression<AST.ASTFunction>(fn.toString());
     if (res.type === 'ExpressionStatement') {
-      res = (res as any as AST.ExpressionStatement).expression as AST.FunctionExpression 
+      res = (res as any as AST.ExpressionStatement).expression as AST.ASTFunction 
     }
     return res;
   }
     
-  static compile(node:AST.FunctionExpression, globals:any):Function {
+  static compile(node:AST.ASTFunction, globals:any):Function {
     let genSym = Macro.genSymbol.toString();
     genSym = 'function genSym ' + genSym.substring(genSym.indexOf('('))
     let src = `(function() {     
