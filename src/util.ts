@@ -19,7 +19,11 @@ export class Util {
   }
 
   static parse(fn:Function|string):AST.FunctionExpression {
-    return Util.parseExpression<AST.FunctionExpression>(fn.toString());
+    let res = Util.parseExpression<AST.FunctionExpression>(fn.toString());
+    if (res.type === 'ExpressionStatement') {
+      res = (res as any as AST.ExpressionStatement).expression as AST.FunctionExpression 
+    }
+    return res;
   }
     
   static compile(node:AST.FunctionExpression, globals:any):Function {
