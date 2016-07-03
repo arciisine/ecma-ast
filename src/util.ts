@@ -7,10 +7,6 @@ import {AST} from "./ast"
 import {Macro} from './macro';
 import {Visitor, Handler} from './visitor';
 
-
-declare var global,window;
-let _global = global || window;
-
 export class Util {
   
   static parseExpression<T extends AST.Node>(expr:string):T {
