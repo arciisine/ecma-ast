@@ -17,6 +17,12 @@ export class Visitor {
     'handlers', 'handler', 'block', 'finalizer', 'test', 'object', 'property'
   ]
 
+  static FUNCTION_TYPES =  [
+    'FunctionExpression', 
+    'FunctionDeclaration',
+    'ArrowFunctionExpression'
+  ].reduce((acc, t) => acc[t] = true && acc, {});
+
   private parents:VisitParent[] = null;
 
   constructor(private handlers : {[key:string]:Handler}) {
@@ -36,14 +42,14 @@ export class Visitor {
     return res === undefined ? node : res;
   }
 
-  private onStart(node:AST.Node):AST.Node {
+  private onStart(node:AST.Node, key:string = node.type):AST.Node {
     return node['visited'] && node || 
-      this.execHandler(this.handlers[`${node.type}Start`] || this.handlers[node.type], node);
+      this.execHandler(this.handlers[`${key}Start`] || this.handlers[key], node);
   }
 
-  private onEnd(node:AST.Node):AST.Node {
+  private onEnd(node:AST.Node, key:string = node.type):AST.Node {
     node['visited'] = true; //Set visited on exit
-    return this.execHandler(this.handlers[`${node.type}End`], node); 
+    return this.execHandler(this.handlers[`${key}End`], node); 
   }
 
   private finish(result:AST.Node):AST.Node {
@@ -61,7 +67,15 @@ export class Visitor {
   }
 
   private visit(node:AST.Node):AST.Node {
-    node = this.onStart(node);
+    let keys = [node.type];
+
+    if (Visitor.FUNCTION_TYPES[node.type]) {
+      keys.push('Function');
+    }
+
+    for (let key of keys) {
+      node = this.onStart(node, key);
+    }
 
     if (!node) {
       return this.finish(node);
@@ -83,7 +97,11 @@ export class Visitor {
         }
       });
 
-    return this.finish(this.onEnd(node));
+    for (let key of keys) {
+      node = this.onEnd(node, key);
+    }
+
+    return this.finish(node);
   }
 
   exec<T extends AST.Node>(node:T):T {
