@@ -1,7 +1,14 @@
 export namespace AST {
     export interface Node { type: string }
     export interface Statement extends Node { }
-    export interface ASTFunction extends Node { }
+    export interface ASTFunction extends Node {
+        params: Pattern[];
+        defaults: Expression[];
+        rest?: Identifier ;
+        body: BlockStatement | Expression;
+        generator: boolean;
+        expression: boolean;
+     }
 
     export interface EmptyStatement extends Statement {
         type: "EmptyStatement";
@@ -83,7 +90,6 @@ export namespace AST {
         test: Expression;
     }
 
-
     export interface ForStatement extends Statement {
         type: "ForStatement";
         init?: VariableDeclaration | Expression ;
@@ -91,7 +97,6 @@ export namespace AST {
         update?: Expression ;
         body: Statement;
     }
-
 
     export interface ForInStatement extends Statement {
         type: "ForInStatement";
@@ -101,7 +106,6 @@ export namespace AST {
         each: boolean;
     }
 
-
     export interface ForOfStatement extends Statement {
         type: "ForOfStatement";
         left: VariableDeclaration |  Expression;
@@ -109,42 +113,28 @@ export namespace AST {
         body: Statement;
     }
 
-
     export interface LetStatement extends Statement {
         type: "LetStatement";
         head: VariableDeclarator[];
         body: Statement;
     }
 
-
-
     export interface DebuggerStatement extends Statement {
         type: "DebuggerStatement";
     }
 
-
     export interface Declaration extends Statement { }
-
 
     export interface FunctionDeclaration extends ASTFunction, Declaration {
         type: "FunctionDeclaration";
         id: Identifier;
-        params: Pattern[];
-        defaults: Expression[];
-        rest?: Identifier ;
-        body: BlockStatement | Expression;
-        generator: boolean;
-        expression: boolean;
     }
-
-
 
     export interface VariableDeclaration extends Declaration {
         type: "VariableDeclaration";
         declarations: VariableDeclarator[];
         kind: "var" | "let" | "const";
     }
-
 
     export interface VariableDeclarator extends Node {
         type: "VariableDeclarator";
@@ -154,23 +144,19 @@ export namespace AST {
 
     export interface Expression extends Node, Pattern { }
 
-
     export interface ThisExpression extends Expression {
         type: "ThisExpression";
     }
-
 
     export interface ArrayExpression extends Expression {
         type: "ArrayExpression";
         elements?: Expression[];
     }
 
-
     export interface ObjectExpression extends Expression {
         type: "ObjectExpression";
         properties: Property[];
     }
-
 
     export interface Property extends Node {
         type: "Property";
@@ -181,30 +167,17 @@ export namespace AST {
 
     export interface FunctionExpression extends ASTFunction, Expression {
         type: "FunctionExpression";
-        id?: Identifier ;
-        params: Pattern[];
-        defaults: Expression[];
-        rest?: Identifier ;
-        body: BlockStatement | Expression;
-        generator: boolean;
-        expression: boolean;
+        id?: Identifier ;        
     }
 
     export interface ArrowExpression extends ASTFunction, Expression {
         type: "ArrowExpression";
-        params: Pattern[];
-        defaults: Expression[];
-        rest?: Identifier ;
-        body: BlockStatement | Expression;
-        generator: boolean;
-        expression: boolean;
     }
 
     export interface SequenceExpression extends Expression {
         type: "SequenceExpression";
         expressions: Expression[];
     }
-
 
     export interface UnaryExpression extends Expression {
         type: "UnaryExpression";
@@ -213,14 +186,12 @@ export namespace AST {
         argument: Expression;
     }
 
-
     export interface BinaryExpression extends Expression {
         type: "BinaryExpression";
         operator: BinaryOperator;
         left: Expression;
         right: Expression;
     }
-
 
     export interface AssignmentExpression extends Expression {
         type: "AssignmentExpression";
@@ -229,14 +200,12 @@ export namespace AST {
         right: Expression;
     }
 
-
     export interface UpdateExpression extends Expression {
         type: "UpdateExpression";
         operator: UpdateOperator;
         argument: Expression;
         prefix: boolean;
     }
-
 
     export interface LogicalExpression extends Expression {
         type: "LogicalExpression";
@@ -245,7 +214,6 @@ export namespace AST {
         right: Expression;
     }
 
-
     export interface ConditionalExpression extends Expression {
         type: "ConditionalExpression";
         test: Expression;
@@ -253,20 +221,17 @@ export namespace AST {
         consequent: Expression;
     }
 
-
     export interface NewExpression extends Expression {
         type: "NewExpression";
         callee: Expression;
         arguments: Expression[];
     }
 
-
     export interface CallExpression extends Expression {
         type: "CallExpression";
         callee: Expression|Identifier;
         arguments: Expression[];
     }
-
 
     export interface MemberExpression extends Expression {
         type: "MemberExpression";
@@ -275,13 +240,10 @@ export namespace AST {
         computed: boolean;
     }
 
-
     export interface YieldExpression extends Expression {
         type: "YieldExpression";
         argument?: Expression ;
     }
-
-
 
     export interface ComprehensionExpression extends Expression {
         type: "ComprehensionExpression";
@@ -290,8 +252,6 @@ export namespace AST {
         filter?: Expression ;
     }
 
-
-
     export interface GeneratorExpression extends Expression {
         type: "GeneratorExpression";
         body: Expression;
@@ -299,22 +259,16 @@ export namespace AST {
         filter?: Expression ;
     }
 
-
-
     export interface GraphExpression extends Expression {
         type: "GraphExpression";
         index: number;
         expression: Literal;
     }
 
-
-
     export interface GraphIndexExpression extends Expression {
         type: "GraphIndexExpression";
         index: number;
     }
-
-
 
     export interface LetExpression extends Expression {
         type: "LetExpression";
@@ -322,15 +276,12 @@ export namespace AST {
         body: Expression;
     }
 
-
-
     export interface Pattern extends Node { }
 
     export interface ObjectPattern extends Pattern {
         type: "ObjectPattern";
         properties: { key: Literal | Identifier, value: Pattern }[];
     }
-
 
     export interface ArrayPattern extends Pattern {
         type: "ArrayPattern";
@@ -343,7 +294,6 @@ export namespace AST {
         consequent: Statement[];
     }
 
-
     export interface CatchClause extends Node {
         type: "CatchClause";
         param: Pattern;
@@ -351,15 +301,12 @@ export namespace AST {
         body: BlockStatement;
     }
 
-
-
     export interface ComprehensionBlock extends Node {
         type: "ComprehensionBlock";
         left: Pattern;
         right: Expression;
         each: boolean;
     }
-
 
     export interface ComprehensionIf extends Node {
         type: "ComprehensionIf";
@@ -371,17 +318,14 @@ export namespace AST {
         name: string;
     }
 
-
     export interface Literal extends Expression {
         type: "Literal";
         value?: string | boolean | number | RegExp;
     }
 
-
     export enum UnaryOperator {
         "-" , "+" , "!" , "~" , "typeof" , "void" , "delete"
     }
-
 
     export enum BinaryOperator {
         "==" , "!=" , "===" , "!=="
@@ -392,19 +336,15 @@ export namespace AST {
             , "instanceof" , ".."
     }
 
-
-
     export enum LogicalOperator {
         ",," , "&&"
     }
-
 
     export enum AssignmentOperator {
         "=" , "+=" , "-=" , "*=" , "/=" , "%="
             , "<<=" , ">>=" , ">>>="
             , ",=" , "^=" , "&="
     }
-
 
     export enum UpdateOperator {
         "++" , "--"
