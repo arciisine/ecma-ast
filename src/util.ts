@@ -44,6 +44,10 @@ export class Util {
     return Util.compile(ast, globals);
   }
 
+  static isFunction(obj) {
+    return !!(obj && obj.constructor && obj.call && obj.apply);
+  }
+
   static isPureFunction(fn:Function, globals:any = {}):boolean {
     let found = {};
     let readId = (p:AST.Pattern) => p.type === "Identifier" ? p['name'] : (p as AST.Identifier).name;
