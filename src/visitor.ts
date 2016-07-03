@@ -42,14 +42,18 @@ export class Visitor {
     return res === undefined ? node : res;
   }
 
-  private onStart(node:AST.Node, key:string = node.type):AST.Node {
-    return node['visited'] && node || 
-      this.execHandler(this.handlers[`${key}Start`] || this.handlers[key], node);
+  private onStart(node:AST.Node, key:string = null):AST.Node {
+    if (node['visited']) {
+      return node;
+    } else {
+      key = key || node.type;
+      let handler = this.handlers[`${key}Start`] || this.handlers[key];
+      return this.execHandler(handler, node);
+    }
   }
 
-  private onEnd(node:AST.Node, key:string = node.type):AST.Node {
-    node['visited'] = true; //Set visited on exit
-    return this.execHandler(this.handlers[`${key}End`], node); 
+  private onEnd(node:AST.Node, key:string = null):AST.Node {
+    return this.execHandler(this.handlers[`${key || node.type}End`], node);
   }
 
   private finish(result:AST.Node):AST.Node {
