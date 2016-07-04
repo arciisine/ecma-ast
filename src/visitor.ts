@@ -31,7 +31,7 @@ export class Visitor {
     'string', 
     'boolean', 
     'number'
-  ].reduce((acc, t) => acc[t] = true && acc, {});
+  ].reduce((acc, t) => (acc[t] = true) && acc, {});
 
   private parents:VisitParent[] = null;
 
