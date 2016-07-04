@@ -15,7 +15,7 @@ export class Visitor {
     'body', 'declarations', 'argument', 'arguments', 'alternate', 'consequent',
     'left', 'right', 'init', 'expression', 'callee', 'elements', 
     'handlers', 'handler', 'block', 'finalizer', 'test', 'object', 'property'
-  ]
+  ].reduce((acc, t) => acc[t] = true && acc, {})
 
   static FUNCTION_TYPES =  [
     'FunctionExpression', 
@@ -23,11 +23,15 @@ export class Visitor {
     'ArrowFunctionExpression'
   ].reduce((acc, t) => acc[t] = true && acc, {});
 
+  static PRIMITIVE_TYPES = [
+    'string', 
+    'boolean', 
+    'number'
+  ].reduce((acc, t) => acc[t] = true && acc, {});
+
   private parents:VisitParent[] = null;
 
-  constructor(private handlers : {[key:string]:Handler}) {
-    
-  }
+  constructor(private handlers : {[key:string]:Handler}) {}
 
   get parent() {
     return this.parents.length && this.parents[0];
@@ -43,13 +47,9 @@ export class Visitor {
   }
 
   private onStart(node:AST.Node, key:string = null):AST.Node {
-    if (node['visited']) {
-      return node;
-    } else {
-      key = key || node.type;
-      let handler = this.handlers[`${key}Start`] || this.handlers[key];
-      return this.execHandler(handler, node);
-    }
+    key = key || node.type;
+    let handler = this.handlers[`${key}Start`] || this.handlers[key];
+    return this.execHandler(handler, node);
   }
 
   private onEnd(node:AST.Node, key:string = null):AST.Node {
@@ -71,6 +71,8 @@ export class Visitor {
   }
 
   private visit(node:AST.Node):AST.Node {
+    if (node['skip']) return node; //Skip node
+
     let keys = [node.type];
 
     if (Visitor.FUNCTION_TYPES[node.type]) {
@@ -85,7 +87,8 @@ export class Visitor {
       return this.finish(node);
     }
 
-    Visitor.NESTED_PROPERTIES.filter(p => !!node[p])
+    Object.keys(node)
+      .filter(p => Visitor.NESTED_PROPERTIES[p] && !!node[p])
       .forEach(p => { 
         let x = node[p];
         if (Array.isArray(x)) {
@@ -94,7 +97,7 @@ export class Visitor {
             this.visit(y);
             this.parents.shift(); 
           })
-        } else if (typeof x !== 'string' && typeof x !== 'boolean' && typeof x !== 'number') {
+        } else if (!Visitor.PRIMITIVE_TYPES[typeof x]) {
           this.parents.unshift({node, key:p})
           this.visit(x);
           this.parents.shift();
