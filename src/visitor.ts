@@ -47,7 +47,7 @@ export class Visitor {
 
   private execHandler(fn:Handler, node:AST.Node):AST.Node {
     let res = (fn ? fn.call(this, node, this) : node);
-    return res['type'] ? res : node; //Always return a node 
+    return (res && res['type']) ? res : node; //Always return a node 
   }
 
   private onStart(node:AST.Node, key:string = null):AST.Node {
