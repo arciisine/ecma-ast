@@ -22,9 +22,9 @@ export class Visitor {
   ].reduce((acc, t) => (acc[t] = true) && acc, {})
 
   static TYPE_ALIASES =  {
-    'FunctionExpression' : 'Function', 
-    'FunctionDeclaration'  : 'Function',
-    'ArrowFunctionExpression'  : 'Function'
+    FunctionExpression      : 'Function', 
+    FunctionDeclaration     : 'Function',
+    ArrowFunctionExpression : 'Function'
   }
 
   static PRIMITIVE_TYPES = [
@@ -46,7 +46,8 @@ export class Visitor {
   }
 
   private execHandler(fn:Handler, node:AST.Node):AST.Node {
-    return (fn ? fn.call(this, node, this) : node) || node;
+    let res = (fn ? fn.call(this, node, this) : node);
+    return res['type'] ? res : node; //Always return a node 
   }
 
   private onStart(node:AST.Node, key:string = null):AST.Node {
@@ -77,7 +78,7 @@ export class Visitor {
     if (node[Visitor.SKIP_FLAG]) return node;
 
     let alias = Visitor.TYPE_ALIASES[node.type];
-    let keys = alias ? [node.type] : [node.type, alias];
+    let keys = alias ? [node.type, alias] : [node.type];
 
     for (let key of keys) {
       node = this.onStart(node, key);
