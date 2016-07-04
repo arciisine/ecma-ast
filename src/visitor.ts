@@ -88,7 +88,9 @@ export class Visitor {
     }
 
     Object.keys(node)
-      .filter(p => Visitor.NESTED_PROPERTIES[p] && !!node[p])
+      .filter(p =>
+        Visitor.NESTED_PROPERTIES[p] && 
+        !Visitor.PRIMITIVE_TYPES[typeof node[p]])
       .forEach(p => { 
         let x = node[p];
         if (Array.isArray(x)) {
@@ -97,7 +99,7 @@ export class Visitor {
             this.visit(y);
             this.parents.shift(); 
           })
-        } else if (!Visitor.PRIMITIVE_TYPES[typeof x]) {
+        } else {
           this.parents.unshift({node, key:p})
           this.visit(x);
           this.parents.shift();
