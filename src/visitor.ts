@@ -82,7 +82,7 @@ export class Visitor {
       node = this.onStart(node, key);
     }
 
-    if (!node) {
+    if (node[Visitor.SKIP_FLAG]) {
       return this.finish(node);
     }
 
