@@ -11,17 +11,20 @@ export interface Handler {
 
 export class Visitor {
 
+  static SKIP_FLAG = 'skip';
+  static DELETE_FLAG = 'delete';
+
   static NESTED_PROPERTIES =  [
     'body', 'declarations', 'argument', 'arguments', 'alternate', 'consequent',
     'left', 'right', 'init', 'expression', 'callee', 'elements', 
     'handlers', 'handler', 'block', 'finalizer', 'test', 'object', 'property'
   ].reduce((acc, t) => acc[t] = true && acc, {})
 
-  static FUNCTION_TYPES =  [
-    'FunctionExpression', 
-    'FunctionDeclaration',
-    'ArrowFunctionExpression'
-  ].reduce((acc, t) => acc[t] = true && acc, {});
+  static TYPE_ALIASES =  {
+    'FunctionExpression' : 'Function', 
+    'FunctionDeclaration'  : 'Function',
+    'ArrowFunctionExpression'  : 'Function'
+  }
 
   static PRIMITIVE_TYPES = [
     'string', 
@@ -42,8 +45,7 @@ export class Visitor {
   }
 
   private execHandler(fn:Handler, node:AST.Node):AST.Node {
-    let res = fn ? fn.call(this, node, this) : node;
-    return res === undefined ? node : res;
+    return (fn ? fn.call(this, node, this) : node) || node;
   }
 
   private onStart(node:AST.Node, key:string = null):AST.Node {
@@ -58,11 +60,11 @@ export class Visitor {
 
   private finish(result:AST.Node):AST.Node {
     let parent = this.parent;
-    if (result === null) { //delete
-      if (typeof parent.key === 'string') {
-        delete parent.node[parent.key];
-      } else {
+    if (result[Visitor.DELETE_FLAG]) {
+      if (Array.isArray(parent.node)) {  //Array
         (parent.node as AST.Node[]).splice(parent.key as number, 1);
+      } else { //Object
+        delete parent.node[parent.key];            
       }
     } else if (parent && result) { //Reassign if changed      
       parent.node[parent.key] = result;
@@ -71,13 +73,10 @@ export class Visitor {
   }
 
   private visit(node:AST.Node):AST.Node {
-    if (node['skip']) return node; //Skip node
+    if (node[Visitor.SKIP_FLAG]) return node;
 
-    let keys = [node.type];
-
-    if (Visitor.FUNCTION_TYPES[node.type]) {
-      keys.push('Function');
-    }
+    let alias = Visitor.TYPE_ALIASES[node.type];
+    let keys = alias ? [node.type] : [node.type, alias];
 
     for (let key of keys) {
       node = this.onStart(node, key);
