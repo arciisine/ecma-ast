@@ -19,7 +19,7 @@ export class Visitor {
     'body', 'declarations', 'argument', 'arguments', 'alternate', 'consequent',
     'left', 'right', 'init', 'expression', 'callee', 'elements', 
     'handlers', 'handler', 'block', 'finalizer', 'test', 'object', 'property'
-  ].reduce((acc, t) => acc[t] = true && acc, {})
+  ].reduce((acc, t) => (acc[t] = true) && acc, {})
 
   static TYPE_ALIASES =  {
     'FunctionExpression' : 'Function', 
