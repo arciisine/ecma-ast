@@ -1,4 +1,5 @@
 import {AST} from "./ast"
+import {Macro} from './macro';
 
 export interface VisitParent {
   node:AST.Node|AST.Node[],
@@ -11,8 +12,8 @@ export interface Handler {
 
 export class Visitor {
 
-  static SKIP_FLAG = 'skip';
-  static DELETE_FLAG = 'delete';
+  static SKIP_FLAG = Macro.genSymbol();
+  static DELETE_FLAG = Macro.genSymbol();
 
   static NESTED_PROPERTIES =  [
     'body', 'declarations', 'argument', 'arguments', 'alternate', 'consequent',
