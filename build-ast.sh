@@ -28,4 +28,4 @@ for x in $FILES; do
   parse target/$x.md > target/$x.ts
 done
 
-python build-ast.py $FILES > target/ast.ts
+python build-ast.py $FILES > src/ast.ts
