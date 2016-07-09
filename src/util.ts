@@ -6,6 +6,7 @@ import * as escodegen from './escodegen';
 import {AST} from "./ast"
 import {Macro} from './macro';
 import {Visitor, Handler} from './visitor';
+import {Guard as g} from './guard';
 
 export class Util {
   
@@ -20,8 +21,8 @@ export class Util {
 
   static parse(fn:Function|string):AST.ASTFunction {
     let res = Util.parseExpression<AST.ASTFunction>(fn.toString());
-    if (res.type === 'ExpressionStatement') {
-      res = (res as any as AST.ExpressionStatement).expression as AST.ASTFunction 
+    if (g.isExpressionStatement(res as AST.Node)) {
+      res = res.expression as any as AST.ASTFunction 
     }
     return res;
   }
