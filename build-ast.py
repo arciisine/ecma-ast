@@ -2,7 +2,11 @@ import re, sys
 declarations = {}
 order = []
 
-FORCE_FLATTEN = set([('ArrowFunctionExpression', 'Function')])
+FORCE_FLATTEN = set([
+  ('ArrowFunctionExpression', 'Function'),
+  ('FunctionExpression', 'Function'),
+  ('FunctionDeclaration', 'Function'),
+])
 
 def flatten(obj):
 
@@ -96,6 +100,39 @@ def parse(text):
       "values" : values
     }   
 
+def base_function():
+  common = None
+
+  decls = [declarations[k] for k in declarations.keys()
+    if 'Function' in k and k != 'Function']
+  
+  for decl in decls:
+      fields = decl['fields']
+      if common is None:
+        common = {}
+        common.update(fields)
+      else:
+        for k in fields.keys():
+          if k in common and common[k] != fields[k]:
+            del common[k]
+        for k in common.keys():
+          if k not in fields:
+            del common[k]
+  
+  declarations['BaseFunction'] = {
+    "source" : "interface",
+    "type" : None,
+    "name" : "BaseFunction",
+    "fields" : common
+  }
+
+  order.append('BaseFunction')
+
+  for decl in decls:
+    decl['extends'].append('BaseFunction')
+    for key in common.keys():
+      del decl['fields'][key]
+
 def process(files):
   for f in files:
     for line in open('target/%s.ts'%f, 'r').readlines():
@@ -115,7 +152,7 @@ def process(files):
         order.append(key)
         
   for k,v in declarations.items():
-    declarations[k] = flatten(v)
+    declarations[k] = flatten(v)  
 
 def output():
   print 'export namespace AST {'
@@ -146,4 +183,5 @@ def output():
 
 if __name__ == '__main__':
   process(sys.argv[1:])
+  base_function()
   output()

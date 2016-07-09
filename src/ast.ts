@@ -174,7 +174,8 @@ export namespace AST {
   export interface Declaration  extends Statement {
     
   }
-  export interface FunctionDeclaration  extends Function,Declaration {
+  export interface FunctionDeclaration  extends Declaration,BaseFunction {
+    body:  BlockStatement;
     type:  "FunctionDeclaration";
     id:  Identifier;
   }
@@ -225,7 +226,8 @@ export namespace AST {
   }
   export function isProperty(n:Node):n is Property { return n.type === "Property"; } 
 
-  export interface FunctionExpression  extends Function,Expression {
+  export interface FunctionExpression  extends Expression,BaseFunction {
+    body:  BlockStatement;
     type:  "FunctionExpression";
   }
   export function isFunctionExpression(n:Node):n is FunctionExpression { return n.type === "FunctionExpression"; } 
@@ -343,11 +345,8 @@ export namespace AST {
   }
   export function isSpreadElement(n:Node):n is SpreadElement { return n.type === "SpreadElement"; } 
 
-  export interface ArrowFunctionExpression  extends Expression {
+  export interface ArrowFunctionExpression  extends Expression,BaseFunction {
     body:  BlockStatement | Expression;
-    id?:  Identifier;
-    params: (Pattern )[];
-    generator:  boolean;
     type:  "ArrowFunctionExpression";
     expression:  boolean;
   }
@@ -511,4 +510,9 @@ export namespace AST {
   }
   export function isExportAllDeclaration(n:Node):n is ExportAllDeclaration { return n.type === "ExportAllDeclaration"; } 
 
+  export interface BaseFunction  {
+    id?:  Identifier;
+    params: (Pattern )[];
+    generator:  boolean;
+  }
 }
