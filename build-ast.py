@@ -135,8 +135,8 @@ def output():
         "fields":"\n    ".join(['%s: %s' %pair for pair in obj['fields'].items()])
       }
       print '  export interface %(name)s %(extends)s {\n    %(fields)s\n  }'% context
-      if obj['type'] is not None:
-        print '  export function is%(name)s(n:Node):n is %(name)s { return n.type === "%(type)s"; } ' % context        
+      if obj['type'] is not None and len(obj['extends']) > 0:
+        print '  export function is%(name)s(n:Node):n is %(name)s { return n.type === "%(type)s"; } \n' % context        
     
   print '}'
 
