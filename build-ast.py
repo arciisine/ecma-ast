@@ -5,9 +5,7 @@ order = []
 def get_func_types():
   return [k for k in order if 'Function' in k and k != 'Function']  
 
-FORCE_FLATTEN = set()
-
-def flatten(obj):
+def flatten(obj, force=set()):
 
   if 'type' not in obj or obj['type'] is None: 
     return obj
@@ -20,7 +18,7 @@ def flatten(obj):
     parent = declarations[p]
     typ = parent['type']
 
-    if typ is not None or (obj['name'], parent['name']) in FORCE_FLATTEN:
+    if typ is not None or parent['name'] in force:
       out.update(parent)
       fields.update(parent['fields'])
     else:
@@ -149,11 +147,9 @@ def process(files):
       else:
         declarations[key] = out
         order.append(key)
-        
-  FORCE_FLATTEN = set([(x, 'Function') for x in get_func_types()])
 
   for k,v in declarations.items():
-    declarations[k] = flatten(v)  
+    declarations[k] = flatten(v, set(['Function']) if 'Function' in k and k != 'Function' else set())  
 
 def output():
   print 'export namespace AST {'
