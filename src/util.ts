@@ -6,7 +6,6 @@ import * as escodegen from './escodegen';
 import {AST} from "./ast"
 import {Macro} from './macro';
 import {Visitor, Handler} from './visitor';
-import {Guard as g} from './guard';
 
 export class Util {
   
@@ -19,23 +18,30 @@ export class Util {
     return escodegen.generate(node);
   }
 
-  static parse(fn:Function|string):AST.ASTFunction {
+  static parse(fn:Function|string):AST.FunctionExpression|AST.ArrowFunctionExpression|AST.FunctionDeclaration {
     let res = Util.parseExpression<AST.Node>(fn.toString());
-    if (g.isExpressionStatement(res)) {
-      return res.expression as AST.ASTFunction 
-    } else if (g.isFunction(res)) {
-      return res;
+    let ret:AST.Node = res
+    if (AST.isExpressionStatement(res)) {
+      ret = res.expression
     }
+
+    if (AST.isFunctionExpression(ret)) {
+      return ret;
+    } else if (AST.isFunctionDeclaration(ret)) {
+      return ret;
+    } else if (AST.isArrowFunctionExpression(ret)) {
+      return ret;
+    }    
   }
     
-  static compile(node:AST.ASTFunction, globals:any):Function {
+  static compile(node:AST.Function, globals:any):Function {
     let genSym = Macro.genSymbol.toString();
     genSym = 'function genSym ' + genSym.substring(genSym.indexOf('('))
     let src = `(function() {     
       var id_ = new Date().getTime();
       var genSymbol = ${genSym};
       ${Object.keys(globals || {}).map(k => `var ${k} = ${globals[k].toString()}`).join('\n')} 
-      return ${Util.compileExpression(node)}; 
+      return ${Util.compileExpression(node as any as AST.Node)}; 
     })()`;
     return eval(src);
   }
