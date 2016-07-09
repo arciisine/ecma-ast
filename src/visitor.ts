@@ -45,6 +45,10 @@ export class Visitor {
     return this.parents.find(pred)
   }
 
+  findParents(pred:(node:VisitParent)=>boolean) {
+    return this.parents.filter(pred)
+  }
+
   private execHandler(fn:Handler, node:AST.Node):AST.Node {
     let res = (fn ? fn.call(this, node, this) : node);
     return (res && res['type']) ? res : node; //Always return a node 
