@@ -29,9 +29,13 @@ export namespace AST {
   }
   export interface Program  {
     body:  [ Statement | ModuleDeclaration ];
+    type:  "Program";
     sourceType:  "script" | "module";
   }
   export interface Function  {
+    body:  BlockStatement;
+    id?:  Identifier;
+    params: Pattern[];
     generator:  boolean;
   }
   export interface Statement  extends Node {
@@ -176,6 +180,8 @@ export namespace AST {
 
   export interface VariableDeclaration  {
     kind:  "var" | "let" | "const";
+    declarations: VariableDeclarator[];
+    type:  "VariableDeclaration";
   }
   export interface VariableDeclarator  extends Node {
     init?:  Expression;
@@ -193,6 +199,7 @@ export namespace AST {
   export function isThisExpression(n:Node):n is ThisExpression { return n.type === "ThisExpression"; } 
 
   export interface ArrayExpression  {
+    type:  "ArrayExpression";
     elements?:  [ Expression | SpreadElement  ];
   }
   export interface ObjectExpression  extends Expression {
@@ -202,10 +209,13 @@ export namespace AST {
   export function isObjectExpression(n:Node):n is ObjectExpression { return n.type === "ObjectExpression"; } 
 
   export interface Property  {
+    kind:  "init" | "get" | "set";
     shorthand:  boolean;
-    method:  boolean;
-    key:  Expression;
     computed:  boolean;
+    key:  Expression;
+    type:  "Property";
+    method:  boolean;
+    value:  Expression;
   }
   export interface FunctionExpression  extends Function,Expression {
     type:  "FunctionExpression";
@@ -246,6 +256,9 @@ export namespace AST {
     "==" ,  "!=" ,  "===" ,  "!=="          ,  "<" ,  "<=" ,  ">" ,  ">="          ,  "<<" ,  ">>" ,  ">>>"          ,  "+" ,  "-" ,  "*" ,  "/" ,  "%"          ,  ", " ,  "^" ,  "&" ,  "in"          ,  "instanceof"
   }
   export interface AssignmentExpression  {
+    operator:  AssignmentOperator;
+    right:  Expression;
+    type:  "AssignmentExpression";
     left:  Pattern;
   }
   export enum AssignmentOperator {
@@ -263,6 +276,9 @@ export namespace AST {
     ", " ,  "&&"
   }
   export interface MemberExpression  {
+    property:  Expression;
+    type:  "MemberExpression";
+    computed:  boolean;
     object:  Expression | Super;
   }
   export interface ConditionalExpression  extends Expression {
@@ -274,9 +290,12 @@ export namespace AST {
   export function isConditionalExpression(n:Node):n is ConditionalExpression { return n.type === "ConditionalExpression"; } 
 
   export interface CallExpression  {
+    type:  "CallExpression";
+    callee:  Expression | Super;
     arguments:  [ Expression | SpreadElement ];
   }
   export interface NewExpression  {
+    callee:  Expression | Super;
     type:  "NewExpression";
     arguments:  [ Expression | SpreadElement ];
   }

@@ -100,12 +100,15 @@ def process(files):
     for line in open('target/%s.ts'%f, 'r').readlines():
       if line.strip() == "": continue
       out = parse(line)
-      key = out['name']      
-      
+      key = out['name']
+    
       if key in declarations:
         for k,v in out.items():
           if v is not None:
-            declarations[key][k] = v
+            if k == 'fields':
+              declarations[key][k].update(v)
+            else:
+              declarations[key][k] = v
       else:
         declarations[key] = out
         order.append(key)

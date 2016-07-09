@@ -22,8 +22,7 @@ export class Macro {
 
 	static Array(size:number = 0):AST.ArrayPattern  {
     return {
-      type: "ArrayPattern",
-      elements: []
+      type: "ArrayPattern"
     };
   } 
 
