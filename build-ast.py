@@ -2,6 +2,7 @@ import re, sys
 declarations = {}
 order = []
 
+FORCE_FLATTEN = set([('ArrowFunctionExpression', 'Function')])
 
 def flatten(obj):
 
@@ -16,7 +17,7 @@ def flatten(obj):
     parent = declarations[p]
     typ = parent['type']
 
-    if typ is not None:
+    if typ is not None or (obj['name'], parent['name']) in FORCE_FLATTEN:
       out.update(parent)
       fields.update(parent['fields'])
     else:

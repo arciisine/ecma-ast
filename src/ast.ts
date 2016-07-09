@@ -28,14 +28,14 @@ export namespace AST {
     regex: {     pattern: string;     flags: string;   };
   }
   export interface Program  {
-    body:  [ Statement | ModuleDeclaration ];
+    body: (Statement | ModuleDeclaration )[];
     type:  "Program";
     sourceType:  "script" | "module";
   }
   export interface Function  {
     body:  BlockStatement;
     id?:  Identifier;
-    params: Pattern[];
+    params: (Pattern )[];
     generator:  boolean;
   }
   export interface Statement  extends Node {
@@ -48,7 +48,7 @@ export namespace AST {
   export function isExpressionStatement(n:Node):n is ExpressionStatement { return n.type === "ExpressionStatement"; } 
 
   export interface BlockStatement  extends Statement {
-    body: Statement[];
+    body: (Statement )[];
     type:  "BlockStatement";
   }
   export function isBlockStatement(n:Node):n is BlockStatement { return n.type === "BlockStatement"; } 
@@ -104,7 +104,7 @@ export namespace AST {
   export function isIfStatement(n:Node):n is IfStatement { return n.type === "IfStatement"; } 
 
   export interface SwitchStatement  extends Statement {
-    cases: SwitchCase[];
+    cases: (SwitchCase )[];
     type:  "SwitchStatement";
     discriminant:  Expression;
   }
@@ -113,7 +113,7 @@ export namespace AST {
   export interface SwitchCase  extends Node {
     type:  "SwitchCase";
     test?:  Expression;
-    consequent: Statement[];
+    consequent: (Statement )[];
   }
   export function isSwitchCase(n:Node):n is SwitchCase { return n.type === "SwitchCase"; } 
 
@@ -180,7 +180,7 @@ export namespace AST {
 
   export interface VariableDeclaration  {
     kind:  "var" | "let" | "const";
-    declarations: VariableDeclarator[];
+    declarations: (VariableDeclarator )[];
     type:  "VariableDeclaration";
   }
   export interface VariableDeclarator  extends Node {
@@ -200,11 +200,11 @@ export namespace AST {
 
   export interface ArrayExpression  {
     type:  "ArrayExpression";
-    elements?:  [ Expression | SpreadElement  ];
+    elements?: (Expression | SpreadElement  )[];
   }
   export interface ObjectExpression  extends Expression {
     type:  "ObjectExpression";
-    properties: Property[];
+    properties: (Property )[];
   }
   export function isObjectExpression(n:Node):n is ObjectExpression { return n.type === "ObjectExpression"; } 
 
@@ -292,15 +292,15 @@ export namespace AST {
   export interface CallExpression  {
     type:  "CallExpression";
     callee:  Expression | Super;
-    arguments:  [ Expression | SpreadElement ];
+    arguments: (Expression | SpreadElement )[];
   }
   export interface NewExpression  {
     callee:  Expression | Super;
     type:  "NewExpression";
-    arguments:  [ Expression | SpreadElement ];
+    arguments: (Expression | SpreadElement )[];
   }
   export interface SequenceExpression  extends Expression {
-    expressions: Expression[];
+    expressions: (Expression )[];
     type:  "SequenceExpression";
   }
   export function isSequenceExpression(n:Node):n is SequenceExpression { return n.type === "SequenceExpression"; } 
@@ -325,8 +325,11 @@ export namespace AST {
   }
   export function isSpreadElement(n:Node):n is SpreadElement { return n.type === "SpreadElement"; } 
 
-  export interface ArrowFunctionExpression  extends Function,Expression {
+  export interface ArrowFunctionExpression  extends Expression {
     body:  BlockStatement | Expression;
+    id?:  Identifier;
+    params: (Pattern )[];
+    generator:  boolean;
     type:  "ArrowFunctionExpression";
     expression:  boolean;
   }
@@ -340,8 +343,8 @@ export namespace AST {
   export function isYieldExpression(n:Node):n is YieldExpression { return n.type === "YieldExpression"; } 
 
   export interface TemplateLiteral  extends Expression {
-    quasis: TemplateElement[];
-    expressions: Expression[];
+    quasis: (TemplateElement )[];
+    expressions: (Expression )[];
     type:  "TemplateLiteral";
   }
   export function isTemplateLiteral(n:Node):n is TemplateLiteral { return n.type === "TemplateLiteral"; } 
@@ -371,13 +374,13 @@ export namespace AST {
   }
   export interface ObjectPattern  extends Pattern {
     type:  "ObjectPattern";
-    properties: AssignmentProperty[];
+    properties: (AssignmentProperty )[];
   }
   export function isObjectPattern(n:Node):n is ObjectPattern { return n.type === "ObjectPattern"; } 
 
   export interface ArrayPattern  extends Pattern {
     type:  "ArrayPattern";
-    elements?:  [ Pattern  ];
+    elements?: (Pattern  )[];
   }
   export function isArrayPattern(n:Node):n is ArrayPattern { return n.type === "ArrayPattern"; } 
 
@@ -400,7 +403,7 @@ export namespace AST {
     superClass?:  Expression;
   }
   export interface ClassBody  extends Node {
-    body: MethodDefinition[];
+    body: (MethodDefinition )[];
     type:  "ClassBody";
   }
   export function isClassBody(n:Node):n is ClassBody { return n.type === "ClassBody"; } 
@@ -440,7 +443,7 @@ export namespace AST {
     local:  Identifier;
   }
   export interface ImportDeclaration  extends ModuleDeclaration {
-    specifiers:  [ ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier ];
+    specifiers: (ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier )[];
     type:  "ImportDeclaration";
     source:  Literal;
   }
@@ -463,7 +466,7 @@ export namespace AST {
   export function isImportNamespaceSpecifier(n:Node):n is ImportNamespaceSpecifier { return n.type === "ImportNamespaceSpecifier"; } 
 
   export interface ExportNamedDeclaration  extends ModuleDeclaration {
-    specifiers: ExportSpecifier[];
+    specifiers: (ExportSpecifier )[];
     type:  "ExportNamedDeclaration";
     source?:  Literal;
     declaration?:  Declaration;

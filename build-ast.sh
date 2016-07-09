@@ -10,7 +10,7 @@ function parse() {
         -e 's|&lt;|<|g' \
         -e 's|&gt;|>|g' \
         -e 's|//.*$||g' | \
-    perl -pe 's/:\s*\[\s*([^\] ]+)\s*\]/:\1\[\]/' | \
+    perl -pe 's/:\s*\[\s*([A-Za-z |]+)\s*\]/:(\1)\[\]/' | \
     perl -pe 's/(.*):(.*)\|\s*null(.*)/\1?:\2\3/' | \
     tr '\n' ' ' | \
     perl -pe 's/(extend )?(enum|interface)/\nexport $2/g' | \

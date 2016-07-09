@@ -27,7 +27,7 @@ export class Macro {
   } 
 
 	static Throw(e:AST.Expression):AST.ThrowStatement {return {type:"ThrowStatement", argument:e}};
-  static Call(src:AST.Identifier|AST.Expression, ...args):AST.CallExpression {
+  static Call(src:AST.Identifier|AST.Expression, ...args:AST.Expression[]):AST.CallExpression {
     return {type:"CallExpression", callee:src, arguments:args.filter(x => !!x)}
   };
 
@@ -125,9 +125,7 @@ export class Macro {
       id,
       params, 
       body : Macro.Block(...body), 
-      generator, 
-      defaults:[], 
-      expression:false
+      generator
     };
   } 
   static IfThen(test:AST.Expression, body:AST.Node[], elseBody:AST.Node[] = []):AST.IfStatement {
