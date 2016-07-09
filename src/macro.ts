@@ -20,10 +20,10 @@ export class Macro {
     return {type:"YieldExpression", argument:e, delegate} as AST.YieldExpression
   };
 
-	static Array(size:number = 0):AST.ArrayPattern  {
+	static Array(...inputs:AST.Pattern[]):AST.ArrayPattern  {
     return {
       type: "ArrayPattern",
-      elements : []
+      elements : inputs
     };
   } 
 
