@@ -122,6 +122,7 @@ def base_function():
   declarations['BaseFunction'] = {
     "source" : "interface",
     "type" : None,
+    "extends" : ["Node"],
     "name" : "BaseFunction",
     "fields" : common
   }

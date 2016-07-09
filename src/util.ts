@@ -18,23 +18,17 @@ export class Util {
     return escodegen.generate(node);
   }
 
-  static parse(fn:Function|string):AST.FunctionExpression|AST.ArrowFunctionExpression|AST.FunctionDeclaration {
+  static parse(fn:Function|string):AST.BaseFunction {
     let res = Util.parseExpression<AST.Node>(fn.toString());
     let ret:AST.Node = res
     if (AST.isExpressionStatement(res)) {
       ret = res.expression
     }
 
-    if (AST.isFunctionExpression(ret)) {
-      return ret;
-    } else if (AST.isFunctionDeclaration(ret)) {
-      return ret;
-    } else if (AST.isArrowFunctionExpression(ret)) {
-      return ret;
-    }    
+    return ret as any as AST.BaseFunction
   }
     
-  static compile(node:AST.Function, globals:any):Function {
+  static compile(node:AST.BaseFunction, globals:any):Function {
     let genSym = Macro.genSymbol.toString();
     genSym = 'function genSym ' + genSym.substring(genSym.indexOf('('))
     let src = `(function() {     

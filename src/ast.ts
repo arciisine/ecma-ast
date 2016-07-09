@@ -510,7 +510,7 @@ export namespace AST {
   }
   export function isExportAllDeclaration(n:Node):n is ExportAllDeclaration { return n.type === "ExportAllDeclaration"; } 
 
-  export interface BaseFunction  {
+  export interface BaseFunction  extends Node {
     id?:  Identifier;
     params: (Pattern )[];
     generator:  boolean;
