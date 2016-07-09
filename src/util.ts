@@ -20,11 +20,12 @@ export class Util {
   }
 
   static parse(fn:Function|string):AST.ASTFunction {
-    let res = Util.parseExpression<AST.ASTFunction>(fn.toString());
-    if (g.isExpressionStatement(res as AST.Node)) {
-      res = res.expression as any as AST.ASTFunction 
+    let res = Util.parseExpression<AST.Node>(fn.toString());
+    if (g.isExpressionStatement(res)) {
+      return res.expression as AST.ASTFunction 
+    } else if (g.isFunction(res)) {
+      return res;
     }
-    return res;
   }
     
   static compile(node:AST.ASTFunction, globals:any):Function {
