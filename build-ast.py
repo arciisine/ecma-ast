@@ -2,11 +2,10 @@ import re, sys
 declarations = {}
 order = []
 
-FORCE_FLATTEN = set([
-  ('ArrowFunctionExpression', 'Function'),
-  ('FunctionExpression', 'Function'),
-  ('FunctionDeclaration', 'Function'),
-])
+def get_func_types():
+  return [k for k in order if 'Function' in k and k != 'Function']  
+
+FORCE_FLATTEN = set()
 
 def flatten(obj):
 
@@ -103,8 +102,7 @@ def parse(text):
 def base_function():
   common = None
 
-  decls = [declarations[k] for k in declarations.keys()
-    if 'Function' in k and k != 'Function']
+  decls = [declarations[k] for k in get_func_types()]
   
   for decl in decls:
       fields = decl['fields']
@@ -152,6 +150,8 @@ def process(files):
         declarations[key] = out
         order.append(key)
         
+  FORCE_FLATTEN = set([(x, 'Function') for x in get_func_types()])
+
   for k,v in declarations.items():
     declarations[k] = flatten(v)  
 
@@ -180,6 +180,8 @@ def output():
       if obj['type'] is not None:
         print '  export function is%(name)s(n:Node):n is %(name)s { return n.type === "%(type)s"; } \n' % context        
     
+  print '  export function isFunction(n:Node):n is BaseFunction { return %s }' % (' || '.join(['n.type === "%s"' % k for k in get_func_types()]))
+
   print '}'
 
 if __name__ == '__main__':
