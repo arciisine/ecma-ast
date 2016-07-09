@@ -32,6 +32,8 @@ export namespace AST {
     type:  "Program";
     sourceType:  "script" | "module";
   }
+  export function isProgram(n:Node):n is Program { return n.type === "Program"; } 
+
   export interface Function  {
     body:  BlockStatement;
     id?:  Identifier;
@@ -183,6 +185,8 @@ export namespace AST {
     declarations: (VariableDeclarator )[];
     type:  "VariableDeclaration";
   }
+  export function isVariableDeclaration(n:Node):n is VariableDeclaration { return n.type === "VariableDeclaration"; } 
+
   export interface VariableDeclarator  extends Node {
     init?:  Expression;
     type:  "VariableDeclarator";
@@ -202,6 +206,8 @@ export namespace AST {
     type:  "ArrayExpression";
     elements?: (Expression | SpreadElement  )[];
   }
+  export function isArrayExpression(n:Node):n is ArrayExpression { return n.type === "ArrayExpression"; } 
+
   export interface ObjectExpression  extends Expression {
     type:  "ObjectExpression";
     properties: (Property )[];
@@ -217,6 +223,8 @@ export namespace AST {
     method:  boolean;
     value:  Expression;
   }
+  export function isProperty(n:Node):n is Property { return n.type === "Property"; } 
+
   export interface FunctionExpression  extends Function,Expression {
     type:  "FunctionExpression";
   }
@@ -261,6 +269,8 @@ export namespace AST {
     type:  "AssignmentExpression";
     left:  Pattern;
   }
+  export function isAssignmentExpression(n:Node):n is AssignmentExpression { return n.type === "AssignmentExpression"; } 
+
   export enum AssignmentOperator {
     "=" ,  "+=" ,  "-=" ,  "*=" ,  "/=" ,  "%="         ,  "<<=" ,  ">>=" ,  ">>>="         ,  ", =" ,  "^=" ,  "&="
   }
@@ -281,6 +291,8 @@ export namespace AST {
     computed:  boolean;
     object:  Expression | Super;
   }
+  export function isMemberExpression(n:Node):n is MemberExpression { return n.type === "MemberExpression"; } 
+
   export interface ConditionalExpression  extends Expression {
     test:  Expression;
     alternate:  Expression;
@@ -294,11 +306,15 @@ export namespace AST {
     callee:  Expression | Super;
     arguments: (Expression | SpreadElement )[];
   }
+  export function isCallExpression(n:Node):n is CallExpression { return n.type === "CallExpression"; } 
+
   export interface NewExpression  {
     callee:  Expression | Super;
     type:  "NewExpression";
     arguments: (Expression | SpreadElement )[];
   }
+  export function isNewExpression(n:Node):n is NewExpression { return n.type === "NewExpression"; } 
+
   export interface SequenceExpression  extends Expression {
     expressions: (Expression )[];
     type:  "SequenceExpression";
@@ -314,6 +330,8 @@ export namespace AST {
     type:  "ForOfStatement";
     left:  VariableDeclaration |  Pattern;
   }
+  export function isForOfStatement(n:Node):n is ForOfStatement { return n.type === "ForOfStatement"; } 
+
   export interface Super  extends Node {
     type:  "Super";
   }
@@ -372,6 +390,8 @@ export namespace AST {
     type:  "Property";
     method: boolean
   }
+  export function isAssignmentProperty(n:Node):n is AssignmentProperty { return n.type === "AssignmentProperty"; } 
+
   export interface ObjectPattern  extends Pattern {
     type:  "ObjectPattern";
     properties: (AssignmentProperty )[];
