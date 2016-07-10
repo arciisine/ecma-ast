@@ -157,10 +157,10 @@ def output():
   for k in order:
     obj = declarations[k]
     if obj['source'] == 'enum':
-        print '  export enum %(name)s {\n    %(values)s\n  }' % \
+        print '  export interface %(name)s {\n    this:%(values)s\n  };\n' % \
           {
             "name":obj['name'], 
-            "values":", ".join(obj['values'])
+            "values":re.sub('"\s+\|\s+"', '" | "', " | ".join(obj['values']))
           }
     else:
       extends = ''
