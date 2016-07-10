@@ -15,7 +15,7 @@ export class Util {
   }
 
   static parseProgram<T extends AST.Node>(expr:string):AST.Program {
-    let res =  esprima.parse(expr);
+    let res =  esprima.parse(expr) as any as AST.Program;
     return res;
   }
 
