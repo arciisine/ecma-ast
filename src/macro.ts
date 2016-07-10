@@ -129,6 +129,17 @@ export class Macro {
       generator
     };
   } 
+
+  static FuncExpr(id:AST.Identifier, params:AST.Pattern[], body:AST.Node[], generator:boolean = false, expr:boolean = false):AST.FunctionExpression {
+    return {
+      type : "FunctionExpression", 
+      id,
+      params, 
+      body : Macro.Block(...body), 
+      generator
+    };
+  } 
+
   static IfThen(test:AST.Expression, body:AST.Node[], elseBody:AST.Node[] = []):AST.IfStatement {
     let res:any = {
       type : "IfStatement",
