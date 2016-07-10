@@ -10,7 +10,12 @@ import {Visitor, Handler} from './visitor';
 export class Util {
   
   static parseExpression<T extends AST.Node>(expr:string):T {
-    let res =  (esprima.parse(expr) as any).body[0] as T;
+    let res =  Util.parseProgram(expr);
+    return res.body[0] as any as T;
+  }
+
+  static parseProgram<T extends AST.Node>(expr:string):AST.Program {
+    let res =  esprima.parse(expr);
     return res;
   }
 
