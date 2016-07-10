@@ -240,9 +240,7 @@ export namespace AST {
   }
   export function isUnaryExpression(n:Node):n is UnaryExpression { return n.type === "UnaryExpression"; } 
 
-  export interface UnaryOperator {
-    this:"-" | "+" | "!" | "~" | "typeof" | "void" | "delete"
-  };
+  export type UnaryOperator = "-" | "+" | "!" | "~" | "typeof" | "void" | "delete";
 
   export interface UpdateExpression  extends Expression {
     operator:  UpdateOperator;
@@ -252,9 +250,7 @@ export namespace AST {
   }
   export function isUpdateExpression(n:Node):n is UpdateExpression { return n.type === "UpdateExpression"; } 
 
-  export interface UpdateOperator {
-    this:"++" | "--"
-  };
+  export type UpdateOperator = "++" | "--";
 
   export interface BinaryExpression  extends Expression {
     operator:  BinaryOperator;
@@ -264,9 +260,7 @@ export namespace AST {
   }
   export function isBinaryExpression(n:Node):n is BinaryExpression { return n.type === "BinaryExpression"; } 
 
-  export interface BinaryOperator {
-    this:"==" | "!=" | "===" | "!==" | "<" | "<=" | ">" | ">=" | "<<" | ">>" | ">>>" | "+" | "-" | "*" | "/" | "%" | " | " | "^" | "&" | "in" | "instanceof"
-  };
+  export type BinaryOperator = "==" | "!=" | "===" | "!==" | "<" | "<=" | ">" | ">=" | "<<" | ">>" | ">>>" | "+" | "-" | "*" | "/" | "%" | " | " | "^" | "&" | "in" | "instanceof";
 
   export interface AssignmentExpression  {
     operator:  AssignmentOperator;
@@ -276,9 +270,7 @@ export namespace AST {
   }
   export function isAssignmentExpression(n:Node):n is AssignmentExpression { return n.type === "AssignmentExpression"; } 
 
-  export interface AssignmentOperator {
-    this:"=" | "+=" | "-=" | "*=" | "/=" | "%=" | "<<=" | ">>=" | ">>>=" | " | =" | "^=" | "&="
-  };
+  export type AssignmentOperator = "=" | "+=" | "-=" | "*=" | "/=" | "%=" | "<<=" | ">>=" | ">>>=" | " | =" | "^=" | "&=";
 
   export interface LogicalExpression  extends Expression {
     operator:  LogicalOperator;
@@ -288,9 +280,7 @@ export namespace AST {
   }
   export function isLogicalExpression(n:Node):n is LogicalExpression { return n.type === "LogicalExpression"; } 
 
-  export interface LogicalOperator {
-    this:" | "  |  "&&"
-  };
+  export type LogicalOperator = " | "  |  "&&";
 
   export interface MemberExpression  {
     property:  Expression;
