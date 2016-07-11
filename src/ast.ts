@@ -1,6 +1,5 @@
 export namespace AST {
   export interface Node  {
-    loc:  SourceLocation;
     type:  string;
   }
   export interface SourceLocation  {
@@ -312,282 +311,231 @@ export namespace AST {
     id:  Identifier;
     generator:  boolean;
   }
-  export function Identifier(o:{loc:  SourceLocation,
-    name:  string,}):Identifier {
+  export function Identifier(o:{name:  string,}):Identifier {
     return (o["type"] = "Identifier" && o) as Identifier
   }
-  export function Literal(o:{loc:  SourceLocation,
-    value:  string | boolean  | number | RegExp,}):Literal {
+  export function Literal(o:{value:  string | boolean  | number | RegExp,}):Literal {
     return (o["type"] = "Literal" && o) as Literal
   }
   export function Program(o:{body: (Statement | ModuleDeclaration )[],
-    loc:  SourceLocation,
     sourceType:  "script" | "module",}):Program {
     return (o["type"] = "Program" && o) as Program
   }
-  export function ExpressionStatement(o:{loc:  SourceLocation,
-    expression:  Expression,}):ExpressionStatement {
+  export function ExpressionStatement(o:{expression:  Expression,}):ExpressionStatement {
     return (o["type"] = "ExpressionStatement" && o) as ExpressionStatement
   }
-  export function BlockStatement(o:{body: (Statement )[],
-    loc:  SourceLocation,}):BlockStatement {
+  export function BlockStatement(o:{body: (Statement )[],}):BlockStatement {
     return (o["type"] = "BlockStatement" && o) as BlockStatement
   }
-  export function EmptyStatement(o:{loc:  SourceLocation,}):EmptyStatement {
+  export function EmptyStatement(o:{}):EmptyStatement {
     return (o["type"] = "EmptyStatement" && o) as EmptyStatement
   }
-  export function DebuggerStatement(o:{loc:  SourceLocation,}):DebuggerStatement {
+  export function DebuggerStatement(o:{}):DebuggerStatement {
     return (o["type"] = "DebuggerStatement" && o) as DebuggerStatement
   }
   export function WithStatement(o:{body:  Statement,
-    loc:  SourceLocation,
     object:  Expression,}):WithStatement {
     return (o["type"] = "WithStatement" && o) as WithStatement
   }
-  export function ReturnStatement(o:{loc:  SourceLocation,
-    argument:  Expression,}):ReturnStatement {
+  export function ReturnStatement(o:{argument:  Expression,}):ReturnStatement {
     return (o["type"] = "ReturnStatement" && o) as ReturnStatement
   }
   export function LabeledStatement(o:{body:  Statement,
-    loc:  SourceLocation,
     label:  Identifier,}):LabeledStatement {
     return (o["type"] = "LabeledStatement" && o) as LabeledStatement
   }
-  export function BreakStatement(o:{loc:  SourceLocation,
-    label:  Identifier,}):BreakStatement {
+  export function BreakStatement(o:{label:  Identifier,}):BreakStatement {
     return (o["type"] = "BreakStatement" && o) as BreakStatement
   }
-  export function ContinueStatement(o:{loc:  SourceLocation,
-    label:  Identifier,}):ContinueStatement {
+  export function ContinueStatement(o:{label:  Identifier,}):ContinueStatement {
     return (o["type"] = "ContinueStatement" && o) as ContinueStatement
   }
   export function IfStatement(o:{test:  Expression,
-    loc:  SourceLocation,
     alternate:  Statement,
     consequent:  Statement,}):IfStatement {
     return (o["type"] = "IfStatement" && o) as IfStatement
   }
-  export function SwitchStatement(o:{loc:  SourceLocation,
-    cases: (SwitchCase )[],
+  export function SwitchStatement(o:{cases: (SwitchCase )[],
     discriminant:  Expression,}):SwitchStatement {
     return (o["type"] = "SwitchStatement" && o) as SwitchStatement
   }
   export function SwitchCase(o:{test:  Expression,
-    loc:  SourceLocation,
     consequent: (Statement )[],}):SwitchCase {
     return (o["type"] = "SwitchCase" && o) as SwitchCase
   }
-  export function ThrowStatement(o:{loc:  SourceLocation,
-    argument:  Expression,}):ThrowStatement {
+  export function ThrowStatement(o:{argument:  Expression,}):ThrowStatement {
     return (o["type"] = "ThrowStatement" && o) as ThrowStatement
   }
-  export function TryStatement(o:{loc:  SourceLocation,
+  export function TryStatement(o:{finalizer:  BlockStatement,
     handler:  CatchClause,
-    block:  BlockStatement,
-    finalizer:  BlockStatement,}):TryStatement {
+    block:  BlockStatement,}):TryStatement {
     return (o["type"] = "TryStatement" && o) as TryStatement
   }
   export function CatchClause(o:{body:  BlockStatement,
-    loc:  SourceLocation,
     param:  Pattern,}):CatchClause {
     return (o["type"] = "CatchClause" && o) as CatchClause
   }
   export function WhileStatement(o:{test:  Expression,
-    loc:  SourceLocation,
     body:  Statement,}):WhileStatement {
     return (o["type"] = "WhileStatement" && o) as WhileStatement
   }
   export function DoWhileStatement(o:{body:  Statement,
-    loc:  SourceLocation,
     test:  Expression,}):DoWhileStatement {
     return (o["type"] = "DoWhileStatement" && o) as DoWhileStatement
   }
-  export function ForStatement(o:{body:  Statement,
-    loc:  SourceLocation,
+  export function ForStatement(o:{test:  Expression,
+    body:  Statement,
     init:  VariableDeclaration | Expression,
-    test:  Expression,
     update:  Expression,}):ForStatement {
     return (o["type"] = "ForStatement" && o) as ForStatement
   }
   export function ForInStatement(o:{body:  Statement,
-    loc:  SourceLocation,
     right:  Expression,
     left:  VariableDeclaration |  Pattern,}):ForInStatement {
     return (o["type"] = "ForInStatement" && o) as ForInStatement
   }
   export function FunctionDeclaration(o:{body:  BlockStatement,
-    loc:  SourceLocation,
     params: (Pattern )[],
-    generator:  boolean,
-    id:  Identifier,}):FunctionDeclaration {
+    id:  Identifier,
+    generator:  boolean,}):FunctionDeclaration {
     return (o["type"] = "FunctionDeclaration" && o) as FunctionDeclaration
   }
-  export function VariableDeclaration(o:{loc:  SourceLocation,
-    kind:  "var" | "let" | "const",
+  export function VariableDeclaration(o:{kind:  "var" | "let" | "const",
     declarations: (VariableDeclarator )[],}):VariableDeclaration {
     return (o["type"] = "VariableDeclaration" && o) as VariableDeclaration
   }
-  export function VariableDeclarator(o:{loc:  SourceLocation,
-    init:  Expression,
+  export function VariableDeclarator(o:{init:  Expression,
     id:  Pattern,}):VariableDeclarator {
     return (o["type"] = "VariableDeclarator" && o) as VariableDeclarator
   }
-  export function ThisExpression(o:{loc:  SourceLocation,}):ThisExpression {
+  export function ThisExpression(o:{}):ThisExpression {
     return (o["type"] = "ThisExpression" && o) as ThisExpression
   }
-  export function ArrayExpression(o:{loc:  SourceLocation,
-    elements: (Expression | SpreadElement  )[],}):ArrayExpression {
+  export function ArrayExpression(o:{elements: (Expression | SpreadElement  )[],}):ArrayExpression {
     return (o["type"] = "ArrayExpression" && o) as ArrayExpression
   }
-  export function ObjectExpression(o:{loc:  SourceLocation,
-    properties: (Property )[],}):ObjectExpression {
+  export function ObjectExpression(o:{properties: (Property )[],}):ObjectExpression {
     return (o["type"] = "ObjectExpression" && o) as ObjectExpression
   }
-  export function Property(o:{loc:  SourceLocation,
-    kind:  "init" | "get" | "set",
+  export function Property(o:{kind:  "init" | "get" | "set",
     shorthand:  boolean,
     computed:  boolean,
-    value:  Expression,
     key:  Expression,
-    method:  boolean,}):Property {
+    method:  boolean,
+    value:  Expression,}):Property {
     return (o["type"] = "Property" && o) as Property
   }
   export function FunctionExpression(o:{body:  BlockStatement,
-    loc:  SourceLocation,
     params: (Pattern )[],
-    generator:  boolean,
-    id:  Identifier,}):FunctionExpression {
+    id:  Identifier,
+    generator:  boolean,}):FunctionExpression {
     return (o["type"] = "FunctionExpression" && o) as FunctionExpression
   }
   export function UnaryExpression(o:{operator:  UnaryOperator,
-    loc:  SourceLocation,
     prefix:  boolean,
     argument:  Expression,}):UnaryExpression {
     return (o["type"] = "UnaryExpression" && o) as UnaryExpression
   }
   export function UpdateExpression(o:{operator:  UpdateOperator,
-    loc:  SourceLocation,
     prefix:  boolean,
     argument:  Expression,}):UpdateExpression {
     return (o["type"] = "UpdateExpression" && o) as UpdateExpression
   }
   export function BinaryExpression(o:{operator:  BinaryOperator,
-    loc:  SourceLocation,
     right:  Expression,
     left:  Expression,}):BinaryExpression {
     return (o["type"] = "BinaryExpression" && o) as BinaryExpression
   }
   export function AssignmentExpression(o:{operator:  AssignmentOperator,
-    loc:  SourceLocation,
     right:  Expression,
     left:  Pattern,}):AssignmentExpression {
     return (o["type"] = "AssignmentExpression" && o) as AssignmentExpression
   }
   export function LogicalExpression(o:{operator:  LogicalOperator,
-    loc:  SourceLocation,
     right:  Expression,
     left:  Expression,}):LogicalExpression {
     return (o["type"] = "LogicalExpression" && o) as LogicalExpression
   }
-  export function MemberExpression(o:{loc:  SourceLocation,
-    property:  Expression,
+  export function MemberExpression(o:{property:  Expression,
     computed:  boolean,
     object:  Expression | Super,}):MemberExpression {
     return (o["type"] = "MemberExpression" && o) as MemberExpression
   }
   export function ConditionalExpression(o:{test:  Expression,
-    loc:  SourceLocation,
     alternate:  Expression,
     consequent:  Expression,}):ConditionalExpression {
     return (o["type"] = "ConditionalExpression" && o) as ConditionalExpression
   }
-  export function CallExpression(o:{loc:  SourceLocation,
-    callee:  Expression | Super,
+  export function CallExpression(o:{callee:  Expression | Super,
     arguments: (Expression | SpreadElement )[],}):CallExpression {
     return (o["type"] = "CallExpression" && o) as CallExpression
   }
-  export function NewExpression(o:{loc:  SourceLocation,
-    callee:  Expression | Super,
+  export function NewExpression(o:{callee:  Expression | Super,
     arguments: (Expression | SpreadElement )[],}):NewExpression {
     return (o["type"] = "NewExpression" && o) as NewExpression
   }
-  export function SequenceExpression(o:{loc:  SourceLocation,
-    expressions: (Expression )[],}):SequenceExpression {
+  export function SequenceExpression(o:{expressions: (Expression )[],}):SequenceExpression {
     return (o["type"] = "SequenceExpression" && o) as SequenceExpression
   }
   export function ForOfStatement(o:{body:  Statement,
-    loc:  SourceLocation,
     right:  Expression,
     left:  VariableDeclaration |  Pattern,}):ForOfStatement {
     return (o["type"] = "ForOfStatement" && o) as ForOfStatement
   }
-  export function Super(o:{loc:  SourceLocation,}):Super {
+  export function Super(o:{}):Super {
     return (o["type"] = "Super" && o) as Super
   }
-  export function SpreadElement(o:{loc:  SourceLocation,
-    argument:  Expression,}):SpreadElement {
+  export function SpreadElement(o:{argument:  Expression,}):SpreadElement {
     return (o["type"] = "SpreadElement" && o) as SpreadElement
   }
   export function ArrowFunctionExpression(o:{body:  BlockStatement | Expression,
-    loc:  SourceLocation,
     params: (Pattern )[],
     generator:  boolean,
     expression:  boolean,
     id:  Identifier,}):ArrowFunctionExpression {
     return (o["type"] = "ArrowFunctionExpression" && o) as ArrowFunctionExpression
   }
-  export function YieldExpression(o:{loc:  SourceLocation,
-    argument:  Expression,
+  export function YieldExpression(o:{argument:  Expression,
     delegate:  boolean,}):YieldExpression {
     return (o["type"] = "YieldExpression" && o) as YieldExpression
   }
   export function TemplateLiteral(o:{quasis: (TemplateElement )[],
-    loc:  SourceLocation,
     expressions: (Expression )[],}):TemplateLiteral {
     return (o["type"] = "TemplateLiteral" && o) as TemplateLiteral
   }
-  export function TaggedTemplateExpression(o:{loc:  SourceLocation,
-    quasi:  TemplateLiteral,
+  export function TaggedTemplateExpression(o:{quasi:  TemplateLiteral,
     tag:  Expression,}):TaggedTemplateExpression {
     return (o["type"] = "TaggedTemplateExpression" && o) as TaggedTemplateExpression
   }
-  export function TemplateElement(o:{loc:  SourceLocation,
-    tail:  boolean,
+  export function TemplateElement(o:{tail:  boolean,
     value: {         cooked: string,         raw: string,     },}):TemplateElement {
     return (o["type"] = "TemplateElement" && o) as TemplateElement
   }
-  export function AssignmentProperty(o:{loc:  SourceLocation,
-    kind:  "init",
+  export function AssignmentProperty(o:{kind:  "init",
     shorthand:  boolean,
     computed:  boolean,
-    value:  Pattern,
     key:  Expression,
-    method: boolean}):AssignmentProperty {
+    method: boolean
+    value:  Pattern,}):AssignmentProperty {
     return (o["type"] = "AssignmentProperty" && o) as AssignmentProperty
   }
-  export function ObjectPattern(o:{loc:  SourceLocation,
-    properties: (AssignmentProperty )[],}):ObjectPattern {
+  export function ObjectPattern(o:{properties: (AssignmentProperty )[],}):ObjectPattern {
     return (o["type"] = "ObjectPattern" && o) as ObjectPattern
   }
-  export function ArrayPattern(o:{loc:  SourceLocation,
-    elements: (Pattern  )[],}):ArrayPattern {
+  export function ArrayPattern(o:{elements: (Pattern  )[],}):ArrayPattern {
     return (o["type"] = "ArrayPattern" && o) as ArrayPattern
   }
-  export function RestElement(o:{loc:  SourceLocation,
-    argument:  Pattern,}):RestElement {
+  export function RestElement(o:{argument:  Pattern,}):RestElement {
     return (o["type"] = "RestElement" && o) as RestElement
   }
-  export function AssignmentPattern(o:{loc:  SourceLocation,
-    right:  Expression,
+  export function AssignmentPattern(o:{right:  Expression,
     left:  Pattern,}):AssignmentPattern {
     return (o["type"] = "AssignmentPattern" && o) as AssignmentPattern
   }
-  export function ClassBody(o:{body: (MethodDefinition )[],
-    loc:  SourceLocation,}):ClassBody {
+  export function ClassBody(o:{body: (MethodDefinition )[],}):ClassBody {
     return (o["type"] = "ClassBody" && o) as ClassBody
   }
-  export function MethodDefinition(o:{loc:  SourceLocation,
-    kind:  "constructor" | "method" | "get" | "set",
+  export function MethodDefinition(o:{kind:  "constructor" | "method" | "get" | "set",
     static:  boolean,
     computed:  boolean,
     key:  Expression,
@@ -595,57 +543,46 @@ export namespace AST {
     return (o["type"] = "MethodDefinition" && o) as MethodDefinition
   }
   export function ClassDeclaration(o:{body:  ClassBody,
-    loc:  SourceLocation,
-    superClass:  Expression,
-    id:  Identifier,}):ClassDeclaration {
+    id:  Identifier,
+    superClass:  Expression,}):ClassDeclaration {
     return (o["type"] = "ClassDeclaration" && o) as ClassDeclaration
   }
   export function ClassExpression(o:{body:  ClassBody,
-    loc:  SourceLocation,
-    superClass:  Expression,
-    id:  Identifier,}):ClassExpression {
+    id:  Identifier,
+    superClass:  Expression,}):ClassExpression {
     return (o["type"] = "ClassExpression" && o) as ClassExpression
   }
-  export function MetaProperty(o:{loc:  SourceLocation,
-    meta:  Identifier,
+  export function MetaProperty(o:{meta:  Identifier,
     property:  Identifier,}):MetaProperty {
     return (o["type"] = "MetaProperty" && o) as MetaProperty
   }
-  export function ImportDeclaration(o:{loc:  SourceLocation,
-    source:  Literal,
-    specifiers: (ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier )[],}):ImportDeclaration {
+  export function ImportDeclaration(o:{specifiers: (ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier )[],
+    source:  Literal,}):ImportDeclaration {
     return (o["type"] = "ImportDeclaration" && o) as ImportDeclaration
   }
-  export function ImportSpecifier(o:{loc:  SourceLocation,
-    imported:  Identifier,
+  export function ImportSpecifier(o:{imported:  Identifier,
     local:  Identifier,}):ImportSpecifier {
     return (o["type"] = "ImportSpecifier" && o) as ImportSpecifier
   }
-  export function ImportDefaultSpecifier(o:{loc:  SourceLocation,
-    local:  Identifier,}):ImportDefaultSpecifier {
+  export function ImportDefaultSpecifier(o:{local:  Identifier,}):ImportDefaultSpecifier {
     return (o["type"] = "ImportDefaultSpecifier" && o) as ImportDefaultSpecifier
   }
-  export function ImportNamespaceSpecifier(o:{loc:  SourceLocation,
-    local:  Identifier,}):ImportNamespaceSpecifier {
+  export function ImportNamespaceSpecifier(o:{local:  Identifier,}):ImportNamespaceSpecifier {
     return (o["type"] = "ImportNamespaceSpecifier" && o) as ImportNamespaceSpecifier
   }
-  export function ExportNamedDeclaration(o:{loc:  SourceLocation,
+  export function ExportNamedDeclaration(o:{specifiers: (ExportSpecifier )[],
     declaration:  Declaration,
-    source:  Literal,
-    specifiers: (ExportSpecifier )[],}):ExportNamedDeclaration {
+    source:  Literal,}):ExportNamedDeclaration {
     return (o["type"] = "ExportNamedDeclaration" && o) as ExportNamedDeclaration
   }
-  export function ExportSpecifier(o:{loc:  SourceLocation,
-    exported:  Identifier,
-    local:  Identifier,}):ExportSpecifier {
+  export function ExportSpecifier(o:{local:  Identifier,
+    exported:  Identifier,}):ExportSpecifier {
     return (o["type"] = "ExportSpecifier" && o) as ExportSpecifier
   }
-  export function ExportDefaultDeclaration(o:{loc:  SourceLocation,
-    declaration:  Declaration | Expression,}):ExportDefaultDeclaration {
+  export function ExportDefaultDeclaration(o:{declaration:  Declaration | Expression,}):ExportDefaultDeclaration {
     return (o["type"] = "ExportDefaultDeclaration" && o) as ExportDefaultDeclaration
   }
-  export function ExportAllDeclaration(o:{loc:  SourceLocation,
-    source:  Literal,}):ExportAllDeclaration {
+  export function ExportAllDeclaration(o:{source:  Literal,}):ExportAllDeclaration {
     return (o["type"] = "ExportAllDeclaration" && o) as ExportAllDeclaration
   }
   export function isIdentifier(n:Node):n is Identifier { return n.type === "Identifier"; } 

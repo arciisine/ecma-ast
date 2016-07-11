@@ -116,24 +116,19 @@ export class Macro {
   } 
 
   static FuncExpr(id:AST.Identifier, params:AST.Pattern[], body:AST.Node[], generator:boolean = false, expr:boolean = false):AST.FunctionExpression {
-    return {
-      type : "FunctionExpression", 
+    return AST.FunctionExpression({
       id,
       params, 
       body : Macro.Block(...body), 
       generator
-    };
+    });
   } 
 
-  static IfThen(test:AST.Expression, body:AST.Node[], elseBody:AST.Node[] = []):AST.IfStatement {
-    let res:any = {
-      type : "IfStatement",
+  static IfThen(test:AST.Expression, body:AST.Node[], elseBody:AST.Node[] = null):AST.IfStatement {
+    return AST.IfStatement({
       test,
-      consequent : Macro.Block(...body)
-    }
-    if (elseBody) {
-      res['alternate']  = Macro.Block(...elseBody)
-    };
-    return res as AST.IfStatement;
+      consequent : Macro.Block(...body),
+      alternate : elseBody ? Macro.Block(...elseBody) : null
+    })
   } 
 }

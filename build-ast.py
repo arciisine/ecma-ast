@@ -149,7 +149,9 @@ def process(files):
         order.append(key)
 
   for k in get_func_types():
-    declarations[k] = flatten(declarations[k], set(['Function']))  
+    declarations[k] = flatten(declarations[k], set(['Function']))
+
+  del declarations['Node']['fields']['loc']
 
 def get_all_fields(k):
   obj = declarations[k]
