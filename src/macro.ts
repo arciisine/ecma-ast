@@ -8,46 +8,41 @@ export class Macro {
     return "__gen"+parseInt(`${Math.random()*1000}`)+(id_++); 
   }
 
-  static Id(name?:string):AST.Identifier { return {type:"Identifier", name:name||Macro.genSymbol()} }
-  static Literal(value:any):AST.Literal { return {type:"Literal",    value } }
-	static Block(...body):AST.BlockStatement {  return {type:"BlockStatement", body:body.filter(x => !!x) } }
-	static Expr(n:AST.Node):AST.ExpressionStatement { return {type:"ExpressionStatement", expression:n} }
-	static Continue(label?:AST.Identifier):AST.ContinueStatement { return {type:"ContinueStatement", label} }
+  static Id(name?:string):AST.Identifier { return AST.Identifier({name:name||Macro.genSymbol()}); }
+  static Literal(value:any):AST.Literal { return AST.Literal({value}); }
+	static Block(...body):AST.BlockStatement {  return AST.BlockStatement({body:body.filter(x => !!x)}); }
+	static Expr(n:AST.Node):AST.ExpressionStatement { return AST.ExpressionStatement({expression:n}) }
+	static Continue(label?:AST.Identifier):AST.ContinueStatement { return AST.ContinueStatement({label}); }
 	static Noop():AST.Node { return Macro.Block([]) }
 
-	static Return(e:AST.Expression):AST.ReturnStatement { return {type:"ReturnStatement", argument:e} }
+	static Return(e:AST.Expression):AST.ReturnStatement { return AST.ReturnStatement({argument:e}) }
 	static Yield(e:AST.Expression, delegate:boolean = false):AST.YieldExpression {
-    return {type:"YieldExpression", argument:e, delegate} as AST.YieldExpression
+    return AST.YieldExpression({argument:e, delegate});
   };
 
-	static Array(...inputs:AST.Pattern[]):AST.ArrayExpression  {
-    return {
-      type: "ArrayExpression",
-      elements : inputs
-    };
+	static Array(...elements:AST.Pattern[]):AST.ArrayExpression  {
+    return AST.ArrayExpression({elements});
   } 
 
-	static Throw(e:AST.Expression):AST.ThrowStatement {return {type:"ThrowStatement", argument:e}};
+	static Throw(e:AST.Expression):AST.ThrowStatement {return AST.ThrowStatement({argument:e}); };
   static Call(src:AST.Identifier|AST.Expression, ...args:AST.Expression[]):AST.CallExpression {
-    return {type:"CallExpression", callee:src, arguments:args.filter(x => !!x)}
+    return AST.CallExpression({callee:src, arguments:args.filter(x => !!x)});
   };
 
-	static Assign(id:AST.Identifier, expr:AST.Expression, op:string = '='):AST.AssignmentExpression  {
-    return {
-      type : "AssignmentExpression",
+	static Assign(id:AST.Identifier, expr:AST.Expression, op:AST.AssignmentOperator = '='):AST.AssignmentExpression  {
+    return AST.AssignmentExpression({
       left : id,
-      operator : op as any as AST.AssignmentOperator,
+      operator : op,
       right : expr
-    };
+    });
   }
 
 	static GetProperty(id:AST.Identifier, prop:AST.Identifier|string):AST.MemberExpression {
-    return {
-      type : "MemberExpression",
+    return AST.MemberExpression({
       computed : typeof prop !== 'string',
       object : id,
       property : typeof prop === 'string' ? Macro.Id(prop) : prop,
-    };
+    });
   }
   
 	static Vars(...args):AST.VariableDeclaration {
@@ -58,28 +53,26 @@ export class Macro {
     let decls = [];
     for (let i = 0; i < args.length; i+=2) {
       if (args[i] && i <=  args.length) {
-        decls.push({type:"VariableDeclarator", id:args[i], init:args[i+1]});
+        decls.push(AST.VariableDeclarator({id:args[i], init:args[i+1]}));
       }
     }
-    return {type:"VariableDeclaration", kind, declarations: decls};
+    return AST.VariableDeclaration({kind, declarations: decls});
   }
 
-	static BinaryExpr(id:AST.Identifier, op:string, val:AST.Expression):AST.BinaryExpression {
-    return {
-      type : "BinaryExpression",
+	static BinaryExpr(id:AST.Identifier, op:AST.BinaryOperator, val:AST.Expression):AST.BinaryExpression {
+    return AST.BinaryExpression({
       left : id,
-      operator : op as any as AST.BinaryOperator,
+      operator : op,
       right : val
-    }
+    });
   }
 
-  static UnaryExpr(op:string, val:AST.Expression):AST.UnaryExpression {
-    return {
-      type : "UnaryExpression",    
-      operator : op as any as AST.UnaryOperator,
+  static UnaryExpr(op:AST.UnaryOperator, val:AST.Expression):AST.UnaryExpression {
+    return AST.UnaryExpression({
+      operator : op,
       prefix : true,
       argument : val
-    }
+    });
   }
 
   static Negate(val:AST.Expression):AST.UnaryExpression {
@@ -91,43 +84,35 @@ export class Macro {
   }
 
   static Labeled(id:AST.Identifier, body:AST.Statement):AST.LabeledStatement {
-    return {
-      type : "LabeledStatement",
-      label : id,
-      body
-    };
+    return AST.LabeledStatement({ label : id, body });
   }
 
   static ForLoop(id:AST.Identifier, init:AST.Expression, upto:AST.Expression, body:AST.Statement[], increment:number = 1):AST.ForStatement {
-    return {
-      type : "ForStatement",
+    return AST.ForStatement({
       init: Macro.Vars(id, init),
       test: Macro.BinaryExpr(id, '<', upto),
       update: Macro.Increment(id, increment),
       body: Macro.Block(...body)
-    };
+    });
   }
 
   static TryCatchFinally(t:AST.Node[], c:AST.Node[] = [], f:AST.Node[] = []):AST.TryStatement {
-    return {
-      type : "TryStatement",
+    return AST.TryStatement({
       block :  Macro.Block(...t),
-      handler : {
-        type: "CatchClause",
+      handler : AST.CatchClause({
         param : Macro.Id('e'),
         body : Macro.Block(...c),
-      },
+      }),
       finalizer : Macro.Block(...f)
-    };
+    });
   }
   static Func(id:AST.Identifier, params:AST.Pattern[], body:AST.Node[], generator:boolean = false):AST.FunctionDeclaration {
-    return {
-      type : "FunctionDeclaration", 
+    return AST.FunctionDeclaration({
       id,
       params, 
       body : Macro.Block(...body), 
       generator
-    };
+    });
   } 
 
   static FuncExpr(id:AST.Identifier, params:AST.Pattern[], body:AST.Node[], generator:boolean = false, expr:boolean = false):AST.FunctionExpression {

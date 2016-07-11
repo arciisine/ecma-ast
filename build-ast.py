@@ -52,6 +52,7 @@ def parse(text):
         continue
 
       key,prop = lines[i].strip().split(':',1)
+      key = key.strip('?')
       
       closed = [';']
       i+=1
@@ -150,6 +151,19 @@ def process(files):
   for k in get_func_types():
     declarations[k] = flatten(declarations[k], set(['Function']))  
 
+def get_all_fields(k):
+  obj = declarations[k]
+  if 'extends' in obj:
+    fields = {}
+    for p in obj['extends']:
+      res = get_all_fields(p)
+      if res is not None:
+        fields.update(res)
+    fields.update(obj['fields'])
+    return fields
+  else:
+    return obj['fields'] if 'fields' in obj else None
+
 def output():
 
   decls = []
@@ -183,7 +197,7 @@ def output():
       decls.append('  export interface %(name)s %(extends)s {\n    %(fields)s\n  }'% context)
       if obj['type'] is not None:
         guards.append('  export function is%(name)s(n:Node):n is %(name)s { return n.type === "%(type)s"; } \n' % context)
-        context['fields'] = context['fields'].replace(';', ',');
+        context['fields'] = "\n    ".join(['%s: %s' %pair for pair in get_all_fields(obj['name']).items() if pair[0] != 'type']).replace(';',',')
         cons.append('  export function %(name)s(o:{%(fields)s}):%(name)s {\n    return (o["type"] = "%(type)s" && o) as %(name)s\n  }'% context)
                 
     
