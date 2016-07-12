@@ -185,9 +185,13 @@ def output():
       if 'extends' in obj and len(obj['extends']) > 0:
         extends = ' extends ' + ','.join(obj['extends'])
 
+      all_fields = get_all_fields(obj['name'])
+
       context = {
         "name":obj['name'], 
         "type":obj['type'],
+        "nested":[k for k, v in all_fields.items()
+           if '"' not in v and '{' not in v and 'string' not in v and 'boolean' not in v and 'number' not in v],
         "extends":extends
       } 
 
@@ -195,17 +199,20 @@ def output():
         del obj['fields']['type']
 
       context["fields"] = "\n    ".join(['%s: %s' %pair for pair in obj['fields'].items()])
+      context["nested"] = ','.join(['"%s"'%x for x in context["nested"]])
         
       decls.append('  export interface %(name)s %(extends)s {\n    %(fields)s\n  }'% context)
       if obj['type'] is not None:
         guards.append('  export function is%(name)s(n:Node):n is %(name)s { return n.type === "%(type)s"; } \n' % context)
-        context['fields'] = "\n    ".join(['%s: %s' %pair for pair in get_all_fields(obj['name']).items() if pair[0] != 'type']).replace(';',',')
+        context['fields'] = "\n    ".join(['%s: %s' %pair for pair in all_fields.items() if pair[0] != 'type']).replace(';',',')
         cons.append('  export function %(name)s(o:{%(fields)s}):%(name)s {\n    return (o["type"] = "%(type)s" && o) as %(name)s\n  }'% context)
+        cons.append('  NESTED["%(name)s"] = [%(nested)s]; '% context)
                 
     
   guards.append('  export function isFunction(n:Node):n is BaseFunction { return %s }' % (' || '.join(['n.type === "%s"' % k for k in get_func_types()])))
 
   print 'export namespace AST {'
+  print '  export const NESTED:{[key:string]:string[]} = {}';
   print '\n'.join(decls)
   print '\n'.join(cons)
   print '\n'.join(guards)

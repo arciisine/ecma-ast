@@ -15,12 +15,6 @@ export class Visitor {
   static SKIP_FLAG = Macro.genSymbol();
   static DELETE_FLAG = Macro.genSymbol();
 
-  static NESTED_PROPERTIES =  [
-    'body', 'declarations', 'argument', 'arguments', 'alternate', 'consequent',
-    'left', 'right', 'init', 'expression', 'callee', 'elements', 
-    'handlers', 'handler', 'block', 'finalizer', 'test', 'object', 'property'
-  ].reduce((acc, t) => (acc[t] = true) && acc, {})
-
   static TYPE_ALIASES =  {
     FunctionExpression      : 'Function', 
     FunctionDeclaration     : 'Function',
@@ -92,24 +86,20 @@ export class Visitor {
       return this.finish(node);
     }
 
-    Object.keys(node)
-      .filter(p =>
-        Visitor.NESTED_PROPERTIES[p] && 
-        !Visitor.PRIMITIVE_TYPES[typeof node[p]])
-      .forEach(p => { 
-        let x = node[p];
-        if (Array.isArray(x)) {
-          x.forEach((y, i) => {
-            this.parents.unshift({node:x, key:i})
-            this.visit(y);
-            this.parents.shift(); 
-          })
-        } else {
-          this.parents.unshift({node, key:p})
-          this.visit(x);
-          this.parents.shift();
-        }
-      });
+    AST.NESTED[node.type].forEach(p => { 
+      let x = node[p];
+      if (Array.isArray(x)) {
+        x.forEach((y, i) => {
+          this.parents.unshift({node:x, key:i})
+          this.visit(y);
+          this.parents.shift(); 
+        })
+      } else if (!!p) {
+        this.parents.unshift({node, key:p})
+        this.visit(x);
+        this.parents.shift();
+      }
+    });
 
     for (let key of keys) {
       node = this.onEnd(node, key);

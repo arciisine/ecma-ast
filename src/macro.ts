@@ -100,7 +100,7 @@ export class Macro {
     return AST.TryStatement({
       block :  Macro.Block(...t),
       handler : AST.CatchClause({
-        param : Macro.Id('e'),
+        param : Macro.Id(Macro.genSymbol()),
         body : Macro.Block(...c),
       }),
       finalizer : Macro.Block(...f)
