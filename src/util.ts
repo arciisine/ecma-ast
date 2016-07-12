@@ -24,7 +24,11 @@ export class Util {
   }
 
   static parse(fn:Function|string):AST.BaseFunction {
-    let res = Util.parseExpression<AST.Node>(fn.toString());
+    let src = fn.toString();
+    //Handle static class methods
+    src = /^\s*[A-Za-z0-9]+\s*\(/.test(src) ? `function ${src}` : src
+
+    let res = Util.parseExpression<AST.Node>(src);
     let ret:AST.Node = res
     if (AST.isExpressionStatement(res)) {
       ret = res.expression
