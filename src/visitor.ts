@@ -75,6 +75,8 @@ export class Visitor {
   }
 
   private visit(node:AST.Node):AST.Node {
+    if (!node) return;
+
     let alias = Visitor.TYPE_ALIASES[node.type];
     let keys = alias ? [node.type, alias] : [node.type];
 
@@ -85,7 +87,7 @@ export class Visitor {
       }
     }
     let sub = AST.NESTED[node.type];
-    
+
     if (sub) {
       sub.forEach(p => { 
         let x = node[p];
@@ -95,7 +97,7 @@ export class Visitor {
             this.visit(y);
             this.parents.shift(); 
           })
-        } else if (!!p) {
+        } else {
           this.parents.unshift({node, key:p})
           this.visit(x);
           this.parents.shift();
