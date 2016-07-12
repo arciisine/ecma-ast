@@ -2,7 +2,8 @@ import {AST} from "./ast"
 import {Macro} from './macro';
 
 export interface VisitParent {
-  node:AST.Node|AST.Node[],
+  container:AST.Node|AST.Node[],
+  node:AST.Node,
   key:string|number
 }
 
@@ -61,15 +62,15 @@ export class Visitor {
   private finish(result:AST.Node):AST.Node {
     let parent = this.parent;
     if (result === Visitor.DELETE_FLAG) {
-      if (Array.isArray(parent.node)) {  //Array
-        (parent.node as AST.Node[]).splice(parent.key as number, 1);
+      if (Array.isArray(parent.container)) {  //Array
+        (parent.container as AST.Node[]).splice(parent.key as number, 1);
       } else { //Object
-        delete parent.node[parent.key];            
+        delete parent.container[parent.key];            
       }
     } else if (result === Visitor.PREVENT_DESCENT) {
       return;
     } else if (parent && result) { //Reassign if changed      
-      parent.node[parent.key] = result;
+      parent.container[parent.key] = result;
     } 
     return result;
   }
@@ -93,12 +94,12 @@ export class Visitor {
         let x = node[p];
         if (Array.isArray(x)) {
           x.forEach((y, i) => {
-            this.parents.unshift({node:x, key:i})
+            this.parents.unshift({container:x, key:i, node})
             this.visit(y);
             this.parents.shift(); 
           })
         } else {
-          this.parents.unshift({node, key:p})
+          this.parents.unshift({container:node, key:p, node:node})
           this.visit(x);
           this.parents.shift();
         }
