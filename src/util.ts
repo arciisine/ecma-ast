@@ -34,11 +34,7 @@ export class Util {
   }
     
   static compile(node:AST.BaseFunction, globals:any):Function {
-    let genSym = Macro.genSymbol.toString();
-    genSym = 'function genSym ' + genSym.substring(genSym.indexOf('('))
     let src = `(function() {     
-      var id_ = new Date().getTime();
-      var genSymbol = ${genSym};
       ${Object.keys(globals || {}).map(k => `var ${k} = ${globals[k].toString()}`).join('\n')} 
       return ${Util.compileExpression(node as any as AST.Node)}; 
     })()`;
