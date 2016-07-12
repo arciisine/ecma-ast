@@ -12,8 +12,8 @@ export interface Handler {
 
 export class Visitor {
 
-  static SKIP_FLAG = Macro.genSymbol();
-  static DELETE_FLAG = Macro.genSymbol();
+  static PREVENT_DESCENT = Macro.Id();
+  static DELETE_FLAG = Macro.Id();
 
   static TYPE_ALIASES =  {
     FunctionExpression      : 'Function', 
@@ -60,12 +60,14 @@ export class Visitor {
 
   private finish(result:AST.Node):AST.Node {
     let parent = this.parent;
-    if (result[Visitor.DELETE_FLAG]) {
+    if (result === Visitor.DELETE_FLAG) {
       if (Array.isArray(parent.node)) {  //Array
         (parent.node as AST.Node[]).splice(parent.key as number, 1);
       } else { //Object
         delete parent.node[parent.key];            
       }
+    } else if (result === Visitor.PREVENT_DESCENT) {
+      return;
     } else if (parent && result) { //Reassign if changed      
       parent.node[parent.key] = result;
     } 
@@ -73,17 +75,14 @@ export class Visitor {
   }
 
   private visit(node:AST.Node):AST.Node {
-    if (node[Visitor.SKIP_FLAG]) return node;
-
     let alias = Visitor.TYPE_ALIASES[node.type];
     let keys = alias ? [node.type, alias] : [node.type];
 
     for (let key of keys) {
       node = this.onStart(node, key);
-    }
-
-    if (node[Visitor.SKIP_FLAG]) {
-      return this.finish(node);
+      if (node === Visitor.PREVENT_DESCENT || node === Visitor.DELETE_FLAG) {
+        return this.finish(node);
+      }
     }
 
     AST.NESTED[node.type].forEach(p => { 
@@ -103,6 +102,9 @@ export class Visitor {
 
     for (let key of keys) {
       node = this.onEnd(node, key);
+      if (node === Visitor.DELETE_FLAG) {
+        return this.finish(node);
+      }
     }
 
     return this.finish(node);
