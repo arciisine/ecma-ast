@@ -205,7 +205,7 @@ def output():
       if obj['type'] is not None:
         guards.append('  export function is%(name)s(n:Node):n is %(name)s { return n.type === "%(type)s"; } \n' % context)
         context['fields'] = "\n    ".join(['%s: %s' %pair for pair in all_fields.items() if pair[0] != 'type']).replace(';',',')
-        cons.append('  export function %(name)s(o:{%(fields)s}):%(name)s {\n    return (o["type"] = "%(type)s" && o) as %(name)s\n  }'% context)
+        cons.append('  export function %(name)s(o:{%(fields)s}):%(name)s {\n    return ((o["type"] = "%(type)s") && o) as %(name)s\n  }'% context)
         cons.append('  NESTED["%(name)s"] = [%(nested)s]; '% context)
                 
     

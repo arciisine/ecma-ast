@@ -313,137 +313,137 @@ export namespace AST {
     generator:  boolean;
   }
   export function Identifier(o:{name:  string,}):Identifier {
-    return (o["type"] = "Identifier" && o) as Identifier
+    return ((o["type"] = "Identifier") && o) as Identifier
   }
   NESTED["Identifier"] = []; 
   export function Literal(o:{value:  string | boolean  | number | RegExp,}):Literal {
-    return (o["type"] = "Literal" && o) as Literal
+    return ((o["type"] = "Literal") && o) as Literal
   }
   NESTED["Literal"] = []; 
   export function Program(o:{body: (Statement | ModuleDeclaration )[],
     sourceType:  "script" | "module",}):Program {
-    return (o["type"] = "Program" && o) as Program
+    return ((o["type"] = "Program") && o) as Program
   }
   NESTED["Program"] = ["body"]; 
   export function ExpressionStatement(o:{expression:  Expression,}):ExpressionStatement {
-    return (o["type"] = "ExpressionStatement" && o) as ExpressionStatement
+    return ((o["type"] = "ExpressionStatement") && o) as ExpressionStatement
   }
   NESTED["ExpressionStatement"] = ["expression"]; 
   export function BlockStatement(o:{body: (Statement )[],}):BlockStatement {
-    return (o["type"] = "BlockStatement" && o) as BlockStatement
+    return ((o["type"] = "BlockStatement") && o) as BlockStatement
   }
   NESTED["BlockStatement"] = ["body"]; 
   export function EmptyStatement(o:{}):EmptyStatement {
-    return (o["type"] = "EmptyStatement" && o) as EmptyStatement
+    return ((o["type"] = "EmptyStatement") && o) as EmptyStatement
   }
   NESTED["EmptyStatement"] = []; 
   export function DebuggerStatement(o:{}):DebuggerStatement {
-    return (o["type"] = "DebuggerStatement" && o) as DebuggerStatement
+    return ((o["type"] = "DebuggerStatement") && o) as DebuggerStatement
   }
   NESTED["DebuggerStatement"] = []; 
   export function WithStatement(o:{body:  Statement,
     object:  Expression,}):WithStatement {
-    return (o["type"] = "WithStatement" && o) as WithStatement
+    return ((o["type"] = "WithStatement") && o) as WithStatement
   }
   NESTED["WithStatement"] = ["body","object"]; 
   export function ReturnStatement(o:{argument:  Expression,}):ReturnStatement {
-    return (o["type"] = "ReturnStatement" && o) as ReturnStatement
+    return ((o["type"] = "ReturnStatement") && o) as ReturnStatement
   }
   NESTED["ReturnStatement"] = ["argument"]; 
   export function LabeledStatement(o:{body:  Statement,
     label:  Identifier,}):LabeledStatement {
-    return (o["type"] = "LabeledStatement" && o) as LabeledStatement
+    return ((o["type"] = "LabeledStatement") && o) as LabeledStatement
   }
   NESTED["LabeledStatement"] = ["body","label"]; 
   export function BreakStatement(o:{label:  Identifier,}):BreakStatement {
-    return (o["type"] = "BreakStatement" && o) as BreakStatement
+    return ((o["type"] = "BreakStatement") && o) as BreakStatement
   }
   NESTED["BreakStatement"] = ["label"]; 
   export function ContinueStatement(o:{label:  Identifier,}):ContinueStatement {
-    return (o["type"] = "ContinueStatement" && o) as ContinueStatement
+    return ((o["type"] = "ContinueStatement") && o) as ContinueStatement
   }
   NESTED["ContinueStatement"] = ["label"]; 
   export function IfStatement(o:{test:  Expression,
     alternate:  Statement,
     consequent:  Statement,}):IfStatement {
-    return (o["type"] = "IfStatement" && o) as IfStatement
+    return ((o["type"] = "IfStatement") && o) as IfStatement
   }
   NESTED["IfStatement"] = ["test","alternate","consequent"]; 
   export function SwitchStatement(o:{cases: (SwitchCase )[],
     discriminant:  Expression,}):SwitchStatement {
-    return (o["type"] = "SwitchStatement" && o) as SwitchStatement
+    return ((o["type"] = "SwitchStatement") && o) as SwitchStatement
   }
   NESTED["SwitchStatement"] = ["cases","discriminant"]; 
   export function SwitchCase(o:{test:  Expression,
     consequent: (Statement )[],}):SwitchCase {
-    return (o["type"] = "SwitchCase" && o) as SwitchCase
+    return ((o["type"] = "SwitchCase") && o) as SwitchCase
   }
   NESTED["SwitchCase"] = ["test","consequent"]; 
   export function ThrowStatement(o:{argument:  Expression,}):ThrowStatement {
-    return (o["type"] = "ThrowStatement" && o) as ThrowStatement
+    return ((o["type"] = "ThrowStatement") && o) as ThrowStatement
   }
   NESTED["ThrowStatement"] = ["argument"]; 
   export function TryStatement(o:{finalizer:  BlockStatement,
     handler:  CatchClause,
     block:  BlockStatement,}):TryStatement {
-    return (o["type"] = "TryStatement" && o) as TryStatement
+    return ((o["type"] = "TryStatement") && o) as TryStatement
   }
   NESTED["TryStatement"] = ["finalizer","handler","block"]; 
   export function CatchClause(o:{body:  BlockStatement,
     param:  Pattern,}):CatchClause {
-    return (o["type"] = "CatchClause" && o) as CatchClause
+    return ((o["type"] = "CatchClause") && o) as CatchClause
   }
   NESTED["CatchClause"] = ["body","param"]; 
   export function WhileStatement(o:{test:  Expression,
     body:  Statement,}):WhileStatement {
-    return (o["type"] = "WhileStatement" && o) as WhileStatement
+    return ((o["type"] = "WhileStatement") && o) as WhileStatement
   }
   NESTED["WhileStatement"] = ["test","body"]; 
   export function DoWhileStatement(o:{body:  Statement,
     test:  Expression,}):DoWhileStatement {
-    return (o["type"] = "DoWhileStatement" && o) as DoWhileStatement
+    return ((o["type"] = "DoWhileStatement") && o) as DoWhileStatement
   }
   NESTED["DoWhileStatement"] = ["body","test"]; 
   export function ForStatement(o:{body:  Statement,
     init:  VariableDeclaration | Expression,
     test:  Expression,
     update:  Expression,}):ForStatement {
-    return (o["type"] = "ForStatement" && o) as ForStatement
+    return ((o["type"] = "ForStatement") && o) as ForStatement
   }
   NESTED["ForStatement"] = ["body","init","test","update"]; 
   export function ForInStatement(o:{body:  Statement,
     right:  Expression,
     left:  VariableDeclaration |  Pattern,}):ForInStatement {
-    return (o["type"] = "ForInStatement" && o) as ForInStatement
+    return ((o["type"] = "ForInStatement") && o) as ForInStatement
   }
   NESTED["ForInStatement"] = ["body","right","left"]; 
   export function FunctionDeclaration(o:{body:  BlockStatement,
     params: (Pattern )[],
     generator:  boolean,
     id:  Identifier,}):FunctionDeclaration {
-    return (o["type"] = "FunctionDeclaration" && o) as FunctionDeclaration
+    return ((o["type"] = "FunctionDeclaration") && o) as FunctionDeclaration
   }
   NESTED["FunctionDeclaration"] = ["body","params","id"]; 
   export function VariableDeclaration(o:{kind:  "var" | "let" | "const",
     declarations: (VariableDeclarator )[],}):VariableDeclaration {
-    return (o["type"] = "VariableDeclaration" && o) as VariableDeclaration
+    return ((o["type"] = "VariableDeclaration") && o) as VariableDeclaration
   }
   NESTED["VariableDeclaration"] = ["declarations"]; 
   export function VariableDeclarator(o:{init:  Expression,
     id:  Pattern,}):VariableDeclarator {
-    return (o["type"] = "VariableDeclarator" && o) as VariableDeclarator
+    return ((o["type"] = "VariableDeclarator") && o) as VariableDeclarator
   }
   NESTED["VariableDeclarator"] = ["init","id"]; 
   export function ThisExpression(o:{}):ThisExpression {
-    return (o["type"] = "ThisExpression" && o) as ThisExpression
+    return ((o["type"] = "ThisExpression") && o) as ThisExpression
   }
   NESTED["ThisExpression"] = []; 
   export function ArrayExpression(o:{elements: (Expression | SpreadElement  )[],}):ArrayExpression {
-    return (o["type"] = "ArrayExpression" && o) as ArrayExpression
+    return ((o["type"] = "ArrayExpression") && o) as ArrayExpression
   }
   NESTED["ArrayExpression"] = ["elements"]; 
   export function ObjectExpression(o:{properties: (Property )[],}):ObjectExpression {
-    return (o["type"] = "ObjectExpression" && o) as ObjectExpression
+    return ((o["type"] = "ObjectExpression") && o) as ObjectExpression
   }
   NESTED["ObjectExpression"] = ["properties"]; 
   export function Property(o:{kind:  "init" | "get" | "set",
@@ -452,84 +452,84 @@ export namespace AST {
     value:  Expression,
     key:  Expression,
     method:  boolean,}):Property {
-    return (o["type"] = "Property" && o) as Property
+    return ((o["type"] = "Property") && o) as Property
   }
   NESTED["Property"] = ["value","key"]; 
   export function FunctionExpression(o:{body:  BlockStatement,
     params: (Pattern )[],
     generator:  boolean,
     id:  Identifier,}):FunctionExpression {
-    return (o["type"] = "FunctionExpression" && o) as FunctionExpression
+    return ((o["type"] = "FunctionExpression") && o) as FunctionExpression
   }
   NESTED["FunctionExpression"] = ["body","params","id"]; 
   export function UnaryExpression(o:{operator:  UnaryOperator,
     prefix:  boolean,
     argument:  Expression,}):UnaryExpression {
-    return (o["type"] = "UnaryExpression" && o) as UnaryExpression
+    return ((o["type"] = "UnaryExpression") && o) as UnaryExpression
   }
   NESTED["UnaryExpression"] = ["operator","argument"]; 
   export function UpdateExpression(o:{operator:  UpdateOperator,
     prefix:  boolean,
     argument:  Expression,}):UpdateExpression {
-    return (o["type"] = "UpdateExpression" && o) as UpdateExpression
+    return ((o["type"] = "UpdateExpression") && o) as UpdateExpression
   }
   NESTED["UpdateExpression"] = ["operator","argument"]; 
   export function BinaryExpression(o:{operator:  BinaryOperator,
     right:  Expression,
     left:  Expression,}):BinaryExpression {
-    return (o["type"] = "BinaryExpression" && o) as BinaryExpression
+    return ((o["type"] = "BinaryExpression") && o) as BinaryExpression
   }
   NESTED["BinaryExpression"] = ["operator","right","left"]; 
   export function AssignmentExpression(o:{operator:  AssignmentOperator,
     right:  Expression,
     left:  Pattern,}):AssignmentExpression {
-    return (o["type"] = "AssignmentExpression" && o) as AssignmentExpression
+    return ((o["type"] = "AssignmentExpression") && o) as AssignmentExpression
   }
   NESTED["AssignmentExpression"] = ["operator","right","left"]; 
   export function LogicalExpression(o:{operator:  LogicalOperator,
     right:  Expression,
     left:  Expression,}):LogicalExpression {
-    return (o["type"] = "LogicalExpression" && o) as LogicalExpression
+    return ((o["type"] = "LogicalExpression") && o) as LogicalExpression
   }
   NESTED["LogicalExpression"] = ["operator","right","left"]; 
   export function MemberExpression(o:{property:  Expression,
     computed:  boolean,
     object:  Expression | Super,}):MemberExpression {
-    return (o["type"] = "MemberExpression" && o) as MemberExpression
+    return ((o["type"] = "MemberExpression") && o) as MemberExpression
   }
   NESTED["MemberExpression"] = ["property","object"]; 
   export function ConditionalExpression(o:{test:  Expression,
     alternate:  Expression,
     consequent:  Expression,}):ConditionalExpression {
-    return (o["type"] = "ConditionalExpression" && o) as ConditionalExpression
+    return ((o["type"] = "ConditionalExpression") && o) as ConditionalExpression
   }
   NESTED["ConditionalExpression"] = ["test","alternate","consequent"]; 
   export function CallExpression(o:{callee:  Expression | Super,
     arguments: (Expression | SpreadElement )[],}):CallExpression {
-    return (o["type"] = "CallExpression" && o) as CallExpression
+    return ((o["type"] = "CallExpression") && o) as CallExpression
   }
   NESTED["CallExpression"] = ["callee","arguments"]; 
   export function NewExpression(o:{callee:  Expression | Super,
     arguments: (Expression | SpreadElement )[],}):NewExpression {
-    return (o["type"] = "NewExpression" && o) as NewExpression
+    return ((o["type"] = "NewExpression") && o) as NewExpression
   }
   NESTED["NewExpression"] = ["callee","arguments"]; 
   export function SequenceExpression(o:{expressions: (Expression )[],}):SequenceExpression {
-    return (o["type"] = "SequenceExpression" && o) as SequenceExpression
+    return ((o["type"] = "SequenceExpression") && o) as SequenceExpression
   }
   NESTED["SequenceExpression"] = ["expressions"]; 
   export function ForOfStatement(o:{body:  Statement,
     right:  Expression,
     left:  VariableDeclaration |  Pattern,}):ForOfStatement {
-    return (o["type"] = "ForOfStatement" && o) as ForOfStatement
+    return ((o["type"] = "ForOfStatement") && o) as ForOfStatement
   }
   NESTED["ForOfStatement"] = ["body","right","left"]; 
   export function Super(o:{}):Super {
-    return (o["type"] = "Super" && o) as Super
+    return ((o["type"] = "Super") && o) as Super
   }
   NESTED["Super"] = []; 
   export function SpreadElement(o:{argument:  Expression,}):SpreadElement {
-    return (o["type"] = "SpreadElement" && o) as SpreadElement
+    return ((o["type"] = "SpreadElement") && o) as SpreadElement
   }
   NESTED["SpreadElement"] = ["argument"]; 
   export function ArrowFunctionExpression(o:{body:  BlockStatement | Expression,
@@ -537,27 +537,27 @@ export namespace AST {
     generator:  boolean,
     expression:  boolean,
     id:  Identifier,}):ArrowFunctionExpression {
-    return (o["type"] = "ArrowFunctionExpression" && o) as ArrowFunctionExpression
+    return ((o["type"] = "ArrowFunctionExpression") && o) as ArrowFunctionExpression
   }
   NESTED["ArrowFunctionExpression"] = ["body","params","id"]; 
   export function YieldExpression(o:{argument:  Expression,
     delegate:  boolean,}):YieldExpression {
-    return (o["type"] = "YieldExpression" && o) as YieldExpression
+    return ((o["type"] = "YieldExpression") && o) as YieldExpression
   }
   NESTED["YieldExpression"] = ["argument"]; 
   export function TemplateLiteral(o:{quasis: (TemplateElement )[],
     expressions: (Expression )[],}):TemplateLiteral {
-    return (o["type"] = "TemplateLiteral" && o) as TemplateLiteral
+    return ((o["type"] = "TemplateLiteral") && o) as TemplateLiteral
   }
   NESTED["TemplateLiteral"] = ["quasis","expressions"]; 
   export function TaggedTemplateExpression(o:{quasi:  TemplateLiteral,
     tag:  Expression,}):TaggedTemplateExpression {
-    return (o["type"] = "TaggedTemplateExpression" && o) as TaggedTemplateExpression
+    return ((o["type"] = "TaggedTemplateExpression") && o) as TaggedTemplateExpression
   }
   NESTED["TaggedTemplateExpression"] = ["quasi","tag"]; 
   export function TemplateElement(o:{tail:  boolean,
     value: {         cooked: string,         raw: string,     },}):TemplateElement {
-    return (o["type"] = "TemplateElement" && o) as TemplateElement
+    return ((o["type"] = "TemplateElement") && o) as TemplateElement
   }
   NESTED["TemplateElement"] = []; 
   export function AssignmentProperty(o:{kind:  "init",
@@ -566,28 +566,28 @@ export namespace AST {
     value:  Pattern,
     key:  Expression,
     method: boolean}):AssignmentProperty {
-    return (o["type"] = "AssignmentProperty" && o) as AssignmentProperty
+    return ((o["type"] = "AssignmentProperty") && o) as AssignmentProperty
   }
   NESTED["AssignmentProperty"] = ["value","key"]; 
   export function ObjectPattern(o:{properties: (AssignmentProperty )[],}):ObjectPattern {
-    return (o["type"] = "ObjectPattern" && o) as ObjectPattern
+    return ((o["type"] = "ObjectPattern") && o) as ObjectPattern
   }
   NESTED["ObjectPattern"] = ["properties"]; 
   export function ArrayPattern(o:{elements: (Pattern  )[],}):ArrayPattern {
-    return (o["type"] = "ArrayPattern" && o) as ArrayPattern
+    return ((o["type"] = "ArrayPattern") && o) as ArrayPattern
   }
   NESTED["ArrayPattern"] = ["elements"]; 
   export function RestElement(o:{argument:  Pattern,}):RestElement {
-    return (o["type"] = "RestElement" && o) as RestElement
+    return ((o["type"] = "RestElement") && o) as RestElement
   }
   NESTED["RestElement"] = ["argument"]; 
   export function AssignmentPattern(o:{right:  Expression,
     left:  Pattern,}):AssignmentPattern {
-    return (o["type"] = "AssignmentPattern" && o) as AssignmentPattern
+    return ((o["type"] = "AssignmentPattern") && o) as AssignmentPattern
   }
   NESTED["AssignmentPattern"] = ["right","left"]; 
   export function ClassBody(o:{body: (MethodDefinition )[],}):ClassBody {
-    return (o["type"] = "ClassBody" && o) as ClassBody
+    return ((o["type"] = "ClassBody") && o) as ClassBody
   }
   NESTED["ClassBody"] = ["body"]; 
   export function MethodDefinition(o:{kind:  "constructor" | "method" | "get" | "set",
@@ -595,61 +595,61 @@ export namespace AST {
     computed:  boolean,
     key:  Expression,
     value:  FunctionExpression,}):MethodDefinition {
-    return (o["type"] = "MethodDefinition" && o) as MethodDefinition
+    return ((o["type"] = "MethodDefinition") && o) as MethodDefinition
   }
   NESTED["MethodDefinition"] = ["key","value"]; 
   export function ClassDeclaration(o:{body:  ClassBody,
     superClass:  Expression,
     id:  Identifier,}):ClassDeclaration {
-    return (o["type"] = "ClassDeclaration" && o) as ClassDeclaration
+    return ((o["type"] = "ClassDeclaration") && o) as ClassDeclaration
   }
   NESTED["ClassDeclaration"] = ["body","superClass","id"]; 
   export function ClassExpression(o:{body:  ClassBody,
     id:  Identifier,
     superClass:  Expression,}):ClassExpression {
-    return (o["type"] = "ClassExpression" && o) as ClassExpression
+    return ((o["type"] = "ClassExpression") && o) as ClassExpression
   }
   NESTED["ClassExpression"] = ["body","id","superClass"]; 
   export function MetaProperty(o:{meta:  Identifier,
     property:  Identifier,}):MetaProperty {
-    return (o["type"] = "MetaProperty" && o) as MetaProperty
+    return ((o["type"] = "MetaProperty") && o) as MetaProperty
   }
   NESTED["MetaProperty"] = ["meta","property"]; 
   export function ImportDeclaration(o:{specifiers: (ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier )[],
     source:  Literal,}):ImportDeclaration {
-    return (o["type"] = "ImportDeclaration" && o) as ImportDeclaration
+    return ((o["type"] = "ImportDeclaration") && o) as ImportDeclaration
   }
   NESTED["ImportDeclaration"] = ["specifiers","source"]; 
   export function ImportSpecifier(o:{imported:  Identifier,
     local:  Identifier,}):ImportSpecifier {
-    return (o["type"] = "ImportSpecifier" && o) as ImportSpecifier
+    return ((o["type"] = "ImportSpecifier") && o) as ImportSpecifier
   }
   NESTED["ImportSpecifier"] = ["imported","local"]; 
   export function ImportDefaultSpecifier(o:{local:  Identifier,}):ImportDefaultSpecifier {
-    return (o["type"] = "ImportDefaultSpecifier" && o) as ImportDefaultSpecifier
+    return ((o["type"] = "ImportDefaultSpecifier") && o) as ImportDefaultSpecifier
   }
   NESTED["ImportDefaultSpecifier"] = ["local"]; 
   export function ImportNamespaceSpecifier(o:{local:  Identifier,}):ImportNamespaceSpecifier {
-    return (o["type"] = "ImportNamespaceSpecifier" && o) as ImportNamespaceSpecifier
+    return ((o["type"] = "ImportNamespaceSpecifier") && o) as ImportNamespaceSpecifier
   }
   NESTED["ImportNamespaceSpecifier"] = ["local"]; 
   export function ExportNamedDeclaration(o:{specifiers: (ExportSpecifier )[],
     declaration:  Declaration,
     source:  Literal,}):ExportNamedDeclaration {
-    return (o["type"] = "ExportNamedDeclaration" && o) as ExportNamedDeclaration
+    return ((o["type"] = "ExportNamedDeclaration") && o) as ExportNamedDeclaration
   }
   NESTED["ExportNamedDeclaration"] = ["specifiers","declaration","source"]; 
   export function ExportSpecifier(o:{local:  Identifier,
     exported:  Identifier,}):ExportSpecifier {
-    return (o["type"] = "ExportSpecifier" && o) as ExportSpecifier
+    return ((o["type"] = "ExportSpecifier") && o) as ExportSpecifier
   }
   NESTED["ExportSpecifier"] = ["local","exported"]; 
   export function ExportDefaultDeclaration(o:{declaration:  Declaration | Expression,}):ExportDefaultDeclaration {
-    return (o["type"] = "ExportDefaultDeclaration" && o) as ExportDefaultDeclaration
+    return ((o["type"] = "ExportDefaultDeclaration") && o) as ExportDefaultDeclaration
   }
   NESTED["ExportDefaultDeclaration"] = ["declaration"]; 
   export function ExportAllDeclaration(o:{source:  Literal,}):ExportAllDeclaration {
-    return (o["type"] = "ExportAllDeclaration" && o) as ExportAllDeclaration
+    return ((o["type"] = "ExportAllDeclaration") && o) as ExportAllDeclaration
   }
   NESTED["ExportAllDeclaration"] = ["source"]; 
   export function isIdentifier(n:Node):n is Identifier { return n.type === "Identifier"; } 
