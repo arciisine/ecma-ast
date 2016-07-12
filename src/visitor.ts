@@ -84,21 +84,24 @@ export class Visitor {
         return this.finish(node);
       }
     }
-
-    AST.NESTED[node.type].forEach(p => { 
-      let x = node[p];
-      if (Array.isArray(x)) {
-        x.forEach((y, i) => {
-          this.parents.unshift({node:x, key:i})
-          this.visit(y);
-          this.parents.shift(); 
-        })
-      } else if (!!p) {
-        this.parents.unshift({node, key:p})
-        this.visit(x);
-        this.parents.shift();
-      }
-    });
+    let sub = AST.NESTED[node.type];
+    
+    if (sub) {
+      sub.forEach(p => { 
+        let x = node[p];
+        if (Array.isArray(x)) {
+          x.forEach((y, i) => {
+            this.parents.unshift({node:x, key:i})
+            this.visit(y);
+            this.parents.shift(); 
+          })
+        } else if (!!p) {
+          this.parents.unshift({node, key:p})
+          this.visit(x);
+          this.parents.shift();
+        }
+      });
+    }
 
     for (let key of keys) {
       node = this.onEnd(node, key);
