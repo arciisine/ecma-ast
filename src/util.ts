@@ -3,7 +3,7 @@ import {CompileUtil} from './compile';
 import {ParseUtil} from './parse';
 import {Visitor, Handler} from './visitor';
 
-export class ASTUtil {
+export class Util {
 
   /**
    * Shorthand for parse, visit, compile
