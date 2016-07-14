@@ -37,13 +37,14 @@ export class Macro {
     });
   }
 
-	static GetProperty(id:AST.Identifier, prop:AST.Identifier|string):AST.MemberExpression {
+	static GetProperty(id:AST.Identifier|AST.Expression, prop:AST.Identifier|string):AST.MemberExpression {
     return AST.MemberExpression({
       computed : typeof prop !== 'string',
       object : id,
       property : typeof prop === 'string' ? Macro.Id(prop) : prop,
     });
   }
+
   
 	static Vars(...args):AST.VariableDeclaration {
     let kind:('var'|'const'|'let') = 'var';
