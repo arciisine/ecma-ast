@@ -37,6 +37,20 @@ export class Macro {
     });
   }
 
+  static ObjectAssign(pairs:{[key:string]:AST.Expression}) {
+    return AST.ObjectExpression({
+        properties : Object.keys(pairs).map(k => 
+          AST.Property({
+            kind : "init",
+            method: false,
+            computed : false,
+            shorthand : false,
+            key : Macro.Id(k),
+            value :  pairs[k]
+          }))
+      })
+  }
+
 	static GetProperty(id:AST.Identifier|AST.Expression, prop:AST.Identifier|string):AST.MemberExpression {
     return AST.MemberExpression({
       computed : typeof prop !== 'string',
