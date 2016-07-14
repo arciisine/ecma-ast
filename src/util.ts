@@ -1,53 +1,32 @@
-/// <reference path="../node_modules/@types/esprima/index.d.ts" />
-
-import * as _ from "lodash"
-import * as esprima from "esprima"
-import * as escodegen from './escodegen';
-import {AST} from "./ast"
-import {Macro} from './macro';
+import {CompileUtil} from './compile';
+import {ParseUtil} from './parse';
 import {Visitor, Handler} from './visitor';
 
 export class Util {
-  
-  static parseExpression<T extends AST.Node>(expr:string):T {
-    let res =  Util.parseProgram(expr);
-    return res.body[0] as any as T;
-  }
 
-  static parseProgram<T extends AST.Node>(expr:string):AST.Program {
-    let res =  esprima.parse(expr) as any as AST.Program;
-    return res;
-  }
-
-  static compileExpression(node:AST.Node):string {
-    return escodegen.generate(node);
-  }
-
-  static parse(fn:Function|string):AST.BaseFunction {
-    let src = fn.toString();
-    //Handle static class methods
-    src = /^\s*[A-Za-z0-9]+\s*\(/.test(src) ? `function ${src}` : src
-
-    let res = Util.parseExpression<AST.Node>(src);
-    let ret:AST.Node = res
-    if (AST.isExpressionStatement(res)) {
-      ret = res.expression
-    }
-
-    return ret as any as AST.BaseFunction
-  }
-    
-  static compile(node:AST.BaseFunction, globals:any):Function {
-    let src = `(function() {     
-      ${Object.keys(globals || {}).map(k => `var ${k} = ${globals[k].toString()}`).join('\n')} 
-      return ${Util.compileExpression(node as any as AST.Node)}; 
-    })()`;
-    return eval(src);
-  }
-
+  /**
+   * Shorthand for parse, visit, compile
+   */
   static rewrite(fn:Function, handlers:{[key:string]:Handler}, globals:any = {}) {
-    let ast = Util.parse(fn); 
+    let ast = ParseUtil.parse(fn); 
     ast = new Visitor(handlers).exec(ast);
-    return Util.compile(ast, globals);
+    return CompileUtil.compile(ast, globals);
+  }
+
+  /**
+   * Remove unneeded block scopes
+   */
+  static reduceBlocks(body:AST.Node[]):AST.Node[] {
+    let out = [];
+    for (let i = 0; i < body.length; i++) {
+      let node = body[i];
+      //If you are in a block without any let or const assignments, we can collapse into the parent
+      if (AST.isBlockStatement(node) && !node.body.some(y => AST.isVariableDeclaration(y) && y.kind !== 'var')) {
+        out.push(...Util.reduceBlocks(node.body))
+      } else {
+        out.push(node);
+      }
+    }
+    return out;
   }
 }
