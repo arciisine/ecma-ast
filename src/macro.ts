@@ -37,11 +37,11 @@ export class Macro {
     });
   }
 
-  static ObjectAssign(pairs:{[key:string]:AST.Expression}) {
+  static ObjectExpr(pairs:{[key:string]:AST.Expression}, kind:'init'|'get'|'set' = 'init') {
     return AST.ObjectExpression({
         properties : Object.keys(pairs).map(k => 
           AST.Property({
-            kind : "init",
+            kind,
             method: false,
             computed : false,
             shorthand : false,
