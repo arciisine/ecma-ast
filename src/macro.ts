@@ -10,10 +10,10 @@ export class Macro {
 
   static Id(name?:string):AST.Identifier { return AST.Identifier({name:name||Macro.genSymbol()}); }
   static Literal(value:any):AST.Literal { return AST.Literal({value}); }
-	static Block(...body):AST.BlockStatement {  return AST.BlockStatement({body:body.filter(x => !!x)}); }
+	static Block(...body:AST.Statement[]):AST.BlockStatement {  return AST.BlockStatement({body:body.filter(x => !!x)}); }
 	static Expr(n:AST.Node):AST.ExpressionStatement { return AST.ExpressionStatement({expression:n}) }
 	static Continue(label?:AST.Identifier):AST.ContinueStatement { return AST.ContinueStatement({label}); }
-	static Noop():AST.Node { return Macro.Block([]) }
+	static Noop():AST.Node { return Macro.Block(...[]) }
 
 	static Return(e:AST.Expression):AST.ReturnStatement { return AST.ReturnStatement({argument:e}) }
 	static Yield(e:AST.Expression, delegate:boolean = false):AST.YieldExpression {
