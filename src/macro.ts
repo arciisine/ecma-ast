@@ -58,16 +58,22 @@ export class Macro {
       property : typeof prop === 'string' ? Macro.Id(prop) : prop,
     });
   }
-  
+
 	static Vars(...args):AST.VariableDeclaration {
     let kind:('var'|'const'|'let') = 'var';
     if (args[0] === 'var' || args[0] === 'let' || args[0] === 'const') {
       kind = args.shift();
-    }  
+    }
     let decls = [];
-    for (let i = 0; i < args.length; i+=2) {
-      if (args[i] && i <=  args.length) {
-        decls.push(AST.VariableDeclarator({id:args[i], init:args[i+1]}));
+    if (Array.isArray(args[0])) {
+      decls = args.map(x => {
+        decls.push(AST.VariableDeclarator({id:x[0], init:x[1]}))
+      })
+    } else {
+      for (let i = 0; i < args.length; i+=2) {
+        if (args[i] && i <=  args.length) {
+          decls.push(AST.VariableDeclarator({id:args[i], init:args[i+1]}));
+        }
       }
     }
     return AST.VariableDeclaration({kind, declarations: decls});
