@@ -66,9 +66,7 @@ export class Macro {
     }
     let decls = [];
     if (Array.isArray(args[0])) {
-      decls = args.map(x => {
-        decls.push(AST.VariableDeclarator({id:x[0], init:x[1]}))
-      })
+      decls = args.map(x => AST.VariableDeclarator({id:x[0], init:x[1]}))
     } else {
       for (let i = 0; i < args.length; i+=2) {
         if (args[i] && i <=  args.length) {
