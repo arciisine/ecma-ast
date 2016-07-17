@@ -785,4 +785,5 @@ export namespace AST {
   export function isExportAllDeclaration(n:Node):n is ExportAllDeclaration { return n.type === "ExportAllDeclaration"; } 
 
   export function isFunction(n:Node):n is BaseFunction { return n.type === "FunctionDeclaration" || n.type === "FunctionExpression" || n.type === "ArrowFunctionExpression" || n.type === "BaseFunction" }
+  export function isForLoop(n:Node):n is ForStatement|ForInStatement|ForOfStatement { return n.type === "ForStatement" || n.type === "ForInStatement" || n.type === "ForOfStatement" }
 }

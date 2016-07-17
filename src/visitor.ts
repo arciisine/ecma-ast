@@ -19,7 +19,10 @@ export class Visitor {
   static TYPE_ALIASES =  {
     FunctionExpression      : 'Function', 
     FunctionDeclaration     : 'Function',
-    ArrowFunctionExpression : 'Function'
+    ArrowFunctionExpression : 'Function',
+    ForStatement            : 'ForLoop',
+    ForOfStatement          : 'ForLoop',
+    ForInStatement          : 'ForLoop'
   }
 
   static PRIMITIVE_TYPES = [

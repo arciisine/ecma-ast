@@ -5,6 +5,9 @@ order = []
 def get_func_types():
   return [k for k in order if 'Function' in k and k != 'Function']  
 
+def get_forloop_types():
+  return [k for k in order if k.startswith('For')]
+
 def flatten(obj, flatten=set()):
 
   out = {}
@@ -210,6 +213,10 @@ def output():
                 
     
   guards.append('  export function isFunction(n:Node):n is BaseFunction { return %s }' % (' || '.join(['n.type === "%s"' % k for k in get_func_types()])))
+  guards.append('  export function isForLoop(n:Node):n is %s { return %s }' % (
+    ('|'.join(get_forloop_types())),
+    (' || '.join(['n.type === "%s"' % k for k in get_forloop_types()]))))
+
 
   print 'export namespace AST {'
   print '  export const NESTED:{[key:string]:string[]} = {}';
