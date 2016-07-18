@@ -96,7 +96,7 @@ export class Visitor {
       sub.forEach(p => { 
         let x = node[p];
         if (Array.isArray(x)) {
-          x.forEach((y, i) => {
+          x.slice(0).forEach((y, i) => {
             this.parents.unshift({container:x, key:i, node})
             this.visit(y);
             this.parents.shift(); 
