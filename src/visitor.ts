@@ -33,7 +33,7 @@ export class Visitor {
 
   private parents:VisitParent[] = null;
 
-  constructor(private handlers : {[key:string]:Handler}) {}
+  constructor(private handlers : AST.NodeHandler<Visitor>) {}
 
   get parent() {
     return this.parents.length && this.parents[0];
@@ -54,7 +54,7 @@ export class Visitor {
 
   private onStart(node:AST.Node, key:string = null):AST.Node {
     key = key || node.type;
-    let handler = this.handlers[`${key}Start`] || this.handlers[key];
+    let handler = this.handlers[`${key}Start`];
     return this.execHandler(handler, node);
   }
 
