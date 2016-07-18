@@ -170,12 +170,12 @@ def get_all_fields(k):
     return obj['fields'] if 'fields' in obj else None
 
 HANDLER_METHODS = \
-  '    %(type)sStart?:(node?:%(type)s, ref?:T)=>Node\n' + \
-  '    %(type)sEnd?:(node?:%(type)s, ref?:T)=>Node'
+  '    %(type)sStart?:(node?:%(type)s, ref?:T)=>(Node|void)\n' + \
+  '    %(type)sEnd?:(node?:%(type)s, ref?:T)=>(Node|void)'
 
 MULTI_HANDLER_METHODS = \
-  '    %(name)sStart?:(node?:%(type)s, ref?:T)=>Node\n' + \
-  '    %(name)sEnd?:(node?:%(type)s, ref?:T)=>Node'
+  '    %(name)sStart?:(node?:%(type)s, ref?:T)=>(Node|void)\n' + \
+  '    %(name)sEnd?:(node?:%(type)s, ref?:T)=>(Node|void)'
 
 GUARD_METHOD = '  export function is%(name)s(n:Node):n is %(name)s { return n.type === "%(type)s"; }'
 MULTI_GUARD_METHOD = '  export function is%s(n:Node):n is %s { return %s }';
