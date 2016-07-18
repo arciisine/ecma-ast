@@ -53,8 +53,7 @@ export class Visitor {
   }
 
   private onStart(node:AST.Node, key:string = null):AST.Node {
-    key = key || node.type;
-    let handler = this.handlers[`${key}Start`];
+    let handler = this.handlers[key || node.type];
     return this.execHandler(handler, node);
   }
 
