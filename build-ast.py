@@ -169,20 +169,35 @@ def get_all_fields(k):
   else:
     return obj['fields'] if 'fields' in obj else None
 
+HANDLER_METHODS = \
+  '    %(type)sStart?:(node?:%(type)s, ref?:T)=>Node\n' + \
+  '    %(type)sEnd?:(node?:%(type)s, ref?:T)=>Node'
+
+MULTI_HANDLER_METHODS = \
+  '    %(name)sStart?:(node?:%(type)s, ref?:T)=>Node\n' + \
+  '    %(name)sEnd?:(node?:%(type)s, ref?:T)=>Node'
+
+GUARD_METHOD = '  export function is%(name)s(n:Node):n is %(name)s { return n.type === "%(type)s"; }'
+MULTI_GUARD_METHOD = '  export function is%s(n:Node):n is %s { return %s }';
+INTERFACE_DEF = '  export interface %(name)s %(extends)s {\n    %(fields)s\n  }'
+ENUM_DEF = '  export type %(name)s = %(values)s';
+CONS_DEF = '  export function %(name)s(o:{%(fields)s}):%(name)s {\n    return ((o["type"] = "%(type)s") && o) as %(name)s\n  }'
+NESTED_DEF = '  NESTED["%(name)s"] = [%(nested)s]; '
+
 def output():
 
   decls = []
   cons = []
   guards = []
+  handlers = [];
 
   for k in order:
     obj = declarations[k]
     if obj['source'] == 'enum':
-      decls.append('  export type %(name)s = %(values)s;\n' % \
-        {
-          "name":obj['name'], 
-          "values":re.sub('"\s+\|\s+"', '" | "', " | ".join(obj['values']))
-        })
+      decls.append(ENUM_DEF % {
+        "name":obj['name'], 
+        "values":re.sub('"\s+\|\s+"', '" | "', " | ".join(obj['values']))
+      })
     else:
       extends = ''
       if 'extends' in obj and len(obj['extends']) > 0:
@@ -204,25 +219,27 @@ def output():
       context["fields"] = "\n    ".join(['%s: %s' %pair for pair in obj['fields'].items()])
       context["nested"] = ','.join(['"%s"'%x for x in context["nested"]])
         
-      decls.append('  export interface %(name)s %(extends)s {\n    %(fields)s\n  }'% context)
+      decls.append(INTERFACE_DEF% context)
       if obj['type'] is not None:
-        guards.append('  export function is%(name)s(n:Node):n is %(name)s { return n.type === "%(type)s"; } \n' % context)
+        guards.append(GUARD_METHOD % context)
+        handlers.append(HANDLER_METHODS %context)
         context['fields'] = "\n    ".join(['%s: %s' %pair for pair in all_fields.items() if pair[0] != 'type']).replace(';',',')
-        cons.append('  export function %(name)s(o:{%(fields)s}):%(name)s {\n    return ((o["type"] = "%(type)s") && o) as %(name)s\n  }'% context)
-        cons.append('  NESTED["%(name)s"] = [%(nested)s]; '% context)
+        cons.append(CONS_DEF % context)
+        cons.append(NESTED_DEF % context)
                 
-    
-  guards.append('  export function isFunction(n:Node):n is BaseFunction { return %s }' % (' || '.join(['n.type === "%s"' % k for k in get_func_types()])))
-  guards.append('  export function isForLoop(n:Node):n is %s { return %s }' % (
-    ('|'.join(get_forloop_types())),
-    (' || '.join(['n.type === "%s"' % k for k in get_forloop_types()]))))
-
+  handlers.append(MULTI_HANDLER_METHODS % { "name": "Function", "type" : "BaseFunction" })
+  handlers.append(MULTI_HANDLER_METHODS % { "name": "ForLoop", "type" : ('|'.join(get_forloop_types())) })
+  guards.append(MULTI_GUARD_METHOD % ('Function', 'BaseFunction', ' || '.join(['n.type === "%s"' % k for k in get_func_types()])))
+  guards.append(MULTI_GUARD_METHOD % ('ForLoop', ('|'.join(get_forloop_types())), (' || '.join(['n.type === "%s"' % k for k in get_forloop_types()]))))
 
   print 'export namespace AST {'
   print '  export const NESTED:{[key:string]:string[]} = {}';
   print '\n'.join(decls)
   print '\n'.join(cons)
   print '\n'.join(guards)
+  print '\n  export interface NodeHandler<T> {'
+  print '\n'.join(handlers)
+  print '\n  }'
   print '}'
 
 if __name__ == '__main__':
