@@ -35,20 +35,24 @@ export class Visitor {
     return new Visitor(handlers).exec(node);
   }
 
-  private parents:VisitParent[] = null;
+  private _parents:VisitParent[] = null;
 
   constructor(private handlers : AST.NodeHandler<Visitor>) {}
 
   get parent() {
-    return this.parents.length && this.parents[0];
+    return this._parents.length && this._parents[0];
+  }
+
+  get parents() {
+    return this._parents.length && this._parents.slice(0)
   }
 
   findParent(pred:(node:VisitParent)=>boolean) {
-    return this.parents.find(pred)
+    return this._parents.find(pred)
   }
 
   findParents(pred:(node:VisitParent)=>boolean) {
-    return this.parents.filter(pred)
+    return this._parents.filter(pred)
   }
 
   private execHandler(fn:Handler, node:AST.Node):AST.Node {
@@ -99,14 +103,14 @@ export class Visitor {
         let x = node[p];
         if (Array.isArray(x)) {
           x.slice(0).forEach((y, i) => {
-            this.parents.unshift({container:x, key:i, node})
+            this._parents.unshift({container:x, key:i, node})
             this.visit(y);
-            this.parents.shift(); 
+            this._parents.shift(); 
           })
         } else {
-          this.parents.unshift({container:node, key:p, node:node})
+          this._parents.unshift({container:node, key:p, node:node})
           this.visit(x);
-          this.parents.shift();
+          this._parents.shift();
         }
       });
     }
@@ -122,7 +126,7 @@ export class Visitor {
   }
 
   exec<T extends AST.Node>(node:T):T {
-    this.parents = [];
+    this._parents = [];
     return this.visit(node) as T;
   }
 }
