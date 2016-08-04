@@ -57,8 +57,7 @@ export class Visitor {
   }
 
   private onStart(node:AST.Node, key:string = null):AST.Node {
-    let handler = this.handlers[key || node.type];
-    return this.execHandler(handler, node);
+    return this.execHandler(this.handlers[key || node.type], node);
   }
 
   private onEnd(node:AST.Node, key:string = null):AST.Node {
