@@ -5,11 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "@types/esprima": "^2.1.22-alpha",
-    "@types/estree": "^0.0.30",
     "@types/lodash": "^4.0.21-alpha",
     "esprima": "^2.7.2",
     "lodash": "^4.13.1",
-    "typescript": "^2.0.0-dev.20160707"
+    "typescript": "^2.0.0-beta"
   },
   "devDependencies": {},
   "scripts": {
