@@ -181,13 +181,13 @@ GUARD_METHOD = '  export function is%(name)s(n:Node):n is %(name)s { return n.ty
 MULTI_GUARD_METHOD = '  export function is%s(n:Node):n is %s { return %s }';
 INTERFACE_DEF = '  export interface %(name)s %(extends)s {\n    %(fields)s\n  }'
 ENUM_DEF = '  export type %(name)s = %(values)s';
-CONS_DEF = '  export function %(name)s(o:{%(fields)s}):%(name)s {\n    return ((o["type"] = "%(type)s") && o) as %(name)s\n  }'
+CTOR_DEF = '  export function %(name)s(o:{%(fields)s}):%(name)s {\n    return ((o["type"] = "%(type)s") && o) as %(name)s\n  }'
 NESTED_DEF = '  NESTED["%(name)s"] = [%(nested)s]; '
 
 def output():
 
   decls = []
-  cons = []
+  ctors = []
   guards = []
   handlers = [];
 
@@ -224,8 +224,8 @@ def output():
         guards.append(GUARD_METHOD % context)
         handlers.append(HANDLER_METHODS %context)
         context['fields'] = "\n    ".join(['%s: %s' %pair for pair in all_fields.items() if pair[0] != 'type']).replace(';',',')
-        cons.append(CONS_DEF % context)
-        cons.append(NESTED_DEF % context)
+        ctors.append(CTOR_DEF % context)
+        ctors.append(NESTED_DEF % context)
                 
   handlers.append(MULTI_HANDLER_METHODS % { "name": "Function", "type" : "BaseFunction" })
   handlers.append(MULTI_HANDLER_METHODS % { "name": "ForLoop", "type" : ('|'.join(get_forloop_types())) })
@@ -235,7 +235,7 @@ def output():
   print 'export namespace AST {'
   print '  export const NESTED:{[key:string]:string[]} = {}';
   print '\n'.join(decls)
-  print '\n'.join(cons)
+  print '\n'.join(ctors)
   print '\n'.join(guards)
   print '\n  export interface NodeHandler<T> {'
   print '\n'.join(handlers)
