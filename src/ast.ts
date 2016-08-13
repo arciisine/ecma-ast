@@ -173,7 +173,7 @@ export namespace AST {
     right:  Expression;
     left:  Expression;
   }
-  export type LogicalOperator = " | "  |  "&&"
+  export type LogicalOperator = "||" | "&&"
   export interface MemberExpression  extends Expression,Pattern {
     property:  Expression;
     object:  Expression | Super;

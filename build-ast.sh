@@ -14,7 +14,7 @@ function parse() {
     perl -pe 's/(.*):(.*)\|\s*null(.*)/\1?:\2\3/' | \
     tr '\n' ' ' | \
     perl -pe 's/(extend )?(enum|interface)/\nexport $2/g' | \
-    sed -e '/enum/ s/|/,/g'
+    sed -e '/enum/ s/|/,/g' -e 's/,,/||/'
 }
 
 mkdir -p target/
