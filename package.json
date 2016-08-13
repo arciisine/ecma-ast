@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@types/estree": "^0.0.30",
     "@types/esprima": "^2.1.22-alpha",
     "@types/lodash": "^4.0.21-alpha",
     "esprima": "^2.7.2",
