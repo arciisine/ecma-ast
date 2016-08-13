@@ -19,8 +19,7 @@ export class Util {
    */
   static reduceBlocks(body:AST.Node[]):AST.Node[] {
     let out = [];
-    for (let i = 0; i < body.length; i++) {
-      let node = body[i];
+    for (let node of body) {
       //If you are in a block without any let or const assignments, we can collapse into the parent
       if (AST.isBlockStatement(node) && !node.body.some(y => AST.isVariableDeclaration(y) && y.kind !== 'var')) {
         out.push(...Util.reduceBlocks(node.body))

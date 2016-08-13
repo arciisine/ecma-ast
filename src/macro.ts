@@ -1,6 +1,6 @@
 import {AST} from "./ast"
 
-let id_:number = new Date().getTime()%10000;
+let id_:number = new Date().getTime()%100000;
 
 export class Macro {
 

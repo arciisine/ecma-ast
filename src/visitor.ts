@@ -108,7 +108,7 @@ export class Visitor {
             this._parents.shift(); 
           })
         } else {
-          this._parents.unshift({container:node, key:p, node:node})
+          this._parents.unshift({container:node, key:p, node})
           this.visit(x);
           this._parents.shift();
         }
