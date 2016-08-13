@@ -4,11 +4,11 @@ let id_:number = new Date().getTime()%100000;
 
 export class Macro {
 
-  static genSymbol() {
-    return "__gen"+parseInt(`${Math.random()*1000}`)+(id_++); 
+  static genSymbol(prefix='__gen') {
+    return prefix+parseInt(`${Math.random()*1000}`)+(id_++); 
   }
 
-  static Id(name?:string):AST.Identifier { return AST.Identifier({name:name||Macro.genSymbol()}); }
+  static Id(name?:string, prefix:boolean = false):AST.Identifier { return AST.Identifier({name:prefix?Macro.genSymbol(name): (name||Macro.genSymbol())}); }
   static Literal(value:any):AST.Literal { return AST.Literal({value}); }
 	static Block(...body:AST.Statement[]):AST.BlockStatement {  return AST.BlockStatement({body:body.filter(x => !!x)}); }
 	static Expr(n:AST.Node):AST.ExpressionStatement { return AST.ExpressionStatement({expression:n}) }
