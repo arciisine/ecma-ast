@@ -9,7 +9,7 @@ export class Macro {
   }
 
   static Id(name?:string, prefix:boolean = false):AST.Identifier { return AST.Identifier({name:prefix?Macro.genSymbol(name): (name||Macro.genSymbol())}); }
-  static Literal(value:any):AST.Literal { return AST.Literal({value}); }
+  static Literal(value:string|boolean|number|RegExp):AST.Literal { return AST.Literal({value}); }
 	static Block(...body:AST.Statement[]):AST.BlockStatement {  return AST.BlockStatement({body:body.filter(x => !!x)}); }
 	static Expr(n:AST.Node):AST.ExpressionStatement { return AST.ExpressionStatement({expression:n}) }
 	static Continue(label?:AST.Identifier):AST.ContinueStatement { return AST.ContinueStatement({label}); }
@@ -51,11 +51,11 @@ export class Macro {
       })
   }
 
-	static GetProperty(id:AST.Identifier|AST.Expression, prop:AST.Expression|string):AST.MemberExpression {
+	static GetProperty(id:AST.Identifier|AST.Expression, prop:AST.Expression|string|number):AST.MemberExpression {
     return AST.MemberExpression({
       computed : typeof prop !== 'string',
       object : id,
-      property : typeof prop === 'string' ? Macro.Id(prop) : prop,
+      property : typeof prop === 'string' ? Macro.Id(prop) : ( typeof prop === 'number' ? Macro.Literal(prop) : prop),
     });
   }
 
