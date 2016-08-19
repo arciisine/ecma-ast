@@ -3,13 +3,7 @@ import {CompileUtil} from './compile';
 import {ParseUtil} from './parse';
 import {Visitor, Handler} from './visitor';
 
-let id_:number = new Date().getTime()%100000;
-
 export class Util {
-
-  static genSymbol(prefix='__gen') {
-    return prefix+parseInt(`${Math.random()*1000}`)+(id_++); 
-  }
 
   /**
    * Shorthand for parse, visit, compile

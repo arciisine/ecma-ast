@@ -1,10 +1,11 @@
 import {AST} from "./ast"
-import {Util} from './util'
 
+let id_:number = new Date().getTime()%100000;
+  
 export class Macro {
 
   static genSymbol(prefix='__gen') {
-    return Util.genSymbol(prefix); 
+    return prefix+parseInt(`${Math.random()*1000}`)+(id_++); 
   }
 
   static Id(name?:string, prefix:boolean = false):AST.Identifier { return AST.Identifier({name:prefix?Macro.genSymbol(name): (name||Macro.genSymbol())}); }

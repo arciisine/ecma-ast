@@ -1,7 +1,7 @@
 /// <reference path="../node_modules/@types/esprima/index.d.ts" />
 import * as esprima from "esprima"
 import {AST} from "./ast"
-import {Util} from './util';
+import {Macro as m} from './macro';
 
 export class ParseUtil {
   
@@ -19,7 +19,7 @@ export class ParseUtil {
     let src = fn.toString();
     //Handle static class methods
     if (src.match(/^function\s*\(/)) {
-      src = src.replace(/function/, 'function '+Util.genSymbol('__anon'))
+      src = src.replace(/function/, 'function '+m.genSymbol('__anon'))
     }
 
     if (src.match(/^\s*[A-Za-z0-9]+\s*\(/)) {
