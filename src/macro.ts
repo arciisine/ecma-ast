@@ -1,11 +1,10 @@
 import {AST} from "./ast"
-
-let id_:number = new Date().getTime()%100000;
+import {Util} from './util'
 
 export class Macro {
 
   static genSymbol(prefix='__gen') {
-    return prefix+parseInt(`${Math.random()*1000}`)+(id_++); 
+    return Util.genSymbol(prefix); 
   }
 
   static Id(name?:string, prefix:boolean = false):AST.Identifier { return AST.Identifier({name:prefix?Macro.genSymbol(name): (name||Macro.genSymbol())}); }
@@ -28,7 +27,6 @@ export class Macro {
   static Call(src:AST.Identifier|AST.Expression, ...args:AST.Expression[]):AST.CallExpression {
     return AST.CallExpression({callee:src, arguments:args.filter(x => !!x)});
   };
-
 
   static Labeled(label:AST.Identifier, body:AST.Statement):AST.LabeledStatement {
     return AST.LabeledStatement({ label, body });
