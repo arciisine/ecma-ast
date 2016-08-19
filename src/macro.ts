@@ -29,12 +29,37 @@ export class Macro {
     return AST.CallExpression({callee:src, arguments:args.filter(x => !!x)});
   };
 
+
+  static Labeled(label:AST.Identifier, body:AST.Statement):AST.LabeledStatement {
+    return AST.LabeledStatement({ label, body });
+  }
+
 	static Assign(id:AST.Identifier, expr:AST.Expression, op:AST.AssignmentOperator = '='):AST.AssignmentExpression  {
     return AST.AssignmentExpression({
       left : id,
       operator : op,
       right : expr
     });
+  }
+
+	static BinaryExpr(id:AST.Identifier, op:AST.BinaryOperator, val:AST.Expression):AST.BinaryExpression {
+    return AST.BinaryExpression({
+      left : id,
+      operator : op,
+      right : val
+    });
+  }
+
+  static UnaryExpr(op:AST.UnaryOperator, val:AST.Expression):AST.UnaryExpression {
+    return AST.UnaryExpression({
+      operator : op,
+      prefix : true,
+      argument : val
+    });
+  }
+
+  static Negate(val:AST.Expression):AST.UnaryExpression {
+    return Macro.UnaryExpr("!", val);
   }
 
   static ObjectExpr(pairs:{[key:string]:AST.Expression}, kind:'init'|'get'|'set' = 'init') {
@@ -77,32 +102,8 @@ export class Macro {
     return AST.VariableDeclaration({kind, declarations: decls});
   }
 
-	static BinaryExpr(id:AST.Identifier, op:AST.BinaryOperator, val:AST.Expression):AST.BinaryExpression {
-    return AST.BinaryExpression({
-      left : id,
-      operator : op,
-      right : val
-    });
-  }
-
-  static UnaryExpr(op:AST.UnaryOperator, val:AST.Expression):AST.UnaryExpression {
-    return AST.UnaryExpression({
-      operator : op,
-      prefix : true,
-      argument : val
-    });
-  }
-
-  static Negate(val:AST.Expression):AST.UnaryExpression {
-    return Macro.UnaryExpr("!", val);
-  }
-
   static Increment(id:AST.Identifier, increment:number = 1):AST.AssignmentExpression {
     return Macro.Assign(id, Macro.Literal(increment), '+=');
-  }
-
-  static Labeled(id:AST.Identifier, body:AST.Statement):AST.LabeledStatement {
-    return AST.LabeledStatement({ label : id, body });
   }
 
   static ForLoop(id:AST.Identifier, init:AST.Expression, upto:AST.Expression, body:AST.Statement[], increment:number = 1):AST.ForStatement {
