@@ -16,11 +16,12 @@ export class ParseUtil {
   }
 
   static parse(fn:Function|string):AST.BaseFunction {
-    let src = fn.toString();
-
-    if (Function.prototype.toString.call(fn).indexOf('[native code]') < 20) {
+    //Ensure native functions aren't processed
+    if (Function.prototype['toString'].call(fn).indexOf('[native code]') < 20) {
       throw { message : 'Native Function found, cannot parse', native : true, invalid : false};
     }
+
+    let src = fn.toString();
 
     //Handle anonymous function expressions
     if (src.match(/^function\s*\(/)) {
