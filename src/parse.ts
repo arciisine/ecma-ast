@@ -17,11 +17,17 @@ export class ParseUtil {
 
   static parse(fn:Function|string):AST.BaseFunction {
     let src = fn.toString();
-    //Handle static class methods
+
+    if (Function.prototype.toString.call(fn).indexOf('[native code]') < 20) {
+      throw { message : 'Native Function found, cannot parse', native : true, invalid : false};
+    }
+
+    //Handle anonymous function expressions
     if (src.match(/^function\s*\(/)) {
       src = src.replace(/function/, 'function '+m.genSymbol('__anon'))
     }
 
+    //Handle static class methods
     if (src.match(/^\s*[A-Za-z0-9]+\s*\(/)) {
       src = `function ${src}`;
     }
