@@ -15,13 +15,21 @@ export class ParseUtil {
     return res;
   }
 
+  static getSource(fn:Function|string):string {
+    return typeof fn === 'string' ? fn : Function.prototype['toString'].call(fn);
+  }
+
+  static isNative(fn:Function|string):boolean {
+    return ParseUtil.getSource(fn).indexOf('[native code]') < 20;
+  }
+
   static parse(fn:Function|string):AST.BaseFunction {
     //Ensure native functions aren't processed
-    if (Function.prototype['toString'].call(fn).indexOf('[native code]') < 20) {
+    if (ParseUtil.isNative(fn)) {
       throw { message : 'Native Function found, cannot parse', native : true, invalid : false};
     }
 
-    let src = fn.toString();
+    let src = ParseUtil.getSource(fn);
 
     //Handle anonymous function expressions
     if (src.match(/^function\s*\(/)) {
