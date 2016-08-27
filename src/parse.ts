@@ -20,13 +20,14 @@ export class ParseUtil {
   }
 
   static isNative(fn:Function|string):boolean {
-    return ParseUtil.getSource(fn).indexOf('[native code]') < 20;
+    let pos = ParseUtil.getSource(fn).indexOf('[native code]');
+    return pos >= 0 && pos < 20 ;
   }
 
   static parse(fn:Function|string):AST.BaseFunction {
     //Ensure native functions aren't processed
     if (ParseUtil.isNative(fn)) {
-      throw { message : 'Native Function found, cannot parse', native : true, invalid : false};
+      throw { message : 'Native Function found, cannot parse', native : true};
     }
 
     let src = ParseUtil.getSource(fn);
