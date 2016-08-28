@@ -8,7 +8,8 @@ export class CompileUtil {
   }
 
   static compile(node:AST.BaseFunction|string, globals:any, optimize:any = null):Function {
-    let src = `(function() {     
+    let src = `(function() {
+      'use strict';     
       ${Object.keys(globals || {}).map(k => `var ${k} = ${globals[k].toString()}`).join('\n')} 
       return ${typeof node === 'string' ? node : CompileUtil.compileExpression(node)}; 
     })()`;
