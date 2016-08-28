@@ -13,6 +13,6 @@ export class CompileUtil {
       return ${typeof node === 'string' ? node : CompileUtil.compileExpression(node)}; 
     })()`;
     
-    return eval(src);
+    return eval.call(null, src);
   }
 }
