@@ -78,7 +78,7 @@ export class Visitor {
       }
     } else if (result === Visitor.PREVENT_DESCENT) {
       return;
-    } else if (parent && result) { //Reassign if changed      
+    } else if (parent && result) { //Aassign if returned      
       parent.container[parent.key] = result;
     } 
     return result;
