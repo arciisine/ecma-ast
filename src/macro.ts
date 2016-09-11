@@ -41,12 +41,8 @@ export class Macro {
     });
   }
 
-	static BinaryExpr(id:AST.Identifier, op:AST.BinaryOperator, val:AST.Expression):AST.BinaryExpression {
-    return AST.BinaryExpression({
-      left : id,
-      operator : op,
-      right : val
-    });
+	static BinaryExpr(left:AST.Expression, operator:AST.BinaryOperator, right:AST.Expression):AST.BinaryExpression {
+    return AST.BinaryExpression({left, operator, right});
   }
 
   static UnaryExpr(op:AST.UnaryOperator, val:AST.Expression):AST.UnaryExpression {
