@@ -1,4 +1,3 @@
-/// <reference path="../node_modules/@types/esprima/index.d.ts" />
 import * as esprima from "esprima"
 import {AST} from "./ast"
 import {Macro as m} from './macro';
