@@ -1,11 +1,15 @@
 import {AST} from "./ast"
 
-let id_:number = new Date().getTime()%100000;
+const ID_SIZE = 100000
+const RND_SIZE = 1000
+const SYM_PRE = "_gen"
+
+let id_:number = new Date().getTime()%ID_SIZE;
   
 export class Macro {
 
-  static genSymbol(prefix='__gen') {
-    return (prefix||'__gen')+parseInt(`${Math.random()*1000}`)+(id_++); 
+  static genSymbol(prefix?:string) {
+    return (prefix||SYM_PRE)+(Math.trunc(Math.random()*RND_SIZE) * ID_SIZE + id_++); 
   }
 
   static Id(name?:string, prefix:boolean = false):AST.Identifier { 
