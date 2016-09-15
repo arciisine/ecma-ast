@@ -32,7 +32,8 @@ export class CompileUtil {
           flags[k] = optimize[k];
         }
       }
-      src = compile(flags).compileCode;
+      let res = compile(flags); 
+      src = res.compiledCode;
     }
 
     return eval.call(null, src);
