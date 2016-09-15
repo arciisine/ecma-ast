@@ -2,7 +2,7 @@ import {AST} from './ast';
 import {CompileUtil} from './compile';
 import {ParseUtil} from './parse';
 import {Visitor, Handler} from './visitor';
-
+    
 export class Util {
 
   /**
