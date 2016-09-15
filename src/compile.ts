@@ -16,7 +16,7 @@ export class CompileUtil {
       ${Object.keys(globals || {}).map(k => `var ${k} = ${globals[k].toString()}`).join('\n')} 
       return ${typeof node === 'string' ? node : CompileUtil.compileExpression(node)}; 
     })()`;    
-    
+  
     if (compile === undefined) {
       try { 
         compile = require('google-closure-compiler-js').compile;
@@ -26,7 +26,7 @@ export class CompileUtil {
     }
 
     if (!!optimize && compile) {
-      let flags = {jsCode:[src]};
+      let flags = {jsCode:[{src}]};
       if (typeof optimize === 'object') {
         for (let k of Object.keys(optimize)) {
           flags[k] = optimize[k];
