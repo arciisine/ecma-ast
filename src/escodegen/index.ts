@@ -8,8 +8,8 @@ export interface EscodegenOptionsFormatIndent {
 };
 
 export interface EscodegenOptionsMozilla {
-  comprehensionExpressionStartsWithAssignment: boolean;
-  starlessGenerator: boolean;
+  comprehensionExpressionStartsWithAssignment?: boolean;
+  starlessGenerator?: boolean;
 }
 
 export interface EscodegenOptionsFormat {
