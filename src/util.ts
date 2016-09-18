@@ -8,10 +8,11 @@ export class Util {
   /**
    * Shorthand for parse, visit, compile
    */
-  static rewrite(fn:Function, handlers:{[key:string]:Handler}, globals:any = {}) {
+  static rewrite(fn:Function, handler:AST.NodeHandler<Visitor>, globals:any = {}) {
     let ast = ParseUtil.parse(fn); 
-    ast = new Visitor(handlers).exec(ast);
-    return CompileUtil.compile(ast, globals);
+    ast = new Visitor(handler).exec(ast);
+    let src = CompileUtil.compileFunction(ast, globals);
+    return CompileUtil.evaluate<Function>(src);
   }
 
   /**
