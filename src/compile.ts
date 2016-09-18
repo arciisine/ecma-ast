@@ -1,39 +1,25 @@
 import * as escodegen from './escodegen';
 import {AST} from "./ast"
-declare var require;
 
-let compile = undefined;
+export type Transformer = (string)=>string
 
 export class CompileUtil {
   
-  static compileExpression(node:AST.Node):string {
-    return escodegen.generate(node);
+  static compileExpression(node:AST.Node, options:escodegen.EscodegenOptions = null):string {
+    return escodegen.generate(node, options);
   }
 
-  static compile(node:AST.BaseFunction|string, globals:any, optimize:any = null):Function {
+  static compile(node:AST.BaseFunction|string, globals:any, options:escodegen.EscodegenOptions = null, transforms:Transformer[] = null):Function {
     let src = `(function() {
-      'use strict';     
+      'use strict';
       ${Object.keys(globals || {}).map(k => `var ${k} = ${globals[k].toString()}`).join('\n')} 
-      return ${typeof node === 'string' ? node : CompileUtil.compileExpression(node)}; 
-    })()`;    
-  
-    if (compile === undefined) {
-      try { 
-        compile = require('google-closure-compiler-js').compile;
-      } catch (e) {
-        compile = null;
-      }
-    }
+      return ${typeof node === 'string' ? node : CompileUtil.compileExpression(node, options)}; 
+    })()`;
 
-    if (!!optimize && compile) {
-      let flags = {jsCode:[{src}]};
-      if (typeof optimize === 'object') {
-        for (let k of Object.keys(optimize)) {
-          flags[k] = optimize[k];
-        }
-      }
-      let res = compile(flags); 
-      src = res.compiledCode;
+    if (transforms) {
+      src = transforms
+        .filter(x => !!x)
+        .reduce((src, fn) => fn(src), src);
     }
 
     return eval.call(null, src);

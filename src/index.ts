@@ -4,3 +4,4 @@ export * from './parse';
 export * from './visitor';
 export * from './ast';
 export * from './macro';
+export * from './optimize';
