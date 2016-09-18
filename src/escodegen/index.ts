@@ -13,7 +13,7 @@ export interface EscodegenOptionsMozilla {
 }
 
 export interface EscodegenOptionsFormat {
-  indent: EscodegenOptionsFormatIndent
+  indent?: EscodegenOptionsFormatIndent
   newline?: string;
   space?: string;
   json?: boolean;
