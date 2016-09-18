@@ -19,7 +19,7 @@ export interface EscodegenOptionsFormat {
   json?: boolean;
   renumber?: boolean;
   hexadecimal?: boolean;
-  quotes?: 'single'|'double';
+  quotes?: 'single'|'double'|'auto';
   escapeless?: boolean;
   compact?: boolean;
   parentheses?: boolean;
