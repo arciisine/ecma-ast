@@ -9,19 +9,16 @@ export class CompileUtil {
     return escodegen.generate(node, options);
   }
 
-  static compile(node:AST.BaseFunction|string, globals:any, options:escodegen.EscodegenOptions = null, transforms:Transformer[] = null):Function {
+  static compileFunction(node:AST.BaseFunction, globals:any, options:escodegen.EscodegenOptions = null):string {
     let src = `(function() {
       'use strict';
       ${Object.keys(globals || {}).map(k => `var ${k} = ${globals[k].toString()}`).join('\n')} 
-      return ${typeof node === 'string' ? node : CompileUtil.compileExpression(node, options)}; 
+      return ${CompileUtil.compileExpression(node, options)}; 
     })()`;
+    return src;
+  }
 
-    if (transforms) {
-      src = transforms
-        .filter(x => !!x)
-        .reduce((src, fn) => fn(src), src);
-    }
-
-    return eval.call(null, src);
+  static evaluate<T>(source:string):T {
+    return eval.call(null, source) as T;
   }
 }
