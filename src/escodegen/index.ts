@@ -38,8 +38,8 @@ export interface EscodegenOptions {
   raw?: boolean;
   verbatim?: string;
   sourceMap?: any;
-  sourceMapRoot: any;
-  sourceMapWithCode: any;
+  sourceMapRoot?: any;
+  sourceMapWithCode?: any;
   sourceCode?: any;  
 };
 
