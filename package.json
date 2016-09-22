@@ -10,7 +10,7 @@
     "esprima": "^2.7.2",
     "google-closure-compiler-js": "^20160828.0.1",
     "lodash": "^4.13.1",
-    "typescript": "^2.0.2"
+    "typescript": "^2.0.3"
   },
   "devDependencies": {},
   "scripts": {
