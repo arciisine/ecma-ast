@@ -188,7 +188,7 @@ export namespace AST {
   }
   export interface CallExpression  extends Expression {
     callee:  Expression | Super;
-    arguments:  [ Expression | SpreadElement ];
+    arguments: (Expression | SpreadElement )[];
   }
   export interface NewExpression  extends CallExpression {
     
@@ -219,7 +219,7 @@ export namespace AST {
   }
   export interface TemplateLiteral  extends Expression {
     quasis: (TemplateElement )[];
-    expressions:  [ Expression ];
+    expressions: (Expression )[];
   }
   export interface TaggedTemplateExpression  extends Expression {
     quasi:  TemplateLiteral;
@@ -503,12 +503,12 @@ export namespace AST {
   }
   NESTED["ConditionalExpression"] = ["test","alternate","consequent"]; 
   export function CallExpression(o:{callee:  Expression | Super,
-    arguments:  [ Expression | SpreadElement ],}):CallExpression {
+    arguments: (Expression | SpreadElement )[],}):CallExpression {
     return ((o["type"] = "CallExpression") && o) as CallExpression
   }
   NESTED["CallExpression"] = ["callee","arguments"]; 
   export function NewExpression(o:{callee:  Expression | Super,
-    arguments:  [ Expression | SpreadElement ],}):NewExpression {
+    arguments: (Expression | SpreadElement )[],}):NewExpression {
     return ((o["type"] = "NewExpression") && o) as NewExpression
   }
   NESTED["NewExpression"] = ["callee","arguments"]; 
@@ -544,7 +544,7 @@ export namespace AST {
   }
   NESTED["YieldExpression"] = ["argument"]; 
   export function TemplateLiteral(o:{quasis: (TemplateElement )[],
-    expressions:  [ Expression ],}):TemplateLiteral {
+    expressions: (Expression )[],}):TemplateLiteral {
     return ((o["type"] = "TemplateLiteral") && o) as TemplateLiteral
   }
   NESTED["TemplateLiteral"] = ["quasis","expressions"]; 

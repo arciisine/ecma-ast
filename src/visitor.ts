@@ -35,12 +35,12 @@ export class Visitor {
     return new Visitor(handlers).exec(node);
   }
 
-  private _parents:VisitParent[] = null;
+  private _parents:VisitParent[] = [];
 
   constructor(private handlers : AST.NodeHandler<Visitor>) {}
 
-  get parent() {
-    return this._parents.length && this._parents[0];
+  get parent():VisitParent {
+    return this._parents[0];
   }
 
   get parents() {
@@ -60,11 +60,11 @@ export class Visitor {
     return (res && res['type']) ? res : node; //Always return a node 
   }
 
-  private onStart(node:AST.Node, key:string = null):AST.Node {
+  private onStart(node:AST.Node, key?:string):AST.Node {
     return this.execHandler(this.handlers[key || node.type], node);
   }
 
-  private onEnd(node:AST.Node, key:string = null):AST.Node {
+  private onEnd(node:AST.Node, key?:string):AST.Node {
     return this.execHandler(this.handlers[`${key || node.type}End`], node);
   }
 
@@ -77,15 +77,15 @@ export class Visitor {
         delete parent.container[parent.key];            
       }
     } else if (result === Visitor.PREVENT_DESCENT) {
-      return;
+      return result;
     } else if (parent && result) { //Aassign if returned      
       parent.container[parent.key] = result;
     } 
     return result;
   }
 
-  private visit(node:AST.Node):AST.Node {
-    if (!node) return;
+  private visit(node:AST.Node):void {
+    if (node === null) return;
 
     let alias = Visitor.TYPE_ALIASES[node.type];
     let keys = alias ? [node.type, alias] : [node.type];
@@ -93,7 +93,8 @@ export class Visitor {
     for (let key of keys) {
       node = this.onStart(node, key);
       if (node === Visitor.PREVENT_DESCENT || node === Visitor.DELETE_FLAG) {
-        return this.finish(node);
+        this.finish(node);
+        return;
       }
     }
     let sub = AST.NESTED[node.type];
@@ -118,15 +119,18 @@ export class Visitor {
     for (let key of keys) {
       node = this.onEnd(node, key);
       if (node === Visitor.DELETE_FLAG) {
-        return this.finish(node);
+        this.finish(node);
+        return;
       }
     }
 
-    return this.finish(node);
+    this.finish(node);
+    return;
   }
 
   exec<T extends AST.Node>(node:T):T {
     this._parents = [];
-    return this.visit(node) as T;
+    this.visit(node);
+    return node;
   }
 }
