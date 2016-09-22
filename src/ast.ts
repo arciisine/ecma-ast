@@ -22,12 +22,12 @@ export namespace AST {
     regex: {     pattern: string;     flags: string;   };
   }
   export interface Program  extends Node {
-    body:  [ Statement | ModuleDeclaration ];
+    body: (Statement | ModuleDeclaration )[];
     sourceType:  "script" | "module";
   }
   export interface Function  extends Node {
     body:  BlockStatement;
-    params:  [ Pattern ];
+    params: (Pattern )[];
     id?:  Identifier | null;
     generator:  boolean;
   }
@@ -38,7 +38,7 @@ export namespace AST {
     expression:  Expression;
   }
   export interface BlockStatement  extends Statement {
-    body:  [ Statement ];
+    body: (Statement )[];
   }
   export interface EmptyStatement  extends Statement {
     
@@ -69,12 +69,12 @@ export namespace AST {
     consequent:  Statement;
   }
   export interface SwitchStatement  extends Statement {
-    cases:  [ SwitchCase ];
+    cases: (SwitchCase )[];
     discriminant:  Expression;
   }
   export interface SwitchCase  extends Node {
     test?:  Expression | null;
-    consequent:  [ Statement ];
+    consequent: (Statement )[];
   }
   export interface ThrowStatement  extends Statement {
     argument:  Expression;
@@ -116,7 +116,7 @@ export namespace AST {
   }
   export interface VariableDeclaration  extends Declaration {
     kind:  "var" | "let" | "const";
-    declarations:  [ VariableDeclarator ];
+    declarations: (VariableDeclarator )[];
   }
   export interface VariableDeclarator  extends Node {
     init?:  Expression | null;
@@ -129,10 +129,10 @@ export namespace AST {
     
   }
   export interface ArrayExpression  extends Expression {
-    elements?:  [ Expression | SpreadElement | null ];
+    elements?: (Expression | SpreadElement | null )[];
   }
   export interface ObjectExpression  extends Expression {
-    properties:  [ Property ];
+    properties: (Property )[];
   }
   export interface Property  extends Node {
     kind:  "init" | "get" | "set";
@@ -194,7 +194,7 @@ export namespace AST {
     
   }
   export interface SequenceExpression  extends Expression {
-    expressions:  [ Expression ];
+    expressions: (Expression )[];
   }
   export interface Pattern  extends Node {
     
@@ -218,7 +218,7 @@ export namespace AST {
     delegate:  boolean;
   }
   export interface TemplateLiteral  extends Expression {
-    quasis:  [ TemplateElement ];
+    quasis: (TemplateElement )[];
     expressions:  [ Expression ];
   }
   export interface TaggedTemplateExpression  extends Expression {
@@ -236,10 +236,10 @@ export namespace AST {
   }
   export interface ObjectPattern  {
     type:  "ObjectPattern";
-    properties:  [ AssignmentProperty ];
+    properties: (AssignmentProperty )[];
   }
   export interface ArrayPattern  extends Pattern {
-    elements?:  [ Pattern | null ];
+    elements?: (Pattern | null )[];
   }
   export interface RestElement  extends Pattern {
     argument:  Pattern;
@@ -254,7 +254,7 @@ export namespace AST {
     superClass?:  Expression | null;
   }
   export interface ClassBody  extends Node {
-    body:  [ MethodDefinition ];
+    body: (MethodDefinition )[];
   }
   export interface MethodDefinition  extends Node {
     kind:  "constructor" | "method" | "get" | "set";
@@ -280,7 +280,7 @@ export namespace AST {
     local:  Identifier;
   }
   export interface ImportDeclaration  extends ModuleDeclaration {
-    specifiers:  [ ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier ];
+    specifiers: (ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier )[];
     source:  Literal;
   }
   export interface ImportSpecifier  extends ModuleSpecifier {
@@ -293,7 +293,7 @@ export namespace AST {
     
   }
   export interface ExportNamedDeclaration  extends ModuleDeclaration {
-    specifiers:  [ ExportSpecifier ];
+    specifiers: (ExportSpecifier )[];
     source?:  Literal | null;
     declaration?:  Declaration | null;
   }
@@ -307,7 +307,7 @@ export namespace AST {
     source:  Literal;
   }
   export interface BaseFunction  extends Node {
-    params:  [ Pattern ];
+    params: (Pattern )[];
     generator:  boolean;
   }
   export function Identifier(o:{name:  string,}):Identifier {
@@ -318,7 +318,7 @@ export namespace AST {
     return ((o["type"] = "Literal") && o) as Literal
   }
   NESTED["Literal"] = []; 
-  export function Program(o:{body:  [ Statement | ModuleDeclaration ],
+  export function Program(o:{body: (Statement | ModuleDeclaration )[],
     sourceType:  "script" | "module",}):Program {
     return ((o["type"] = "Program") && o) as Program
   }
@@ -327,7 +327,7 @@ export namespace AST {
     return ((o["type"] = "ExpressionStatement") && o) as ExpressionStatement
   }
   NESTED["ExpressionStatement"] = ["expression"]; 
-  export function BlockStatement(o:{body:  [ Statement ],}):BlockStatement {
+  export function BlockStatement(o:{body: (Statement )[],}):BlockStatement {
     return ((o["type"] = "BlockStatement") && o) as BlockStatement
   }
   NESTED["BlockStatement"] = ["body"]; 
@@ -367,13 +367,13 @@ export namespace AST {
     return ((o["type"] = "IfStatement") && o) as IfStatement
   }
   NESTED["IfStatement"] = ["test","alternate","consequent"]; 
-  export function SwitchStatement(o:{cases:  [ SwitchCase ],
+  export function SwitchStatement(o:{cases: (SwitchCase )[],
     discriminant:  Expression,}):SwitchStatement {
     return ((o["type"] = "SwitchStatement") && o) as SwitchStatement
   }
   NESTED["SwitchStatement"] = ["cases","discriminant"]; 
   export function SwitchCase(o:{test?:  Expression | null,
-    consequent:  [ Statement ],}):SwitchCase {
+    consequent: (Statement )[],}):SwitchCase {
     return ((o["type"] = "SwitchCase") && o) as SwitchCase
   }
   NESTED["SwitchCase"] = ["test","consequent"]; 
@@ -416,14 +416,14 @@ export namespace AST {
   }
   NESTED["ForInStatement"] = ["body","right","left"]; 
   export function FunctionDeclaration(o:{body:  BlockStatement,
-    params:  [ Pattern ],
+    params: (Pattern )[],
     generator:  boolean,
     id:  Identifier,}):FunctionDeclaration {
     return ((o["type"] = "FunctionDeclaration") && o) as FunctionDeclaration
   }
   NESTED["FunctionDeclaration"] = ["body","params","id"]; 
   export function VariableDeclaration(o:{kind:  "var" | "let" | "const",
-    declarations:  [ VariableDeclarator ],}):VariableDeclaration {
+    declarations: (VariableDeclarator )[],}):VariableDeclaration {
     return ((o["type"] = "VariableDeclaration") && o) as VariableDeclaration
   }
   NESTED["VariableDeclaration"] = ["declarations"]; 
@@ -436,11 +436,11 @@ export namespace AST {
     return ((o["type"] = "ThisExpression") && o) as ThisExpression
   }
   NESTED["ThisExpression"] = []; 
-  export function ArrayExpression(o:{elements?:  [ Expression | SpreadElement | null ],}):ArrayExpression {
+  export function ArrayExpression(o:{elements?: (Expression | SpreadElement | null )[],}):ArrayExpression {
     return ((o["type"] = "ArrayExpression") && o) as ArrayExpression
   }
   NESTED["ArrayExpression"] = ["elements"]; 
-  export function ObjectExpression(o:{properties:  [ Property ],}):ObjectExpression {
+  export function ObjectExpression(o:{properties: (Property )[],}):ObjectExpression {
     return ((o["type"] = "ObjectExpression") && o) as ObjectExpression
   }
   NESTED["ObjectExpression"] = ["properties"]; 
@@ -454,7 +454,7 @@ export namespace AST {
   }
   NESTED["Property"] = ["value","key"]; 
   export function FunctionExpression(o:{body:  BlockStatement,
-    params:  [ Pattern ],
+    params: (Pattern )[],
     generator:  boolean,
     id?:  Identifier | null,}):FunctionExpression {
     return ((o["type"] = "FunctionExpression") && o) as FunctionExpression
@@ -512,7 +512,7 @@ export namespace AST {
     return ((o["type"] = "NewExpression") && o) as NewExpression
   }
   NESTED["NewExpression"] = ["callee","arguments"]; 
-  export function SequenceExpression(o:{expressions:  [ Expression ],}):SequenceExpression {
+  export function SequenceExpression(o:{expressions: (Expression )[],}):SequenceExpression {
     return ((o["type"] = "SequenceExpression") && o) as SequenceExpression
   }
   NESTED["SequenceExpression"] = ["expressions"]; 
@@ -531,7 +531,7 @@ export namespace AST {
   }
   NESTED["SpreadElement"] = ["argument"]; 
   export function ArrowFunctionExpression(o:{body:  BlockStatement | Expression,
-    params:  [ Pattern ],
+    params: (Pattern )[],
     generator:  boolean,
     expression:  boolean,
     id?:  Identifier | null,}):ArrowFunctionExpression {
@@ -543,7 +543,7 @@ export namespace AST {
     return ((o["type"] = "YieldExpression") && o) as YieldExpression
   }
   NESTED["YieldExpression"] = ["argument"]; 
-  export function TemplateLiteral(o:{quasis:  [ TemplateElement ],
+  export function TemplateLiteral(o:{quasis: (TemplateElement )[],
     expressions:  [ Expression ],}):TemplateLiteral {
     return ((o["type"] = "TemplateLiteral") && o) as TemplateLiteral
   }
@@ -567,11 +567,11 @@ export namespace AST {
     return ((o["type"] = "AssignmentProperty") && o) as AssignmentProperty
   }
   NESTED["AssignmentProperty"] = ["value","key"]; 
-  export function ObjectPattern(o:{properties:  [ AssignmentProperty ],}):ObjectPattern {
+  export function ObjectPattern(o:{properties: (AssignmentProperty )[],}):ObjectPattern {
     return ((o["type"] = "ObjectPattern") && o) as ObjectPattern
   }
   NESTED["ObjectPattern"] = ["properties"]; 
-  export function ArrayPattern(o:{elements?:  [ Pattern | null ],}):ArrayPattern {
+  export function ArrayPattern(o:{elements?: (Pattern | null )[],}):ArrayPattern {
     return ((o["type"] = "ArrayPattern") && o) as ArrayPattern
   }
   NESTED["ArrayPattern"] = ["elements"]; 
@@ -584,7 +584,7 @@ export namespace AST {
     return ((o["type"] = "AssignmentPattern") && o) as AssignmentPattern
   }
   NESTED["AssignmentPattern"] = ["right","left"]; 
-  export function ClassBody(o:{body:  [ MethodDefinition ],}):ClassBody {
+  export function ClassBody(o:{body: (MethodDefinition )[],}):ClassBody {
     return ((o["type"] = "ClassBody") && o) as ClassBody
   }
   NESTED["ClassBody"] = ["body"]; 
@@ -613,7 +613,7 @@ export namespace AST {
     return ((o["type"] = "MetaProperty") && o) as MetaProperty
   }
   NESTED["MetaProperty"] = ["meta","property"]; 
-  export function ImportDeclaration(o:{specifiers:  [ ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier ],
+  export function ImportDeclaration(o:{specifiers: (ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier )[],
     source:  Literal,}):ImportDeclaration {
     return ((o["type"] = "ImportDeclaration") && o) as ImportDeclaration
   }
@@ -631,7 +631,7 @@ export namespace AST {
     return ((o["type"] = "ImportNamespaceSpecifier") && o) as ImportNamespaceSpecifier
   }
   NESTED["ImportNamespaceSpecifier"] = ["local"]; 
-  export function ExportNamedDeclaration(o:{specifiers:  [ ExportSpecifier ],
+  export function ExportNamedDeclaration(o:{specifiers: (ExportSpecifier )[],
     declaration?:  Declaration | null,
     source?:  Literal | null,}):ExportNamedDeclaration {
     return ((o["type"] = "ExportNamedDeclaration") && o) as ExportNamedDeclaration

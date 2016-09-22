@@ -8,6 +8,7 @@ function parse() {
     grep '^js' | \
     sed -e 's/^js //' \
         -e 's|<:|extends|' | \
+    perl -pe 's/:\s*\[\s*([A-Za-z |]+)\s*\]/:(\1)\[\]/' | \
     perl -pe 's/(extend )?(enum|interface)/\nexport $2/g' | \
     sed -e '/enum/ s/|/,/g'
 }
