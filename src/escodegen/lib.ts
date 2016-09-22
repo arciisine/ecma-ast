@@ -823,7 +823,7 @@ let out = (function (global) {
         return result;
       };
       CodeGenerator.prototype.generatePropertyKey = function (expr, computed) {
-        var result = [];
+        var result:string[] = [];
         if (computed) {
           result.push('[');
         }
@@ -3402,7 +3402,7 @@ let out = (function (global) {
         if (this.sourceRoot != null) {
           needle.source = util.relative(this.sourceRoot, needle.source);
         }
-        var mappings = [];
+        var mappings:{line:string, column:string, lastColumn:string}[] = [];
         var index = this._findMapping(needle, this._originalMappings, 'originalLine', 'originalColumn', util.compareByOriginalPositions);
         if (index >= 0) {
           var mapping = this._originalMappings[index];
@@ -3715,7 +3715,7 @@ let out = (function (global) {
       IndexedSourceMapConsumer.prototype._version = 3;
       Object.defineProperty(IndexedSourceMapConsumer.prototype, 'sources', {
         get: function () {
-          var sources = [];
+          var sources:any[] = [];
           for (var i = 0; i < this._sections.length; i++) {
             for (var j = 0; j < this._sections[i].consumer.sources.length; j++) {
               sources.push(this._sections[i].consumer.sources[j]);
@@ -4242,7 +4242,7 @@ let out = (function (global) {
         };
       }();
       objectKeys = Object.keys || function (o) {
-        var keys = [], key;
+        var keys:string[] = [], key;
         for (key in o) {
           keys.push(key);
         }
@@ -4845,7 +4845,7 @@ let out = (function (global) {
         return comment;
       }
       function attachComments(tree, providedComments, tokens) {
-        var comments = [], comment, len, i, cursor;
+        var comments:any[] = [], comment, len, i, cursor;
         if (!tree.range) {
           throw new Error('attachComments needs range information');
         }
