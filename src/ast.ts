@@ -112,7 +112,6 @@ export namespace AST {
   }
   export interface FunctionDeclaration  extends Declaration,BaseFunction {
     body:  BlockStatement;
-    id:  Identifier;
   }
   export interface VariableDeclaration  extends Declaration {
     kind:  "var" | "let" | "const";
@@ -144,7 +143,6 @@ export namespace AST {
   }
   export interface FunctionExpression  extends Expression,BaseFunction {
     body:  BlockStatement;
-    id?:  Identifier | null;
   }
   export interface UnaryExpression  extends Expression {
     operator:  UnaryOperator;
@@ -211,7 +209,6 @@ export namespace AST {
   export interface ArrowFunctionExpression  extends Expression,BaseFunction {
     body:  BlockStatement | Expression;
     expression:  boolean;
-    id?:  Identifier | null;
   }
   export interface YieldExpression  extends Expression {
     argument?:  Expression | null;
@@ -308,6 +305,7 @@ export namespace AST {
   }
   export interface BaseFunction  extends Node {
     params: (Pattern )[];
+    id?: Identifier | null
     generator:  boolean;
   }
   export function Identifier(o:{name:  string,}):Identifier {
@@ -418,7 +416,7 @@ export namespace AST {
   export function FunctionDeclaration(o:{body:  BlockStatement,
     params: (Pattern )[],
     generator:  boolean,
-    id:  Identifier,}):FunctionDeclaration {
+    id?: Identifier | null}):FunctionDeclaration {
     return ((o["type"] = "FunctionDeclaration") && o) as FunctionDeclaration
   }
   NESTED["FunctionDeclaration"] = ["body","params","id"]; 
@@ -456,7 +454,7 @@ export namespace AST {
   export function FunctionExpression(o:{body:  BlockStatement,
     params: (Pattern )[],
     generator:  boolean,
-    id?:  Identifier | null,}):FunctionExpression {
+    id?: Identifier | null}):FunctionExpression {
     return ((o["type"] = "FunctionExpression") && o) as FunctionExpression
   }
   NESTED["FunctionExpression"] = ["body","params","id"]; 
@@ -534,7 +532,7 @@ export namespace AST {
     params: (Pattern )[],
     generator:  boolean,
     expression:  boolean,
-    id?:  Identifier | null,}):ArrowFunctionExpression {
+    id?: Identifier | null}):ArrowFunctionExpression {
     return ((o["type"] = "ArrowFunctionExpression") && o) as ArrowFunctionExpression
   }
   NESTED["ArrowFunctionExpression"] = ["body","params","id"]; 

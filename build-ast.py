@@ -116,6 +116,8 @@ def base_function():
           if k not in fields:
             del common[k]
   
+  common["id"] = "Identifier | null";
+
   declarations['BaseFunction'] = {
     "source" : "interface",
     "type" : None,
