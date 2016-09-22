@@ -43,8 +43,8 @@ export class Visitor {
     return this._parents[0];
   }
 
-  get parents() {
-    return this._parents.length && this._parents.slice(0)
+  get parents():VisitParent[] {
+    return this._parents.slice(0)
   }
 
   findParent(pred:(node:VisitParent)=>boolean) {
