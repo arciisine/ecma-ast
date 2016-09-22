@@ -10,7 +10,7 @@ function parse() {
         -e 's|<:|extends|' | \
     perl -pe 's/:\s*\[\s*([A-Za-z |]+)\s*\]/:(\1)\[\]/g' | \
     perl -pe 's/(extend )?(enum|interface)/\nexport $2/g' | \
-    sed -e '/enum/ s/|/,/g'
+    sed -e '/enum/ s/"[ ]* | /" ,/g'
 }
 
 mkdir -p target/

@@ -161,19 +161,19 @@ export namespace AST {
     right:  Expression;
     left:  Expression;
   }
-  export type BinaryOperator = "==" | "!=" | "===" | "!==" | "<" | "<=" | ">" | ">=" | "<<" | ">>" | ">>>" | "+" | "-" | "*" | "/" | "%" | " | " | "^" | "&" | "in" | "instanceof"
+  export type BinaryOperator = "==" | "!=" | "===" | "!==" | "<" | "<=" | ">" | ">=" | "<<" | ">>" | ">>>" | "+" | "-" | "*" | "/" | "%" | "|" | "^" | "&" | "in" | "instanceof"
   export interface AssignmentExpression  extends Expression {
     operator:  AssignmentOperator;
     right:  Expression;
     left:  Pattern;
   }
-  export type AssignmentOperator = "=" | "+=" | "-=" | "*=" | "/=" | "%=" | "<<=" | ">>=" | ">>>=" | " | =" | "^=" | "&="
+  export type AssignmentOperator = "=" | "+=" | "-=" | "*=" | "/=" | "%=" | "<<=" | ">>=" | ">>>=" | "|=" | "^=" | "&="
   export interface LogicalExpression  extends Expression {
     operator:  LogicalOperator;
     right:  Expression;
     left:  Expression;
   }
-  export type LogicalOperator = " | "  |  "&&"
+  export type LogicalOperator = "||" | "&&"
   export interface MemberExpression  extends Expression,Pattern {
     property:  Expression;
     object:  Expression | Super;
