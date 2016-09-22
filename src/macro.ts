@@ -16,7 +16,9 @@ export class Macro {
     return AST.Identifier({name: (name && !prefix) ? name : Macro.genSymbol(name)}); 
   }
   static Literal(value:string|boolean|number|RegExp):AST.Literal { return AST.Literal({value}); }
-	static Block(...body:AST.Statement[]):AST.BlockStatement {  return AST.BlockStatement({body:body.filter(x => !!x)}); }
+	static Block(...body:(AST.Statement|null)[]):AST.BlockStatement {  
+    return AST.BlockStatement({body:body.filter(x => !!x) as AST.BlockStatement[]});
+  }
 	static Expr(n:AST.Node):AST.ExpressionStatement { return AST.ExpressionStatement({expression:n}) }
 	static Continue(label?:AST.Identifier):AST.ContinueStatement { return AST.ContinueStatement({label}); }
 	static Noop():AST.Node { return Macro.Block(...[]) }
@@ -126,7 +128,7 @@ export class Macro {
       finalizer : Macro.Block(...f)
     });
   }
-  static Func(id:AST.Identifier, params:AST.Pattern[], body:AST.Node[], generator:boolean = false):AST.FunctionDeclaration {
+  static Func(id:AST.Identifier, params:AST.Pattern[], body:(AST.Statement|null)[], generator:boolean = false):AST.FunctionDeclaration {
     return AST.FunctionDeclaration({
       id,
       params, 
