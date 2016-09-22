@@ -43,4 +43,4 @@ export interface EscodegenOptions {
   sourceCode?: any;  
 };
 
-export let generate:(node:AST.Node, opts?:EscodegenOptions)=>string = escodegen['generate']
+export let generate:(node:AST.Node, opts?:EscodegenOptions|null)=>string = escodegen['generate']

@@ -90,7 +90,7 @@ export class Macro {
     if (args[0] === 'var' || args[0] === 'let' || args[0] === 'const') {
       kind = args.shift();
     }
-    let decls = [];
+    let decls:AST.VariableDeclarator[] = [];
     if (Array.isArray(args[0])) {
       decls = args.map(x => AST.VariableDeclarator({id:x[0], init:x[1]}))
     } else {
@@ -144,7 +144,7 @@ export class Macro {
     });
   } 
 
-  static IfThen(test:AST.Expression, body:AST.Node[], elseBody:AST.Node[] = null):AST.IfStatement {
+  static IfThen(test:AST.Expression, body:AST.Node[], elseBody?:AST.Node[]):AST.IfStatement {
     return AST.IfStatement({
       test,
       consequent : Macro.Block(...body),

@@ -5,11 +5,11 @@ export type Transformer = (string)=>string
 
 export class CompileUtil {
   
-  static compileExpression(node:AST.Node, options:escodegen.EscodegenOptions = null):string {
+  static compileExpression(node:AST.Node, options:escodegen.EscodegenOptions|null = null):string {
     return escodegen.generate(node, options);
   }
 
-  static compileFunction(node:AST.BaseFunction, globals:any, options:escodegen.EscodegenOptions = null):string {
+  static compileFunction(node:AST.BaseFunction, globals:any, options:escodegen.EscodegenOptions|null = null):string {
     let src = `(function() {
       'use strict';
       ${Object.keys(globals || {}).map(k => `var ${k} = ${globals[k].toString()}`).join('\n')} 

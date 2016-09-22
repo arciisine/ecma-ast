@@ -216,14 +216,14 @@ def output():
       if obj['type'] is not None and extends != '':
         del obj['fields']['type']
 
-      context["fields"] = "\n    ".join(['%s: %s' %pair for pair in obj['fields'].items()])
+      context["fields"] = "\n    ".join(['%s%s: %s' %(pair[0], '?' if 'null' in pair[1] else '', pair[1]) for pair in obj['fields'].items()])
       context["nested"] = ','.join(['"%s"'%x for x in context["nested"]])
         
       decls.append(INTERFACE_DEF% context)
       if obj['type'] is not None:
         guards.append(GUARD_METHOD % context)
         handlers.append(HANDLER_METHODS %context)
-        context['fields'] = "\n    ".join(['%s: %s' %pair for pair in all_fields.items() if pair[0] != 'type']).replace(';',',')
+        context['fields'] = "\n    ".join(['%s%s: %s' %(pair[0], '?' if 'null' in pair[1] else '', pair[1]) for pair in all_fields.items() if pair[0] != 'type']).replace(';',',')
         ctors.append(CTOR_DEF % context)
         ctors.append(NESTED_DEF % context)
                 
