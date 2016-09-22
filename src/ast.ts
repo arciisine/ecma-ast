@@ -648,212 +648,212 @@ export namespace AST {
     return ((o["type"] = "ExportAllDeclaration") && o) as ExportAllDeclaration
   }
   NESTED["ExportAllDeclaration"] = ["source"]; 
-  export function isIdentifier(n?:Node|null):n is Identifier { return n && n.type === "Identifier"; }
-  export function isLiteral(n?:Node|null):n is Literal { return n && n.type === "Literal"; }
-  export function isProgram(n?:Node|null):n is Program { return n && n.type === "Program"; }
-  export function isExpressionStatement(n?:Node|null):n is ExpressionStatement { return n && n.type === "ExpressionStatement"; }
-  export function isBlockStatement(n?:Node|null):n is BlockStatement { return n && n.type === "BlockStatement"; }
-  export function isEmptyStatement(n?:Node|null):n is EmptyStatement { return n && n.type === "EmptyStatement"; }
-  export function isDebuggerStatement(n?:Node|null):n is DebuggerStatement { return n && n.type === "DebuggerStatement"; }
-  export function isWithStatement(n?:Node|null):n is WithStatement { return n && n.type === "WithStatement"; }
-  export function isReturnStatement(n?:Node|null):n is ReturnStatement { return n && n.type === "ReturnStatement"; }
-  export function isLabeledStatement(n?:Node|null):n is LabeledStatement { return n && n.type === "LabeledStatement"; }
-  export function isBreakStatement(n?:Node|null):n is BreakStatement { return n && n.type === "BreakStatement"; }
-  export function isContinueStatement(n?:Node|null):n is ContinueStatement { return n && n.type === "ContinueStatement"; }
-  export function isIfStatement(n?:Node|null):n is IfStatement { return n && n.type === "IfStatement"; }
-  export function isSwitchStatement(n?:Node|null):n is SwitchStatement { return n && n.type === "SwitchStatement"; }
-  export function isSwitchCase(n?:Node|null):n is SwitchCase { return n && n.type === "SwitchCase"; }
-  export function isThrowStatement(n?:Node|null):n is ThrowStatement { return n && n.type === "ThrowStatement"; }
-  export function isTryStatement(n?:Node|null):n is TryStatement { return n && n.type === "TryStatement"; }
-  export function isCatchClause(n?:Node|null):n is CatchClause { return n && n.type === "CatchClause"; }
-  export function isWhileStatement(n?:Node|null):n is WhileStatement { return n && n.type === "WhileStatement"; }
-  export function isDoWhileStatement(n?:Node|null):n is DoWhileStatement { return n && n.type === "DoWhileStatement"; }
-  export function isForStatement(n?:Node|null):n is ForStatement { return n && n.type === "ForStatement"; }
-  export function isForInStatement(n?:Node|null):n is ForInStatement { return n && n.type === "ForInStatement"; }
-  export function isFunctionDeclaration(n?:Node|null):n is FunctionDeclaration { return n && n.type === "FunctionDeclaration"; }
-  export function isVariableDeclaration(n?:Node|null):n is VariableDeclaration { return n && n.type === "VariableDeclaration"; }
-  export function isVariableDeclarator(n?:Node|null):n is VariableDeclarator { return n && n.type === "VariableDeclarator"; }
-  export function isThisExpression(n?:Node|null):n is ThisExpression { return n && n.type === "ThisExpression"; }
-  export function isArrayExpression(n?:Node|null):n is ArrayExpression { return n && n.type === "ArrayExpression"; }
-  export function isObjectExpression(n?:Node|null):n is ObjectExpression { return n && n.type === "ObjectExpression"; }
-  export function isProperty(n?:Node|null):n is Property { return n && n.type === "Property"; }
-  export function isFunctionExpression(n?:Node|null):n is FunctionExpression { return n && n.type === "FunctionExpression"; }
-  export function isUnaryExpression(n?:Node|null):n is UnaryExpression { return n && n.type === "UnaryExpression"; }
-  export function isUpdateExpression(n?:Node|null):n is UpdateExpression { return n && n.type === "UpdateExpression"; }
-  export function isBinaryExpression(n?:Node|null):n is BinaryExpression { return n && n.type === "BinaryExpression"; }
-  export function isAssignmentExpression(n?:Node|null):n is AssignmentExpression { return n && n.type === "AssignmentExpression"; }
-  export function isLogicalExpression(n?:Node|null):n is LogicalExpression { return n && n.type === "LogicalExpression"; }
-  export function isMemberExpression(n?:Node|null):n is MemberExpression { return n && n.type === "MemberExpression"; }
-  export function isConditionalExpression(n?:Node|null):n is ConditionalExpression { return n && n.type === "ConditionalExpression"; }
-  export function isCallExpression(n?:Node|null):n is CallExpression { return n && n.type === "CallExpression"; }
-  export function isNewExpression(n?:Node|null):n is NewExpression { return n && n.type === "NewExpression"; }
-  export function isSequenceExpression(n?:Node|null):n is SequenceExpression { return n && n.type === "SequenceExpression"; }
-  export function isForOfStatement(n?:Node|null):n is ForOfStatement { return n && n.type === "ForOfStatement"; }
-  export function isSuper(n?:Node|null):n is Super { return n && n.type === "Super"; }
-  export function isSpreadElement(n?:Node|null):n is SpreadElement { return n && n.type === "SpreadElement"; }
-  export function isArrowFunctionExpression(n?:Node|null):n is ArrowFunctionExpression { return n && n.type === "ArrowFunctionExpression"; }
-  export function isYieldExpression(n?:Node|null):n is YieldExpression { return n && n.type === "YieldExpression"; }
-  export function isTemplateLiteral(n?:Node|null):n is TemplateLiteral { return n && n.type === "TemplateLiteral"; }
-  export function isTaggedTemplateExpression(n?:Node|null):n is TaggedTemplateExpression { return n && n.type === "TaggedTemplateExpression"; }
-  export function isTemplateElement(n?:Node|null):n is TemplateElement { return n && n.type === "TemplateElement"; }
-  export function isAssignmentProperty(n?:Node|null):n is AssignmentProperty { return n && n.type === "AssignmentProperty"; }
-  export function isObjectPattern(n?:Node|null):n is ObjectPattern { return n && n.type === "ObjectPattern"; }
-  export function isArrayPattern(n?:Node|null):n is ArrayPattern { return n && n.type === "ArrayPattern"; }
-  export function isRestElement(n?:Node|null):n is RestElement { return n && n.type === "RestElement"; }
-  export function isAssignmentPattern(n?:Node|null):n is AssignmentPattern { return n && n.type === "AssignmentPattern"; }
-  export function isClassBody(n?:Node|null):n is ClassBody { return n && n.type === "ClassBody"; }
-  export function isMethodDefinition(n?:Node|null):n is MethodDefinition { return n && n.type === "MethodDefinition"; }
-  export function isClassDeclaration(n?:Node|null):n is ClassDeclaration { return n && n.type === "ClassDeclaration"; }
-  export function isClassExpression(n?:Node|null):n is ClassExpression { return n && n.type === "ClassExpression"; }
-  export function isMetaProperty(n?:Node|null):n is MetaProperty { return n && n.type === "MetaProperty"; }
-  export function isImportDeclaration(n?:Node|null):n is ImportDeclaration { return n && n.type === "ImportDeclaration"; }
-  export function isImportSpecifier(n?:Node|null):n is ImportSpecifier { return n && n.type === "ImportSpecifier"; }
-  export function isImportDefaultSpecifier(n?:Node|null):n is ImportDefaultSpecifier { return n && n.type === "ImportDefaultSpecifier"; }
-  export function isImportNamespaceSpecifier(n?:Node|null):n is ImportNamespaceSpecifier { return n && n.type === "ImportNamespaceSpecifier"; }
-  export function isExportNamedDeclaration(n?:Node|null):n is ExportNamedDeclaration { return n && n.type === "ExportNamedDeclaration"; }
-  export function isExportSpecifier(n?:Node|null):n is ExportSpecifier { return n && n.type === "ExportSpecifier"; }
-  export function isExportDefaultDeclaration(n?:Node|null):n is ExportDefaultDeclaration { return n && n.type === "ExportDefaultDeclaration"; }
-  export function isExportAllDeclaration(n?:Node|null):n is ExportAllDeclaration { return n && n.type === "ExportAllDeclaration"; }
+  export function isIdentifier(n?:Node|null):n is Identifier { return n ? n.type === "Identifier" : false; }
+  export function isLiteral(n?:Node|null):n is Literal { return n ? n.type === "Literal" : false; }
+  export function isProgram(n?:Node|null):n is Program { return n ? n.type === "Program" : false; }
+  export function isExpressionStatement(n?:Node|null):n is ExpressionStatement { return n ? n.type === "ExpressionStatement" : false; }
+  export function isBlockStatement(n?:Node|null):n is BlockStatement { return n ? n.type === "BlockStatement" : false; }
+  export function isEmptyStatement(n?:Node|null):n is EmptyStatement { return n ? n.type === "EmptyStatement" : false; }
+  export function isDebuggerStatement(n?:Node|null):n is DebuggerStatement { return n ? n.type === "DebuggerStatement" : false; }
+  export function isWithStatement(n?:Node|null):n is WithStatement { return n ? n.type === "WithStatement" : false; }
+  export function isReturnStatement(n?:Node|null):n is ReturnStatement { return n ? n.type === "ReturnStatement" : false; }
+  export function isLabeledStatement(n?:Node|null):n is LabeledStatement { return n ? n.type === "LabeledStatement" : false; }
+  export function isBreakStatement(n?:Node|null):n is BreakStatement { return n ? n.type === "BreakStatement" : false; }
+  export function isContinueStatement(n?:Node|null):n is ContinueStatement { return n ? n.type === "ContinueStatement" : false; }
+  export function isIfStatement(n?:Node|null):n is IfStatement { return n ? n.type === "IfStatement" : false; }
+  export function isSwitchStatement(n?:Node|null):n is SwitchStatement { return n ? n.type === "SwitchStatement" : false; }
+  export function isSwitchCase(n?:Node|null):n is SwitchCase { return n ? n.type === "SwitchCase" : false; }
+  export function isThrowStatement(n?:Node|null):n is ThrowStatement { return n ? n.type === "ThrowStatement" : false; }
+  export function isTryStatement(n?:Node|null):n is TryStatement { return n ? n.type === "TryStatement" : false; }
+  export function isCatchClause(n?:Node|null):n is CatchClause { return n ? n.type === "CatchClause" : false; }
+  export function isWhileStatement(n?:Node|null):n is WhileStatement { return n ? n.type === "WhileStatement" : false; }
+  export function isDoWhileStatement(n?:Node|null):n is DoWhileStatement { return n ? n.type === "DoWhileStatement" : false; }
+  export function isForStatement(n?:Node|null):n is ForStatement { return n ? n.type === "ForStatement" : false; }
+  export function isForInStatement(n?:Node|null):n is ForInStatement { return n ? n.type === "ForInStatement" : false; }
+  export function isFunctionDeclaration(n?:Node|null):n is FunctionDeclaration { return n ? n.type === "FunctionDeclaration" : false; }
+  export function isVariableDeclaration(n?:Node|null):n is VariableDeclaration { return n ? n.type === "VariableDeclaration" : false; }
+  export function isVariableDeclarator(n?:Node|null):n is VariableDeclarator { return n ? n.type === "VariableDeclarator" : false; }
+  export function isThisExpression(n?:Node|null):n is ThisExpression { return n ? n.type === "ThisExpression" : false; }
+  export function isArrayExpression(n?:Node|null):n is ArrayExpression { return n ? n.type === "ArrayExpression" : false; }
+  export function isObjectExpression(n?:Node|null):n is ObjectExpression { return n ? n.type === "ObjectExpression" : false; }
+  export function isProperty(n?:Node|null):n is Property { return n ? n.type === "Property" : false; }
+  export function isFunctionExpression(n?:Node|null):n is FunctionExpression { return n ? n.type === "FunctionExpression" : false; }
+  export function isUnaryExpression(n?:Node|null):n is UnaryExpression { return n ? n.type === "UnaryExpression" : false; }
+  export function isUpdateExpression(n?:Node|null):n is UpdateExpression { return n ? n.type === "UpdateExpression" : false; }
+  export function isBinaryExpression(n?:Node|null):n is BinaryExpression { return n ? n.type === "BinaryExpression" : false; }
+  export function isAssignmentExpression(n?:Node|null):n is AssignmentExpression { return n ? n.type === "AssignmentExpression" : false; }
+  export function isLogicalExpression(n?:Node|null):n is LogicalExpression { return n ? n.type === "LogicalExpression" : false; }
+  export function isMemberExpression(n?:Node|null):n is MemberExpression { return n ? n.type === "MemberExpression" : false; }
+  export function isConditionalExpression(n?:Node|null):n is ConditionalExpression { return n ? n.type === "ConditionalExpression" : false; }
+  export function isCallExpression(n?:Node|null):n is CallExpression { return n ? n.type === "CallExpression" : false; }
+  export function isNewExpression(n?:Node|null):n is NewExpression { return n ? n.type === "NewExpression" : false; }
+  export function isSequenceExpression(n?:Node|null):n is SequenceExpression { return n ? n.type === "SequenceExpression" : false; }
+  export function isForOfStatement(n?:Node|null):n is ForOfStatement { return n ? n.type === "ForOfStatement" : false; }
+  export function isSuper(n?:Node|null):n is Super { return n ? n.type === "Super" : false; }
+  export function isSpreadElement(n?:Node|null):n is SpreadElement { return n ? n.type === "SpreadElement" : false; }
+  export function isArrowFunctionExpression(n?:Node|null):n is ArrowFunctionExpression { return n ? n.type === "ArrowFunctionExpression" : false; }
+  export function isYieldExpression(n?:Node|null):n is YieldExpression { return n ? n.type === "YieldExpression" : false; }
+  export function isTemplateLiteral(n?:Node|null):n is TemplateLiteral { return n ? n.type === "TemplateLiteral" : false; }
+  export function isTaggedTemplateExpression(n?:Node|null):n is TaggedTemplateExpression { return n ? n.type === "TaggedTemplateExpression" : false; }
+  export function isTemplateElement(n?:Node|null):n is TemplateElement { return n ? n.type === "TemplateElement" : false; }
+  export function isAssignmentProperty(n?:Node|null):n is AssignmentProperty { return n ? n.type === "AssignmentProperty" : false; }
+  export function isObjectPattern(n?:Node|null):n is ObjectPattern { return n ? n.type === "ObjectPattern" : false; }
+  export function isArrayPattern(n?:Node|null):n is ArrayPattern { return n ? n.type === "ArrayPattern" : false; }
+  export function isRestElement(n?:Node|null):n is RestElement { return n ? n.type === "RestElement" : false; }
+  export function isAssignmentPattern(n?:Node|null):n is AssignmentPattern { return n ? n.type === "AssignmentPattern" : false; }
+  export function isClassBody(n?:Node|null):n is ClassBody { return n ? n.type === "ClassBody" : false; }
+  export function isMethodDefinition(n?:Node|null):n is MethodDefinition { return n ? n.type === "MethodDefinition" : false; }
+  export function isClassDeclaration(n?:Node|null):n is ClassDeclaration { return n ? n.type === "ClassDeclaration" : false; }
+  export function isClassExpression(n?:Node|null):n is ClassExpression { return n ? n.type === "ClassExpression" : false; }
+  export function isMetaProperty(n?:Node|null):n is MetaProperty { return n ? n.type === "MetaProperty" : false; }
+  export function isImportDeclaration(n?:Node|null):n is ImportDeclaration { return n ? n.type === "ImportDeclaration" : false; }
+  export function isImportSpecifier(n?:Node|null):n is ImportSpecifier { return n ? n.type === "ImportSpecifier" : false; }
+  export function isImportDefaultSpecifier(n?:Node|null):n is ImportDefaultSpecifier { return n ? n.type === "ImportDefaultSpecifier" : false; }
+  export function isImportNamespaceSpecifier(n?:Node|null):n is ImportNamespaceSpecifier { return n ? n.type === "ImportNamespaceSpecifier" : false; }
+  export function isExportNamedDeclaration(n?:Node|null):n is ExportNamedDeclaration { return n ? n.type === "ExportNamedDeclaration" : false; }
+  export function isExportSpecifier(n?:Node|null):n is ExportSpecifier { return n ? n.type === "ExportSpecifier" : false; }
+  export function isExportDefaultDeclaration(n?:Node|null):n is ExportDefaultDeclaration { return n ? n.type === "ExportDefaultDeclaration" : false; }
+  export function isExportAllDeclaration(n?:Node|null):n is ExportAllDeclaration { return n ? n.type === "ExportAllDeclaration" : false; }
   export function isFunction(n:Node):n is BaseFunction { return n.type === "FunctionDeclaration" || n.type === "FunctionExpression" || n.type === "ArrowFunctionExpression" || n.type === "BaseFunction" }
   export function isForLoop(n:Node):n is ForStatement|ForInStatement|ForOfStatement { return n.type === "ForStatement" || n.type === "ForInStatement" || n.type === "ForOfStatement" }
 
   export interface NodeHandler<T> {
-    Identifier?:(node?:Identifier, ref?:T)=>(Node|void)
-    IdentifierEnd?:(node?:Identifier, ref?:T)=>(Node|void)
-    Literal?:(node?:Literal, ref?:T)=>(Node|void)
-    LiteralEnd?:(node?:Literal, ref?:T)=>(Node|void)
-    Program?:(node?:Program, ref?:T)=>(Node|void)
-    ProgramEnd?:(node?:Program, ref?:T)=>(Node|void)
-    ExpressionStatement?:(node?:ExpressionStatement, ref?:T)=>(Node|void)
-    ExpressionStatementEnd?:(node?:ExpressionStatement, ref?:T)=>(Node|void)
-    BlockStatement?:(node?:BlockStatement, ref?:T)=>(Node|void)
-    BlockStatementEnd?:(node?:BlockStatement, ref?:T)=>(Node|void)
-    EmptyStatement?:(node?:EmptyStatement, ref?:T)=>(Node|void)
-    EmptyStatementEnd?:(node?:EmptyStatement, ref?:T)=>(Node|void)
-    DebuggerStatement?:(node?:DebuggerStatement, ref?:T)=>(Node|void)
-    DebuggerStatementEnd?:(node?:DebuggerStatement, ref?:T)=>(Node|void)
-    WithStatement?:(node?:WithStatement, ref?:T)=>(Node|void)
-    WithStatementEnd?:(node?:WithStatement, ref?:T)=>(Node|void)
-    ReturnStatement?:(node?:ReturnStatement, ref?:T)=>(Node|void)
-    ReturnStatementEnd?:(node?:ReturnStatement, ref?:T)=>(Node|void)
-    LabeledStatement?:(node?:LabeledStatement, ref?:T)=>(Node|void)
-    LabeledStatementEnd?:(node?:LabeledStatement, ref?:T)=>(Node|void)
-    BreakStatement?:(node?:BreakStatement, ref?:T)=>(Node|void)
-    BreakStatementEnd?:(node?:BreakStatement, ref?:T)=>(Node|void)
-    ContinueStatement?:(node?:ContinueStatement, ref?:T)=>(Node|void)
-    ContinueStatementEnd?:(node?:ContinueStatement, ref?:T)=>(Node|void)
-    IfStatement?:(node?:IfStatement, ref?:T)=>(Node|void)
-    IfStatementEnd?:(node?:IfStatement, ref?:T)=>(Node|void)
-    SwitchStatement?:(node?:SwitchStatement, ref?:T)=>(Node|void)
-    SwitchStatementEnd?:(node?:SwitchStatement, ref?:T)=>(Node|void)
-    SwitchCase?:(node?:SwitchCase, ref?:T)=>(Node|void)
-    SwitchCaseEnd?:(node?:SwitchCase, ref?:T)=>(Node|void)
-    ThrowStatement?:(node?:ThrowStatement, ref?:T)=>(Node|void)
-    ThrowStatementEnd?:(node?:ThrowStatement, ref?:T)=>(Node|void)
-    TryStatement?:(node?:TryStatement, ref?:T)=>(Node|void)
-    TryStatementEnd?:(node?:TryStatement, ref?:T)=>(Node|void)
-    CatchClause?:(node?:CatchClause, ref?:T)=>(Node|void)
-    CatchClauseEnd?:(node?:CatchClause, ref?:T)=>(Node|void)
-    WhileStatement?:(node?:WhileStatement, ref?:T)=>(Node|void)
-    WhileStatementEnd?:(node?:WhileStatement, ref?:T)=>(Node|void)
-    DoWhileStatement?:(node?:DoWhileStatement, ref?:T)=>(Node|void)
-    DoWhileStatementEnd?:(node?:DoWhileStatement, ref?:T)=>(Node|void)
-    ForStatement?:(node?:ForStatement, ref?:T)=>(Node|void)
-    ForStatementEnd?:(node?:ForStatement, ref?:T)=>(Node|void)
-    ForInStatement?:(node?:ForInStatement, ref?:T)=>(Node|void)
-    ForInStatementEnd?:(node?:ForInStatement, ref?:T)=>(Node|void)
-    FunctionDeclaration?:(node?:FunctionDeclaration, ref?:T)=>(Node|void)
-    FunctionDeclarationEnd?:(node?:FunctionDeclaration, ref?:T)=>(Node|void)
-    VariableDeclaration?:(node?:VariableDeclaration, ref?:T)=>(Node|void)
-    VariableDeclarationEnd?:(node?:VariableDeclaration, ref?:T)=>(Node|void)
-    VariableDeclarator?:(node?:VariableDeclarator, ref?:T)=>(Node|void)
-    VariableDeclaratorEnd?:(node?:VariableDeclarator, ref?:T)=>(Node|void)
-    ThisExpression?:(node?:ThisExpression, ref?:T)=>(Node|void)
-    ThisExpressionEnd?:(node?:ThisExpression, ref?:T)=>(Node|void)
-    ArrayExpression?:(node?:ArrayExpression, ref?:T)=>(Node|void)
-    ArrayExpressionEnd?:(node?:ArrayExpression, ref?:T)=>(Node|void)
-    ObjectExpression?:(node?:ObjectExpression, ref?:T)=>(Node|void)
-    ObjectExpressionEnd?:(node?:ObjectExpression, ref?:T)=>(Node|void)
-    Property?:(node?:Property, ref?:T)=>(Node|void)
-    PropertyEnd?:(node?:Property, ref?:T)=>(Node|void)
-    FunctionExpression?:(node?:FunctionExpression, ref?:T)=>(Node|void)
-    FunctionExpressionEnd?:(node?:FunctionExpression, ref?:T)=>(Node|void)
-    UnaryExpression?:(node?:UnaryExpression, ref?:T)=>(Node|void)
-    UnaryExpressionEnd?:(node?:UnaryExpression, ref?:T)=>(Node|void)
-    UpdateExpression?:(node?:UpdateExpression, ref?:T)=>(Node|void)
-    UpdateExpressionEnd?:(node?:UpdateExpression, ref?:T)=>(Node|void)
-    BinaryExpression?:(node?:BinaryExpression, ref?:T)=>(Node|void)
-    BinaryExpressionEnd?:(node?:BinaryExpression, ref?:T)=>(Node|void)
-    AssignmentExpression?:(node?:AssignmentExpression, ref?:T)=>(Node|void)
-    AssignmentExpressionEnd?:(node?:AssignmentExpression, ref?:T)=>(Node|void)
-    LogicalExpression?:(node?:LogicalExpression, ref?:T)=>(Node|void)
-    LogicalExpressionEnd?:(node?:LogicalExpression, ref?:T)=>(Node|void)
-    MemberExpression?:(node?:MemberExpression, ref?:T)=>(Node|void)
-    MemberExpressionEnd?:(node?:MemberExpression, ref?:T)=>(Node|void)
-    ConditionalExpression?:(node?:ConditionalExpression, ref?:T)=>(Node|void)
-    ConditionalExpressionEnd?:(node?:ConditionalExpression, ref?:T)=>(Node|void)
-    CallExpression?:(node?:CallExpression, ref?:T)=>(Node|void)
-    CallExpressionEnd?:(node?:CallExpression, ref?:T)=>(Node|void)
-    NewExpression?:(node?:NewExpression, ref?:T)=>(Node|void)
-    NewExpressionEnd?:(node?:NewExpression, ref?:T)=>(Node|void)
-    SequenceExpression?:(node?:SequenceExpression, ref?:T)=>(Node|void)
-    SequenceExpressionEnd?:(node?:SequenceExpression, ref?:T)=>(Node|void)
-    ForOfStatement?:(node?:ForOfStatement, ref?:T)=>(Node|void)
-    ForOfStatementEnd?:(node?:ForOfStatement, ref?:T)=>(Node|void)
-    Super?:(node?:Super, ref?:T)=>(Node|void)
-    SuperEnd?:(node?:Super, ref?:T)=>(Node|void)
-    SpreadElement?:(node?:SpreadElement, ref?:T)=>(Node|void)
-    SpreadElementEnd?:(node?:SpreadElement, ref?:T)=>(Node|void)
-    ArrowFunctionExpression?:(node?:ArrowFunctionExpression, ref?:T)=>(Node|void)
-    ArrowFunctionExpressionEnd?:(node?:ArrowFunctionExpression, ref?:T)=>(Node|void)
-    YieldExpression?:(node?:YieldExpression, ref?:T)=>(Node|void)
-    YieldExpressionEnd?:(node?:YieldExpression, ref?:T)=>(Node|void)
-    TemplateLiteral?:(node?:TemplateLiteral, ref?:T)=>(Node|void)
-    TemplateLiteralEnd?:(node?:TemplateLiteral, ref?:T)=>(Node|void)
-    TaggedTemplateExpression?:(node?:TaggedTemplateExpression, ref?:T)=>(Node|void)
-    TaggedTemplateExpressionEnd?:(node?:TaggedTemplateExpression, ref?:T)=>(Node|void)
-    TemplateElement?:(node?:TemplateElement, ref?:T)=>(Node|void)
-    TemplateElementEnd?:(node?:TemplateElement, ref?:T)=>(Node|void)
-    AssignmentProperty?:(node?:AssignmentProperty, ref?:T)=>(Node|void)
-    AssignmentPropertyEnd?:(node?:AssignmentProperty, ref?:T)=>(Node|void)
-    ObjectPattern?:(node?:ObjectPattern, ref?:T)=>(Node|void)
-    ObjectPatternEnd?:(node?:ObjectPattern, ref?:T)=>(Node|void)
-    ArrayPattern?:(node?:ArrayPattern, ref?:T)=>(Node|void)
-    ArrayPatternEnd?:(node?:ArrayPattern, ref?:T)=>(Node|void)
-    RestElement?:(node?:RestElement, ref?:T)=>(Node|void)
-    RestElementEnd?:(node?:RestElement, ref?:T)=>(Node|void)
-    AssignmentPattern?:(node?:AssignmentPattern, ref?:T)=>(Node|void)
-    AssignmentPatternEnd?:(node?:AssignmentPattern, ref?:T)=>(Node|void)
-    ClassBody?:(node?:ClassBody, ref?:T)=>(Node|void)
-    ClassBodyEnd?:(node?:ClassBody, ref?:T)=>(Node|void)
-    MethodDefinition?:(node?:MethodDefinition, ref?:T)=>(Node|void)
-    MethodDefinitionEnd?:(node?:MethodDefinition, ref?:T)=>(Node|void)
-    ClassDeclaration?:(node?:ClassDeclaration, ref?:T)=>(Node|void)
-    ClassDeclarationEnd?:(node?:ClassDeclaration, ref?:T)=>(Node|void)
-    ClassExpression?:(node?:ClassExpression, ref?:T)=>(Node|void)
-    ClassExpressionEnd?:(node?:ClassExpression, ref?:T)=>(Node|void)
-    MetaProperty?:(node?:MetaProperty, ref?:T)=>(Node|void)
-    MetaPropertyEnd?:(node?:MetaProperty, ref?:T)=>(Node|void)
-    ImportDeclaration?:(node?:ImportDeclaration, ref?:T)=>(Node|void)
-    ImportDeclarationEnd?:(node?:ImportDeclaration, ref?:T)=>(Node|void)
-    ImportSpecifier?:(node?:ImportSpecifier, ref?:T)=>(Node|void)
-    ImportSpecifierEnd?:(node?:ImportSpecifier, ref?:T)=>(Node|void)
-    ImportDefaultSpecifier?:(node?:ImportDefaultSpecifier, ref?:T)=>(Node|void)
-    ImportDefaultSpecifierEnd?:(node?:ImportDefaultSpecifier, ref?:T)=>(Node|void)
-    ImportNamespaceSpecifier?:(node?:ImportNamespaceSpecifier, ref?:T)=>(Node|void)
-    ImportNamespaceSpecifierEnd?:(node?:ImportNamespaceSpecifier, ref?:T)=>(Node|void)
-    ExportNamedDeclaration?:(node?:ExportNamedDeclaration, ref?:T)=>(Node|void)
-    ExportNamedDeclarationEnd?:(node?:ExportNamedDeclaration, ref?:T)=>(Node|void)
-    ExportSpecifier?:(node?:ExportSpecifier, ref?:T)=>(Node|void)
-    ExportSpecifierEnd?:(node?:ExportSpecifier, ref?:T)=>(Node|void)
-    ExportDefaultDeclaration?:(node?:ExportDefaultDeclaration, ref?:T)=>(Node|void)
-    ExportDefaultDeclarationEnd?:(node?:ExportDefaultDeclaration, ref?:T)=>(Node|void)
-    ExportAllDeclaration?:(node?:ExportAllDeclaration, ref?:T)=>(Node|void)
-    ExportAllDeclarationEnd?:(node?:ExportAllDeclaration, ref?:T)=>(Node|void)
-    Function?:(node?:BaseFunction, ref?:T)=>(Node|void)
-    FunctionEnd?:(node?:BaseFunction, ref?:T)=>(Node|void)
-    ForLoop?:(node?:ForStatement|ForInStatement|ForOfStatement, ref?:T)=>(Node|void)
-    ForLoopEnd?:(node?:ForStatement|ForInStatement|ForOfStatement, ref?:T)=>(Node|void)
+    Identifier?:(node?:Identifier, ref?:T)=>(Node|void|null)
+    IdentifierEnd?:(node?:Identifier, ref?:T)=>(Node|void|null)
+    Literal?:(node?:Literal, ref?:T)=>(Node|void|null)
+    LiteralEnd?:(node?:Literal, ref?:T)=>(Node|void|null)
+    Program?:(node?:Program, ref?:T)=>(Node|void|null)
+    ProgramEnd?:(node?:Program, ref?:T)=>(Node|void|null)
+    ExpressionStatement?:(node?:ExpressionStatement, ref?:T)=>(Node|void|null)
+    ExpressionStatementEnd?:(node?:ExpressionStatement, ref?:T)=>(Node|void|null)
+    BlockStatement?:(node?:BlockStatement, ref?:T)=>(Node|void|null)
+    BlockStatementEnd?:(node?:BlockStatement, ref?:T)=>(Node|void|null)
+    EmptyStatement?:(node?:EmptyStatement, ref?:T)=>(Node|void|null)
+    EmptyStatementEnd?:(node?:EmptyStatement, ref?:T)=>(Node|void|null)
+    DebuggerStatement?:(node?:DebuggerStatement, ref?:T)=>(Node|void|null)
+    DebuggerStatementEnd?:(node?:DebuggerStatement, ref?:T)=>(Node|void|null)
+    WithStatement?:(node?:WithStatement, ref?:T)=>(Node|void|null)
+    WithStatementEnd?:(node?:WithStatement, ref?:T)=>(Node|void|null)
+    ReturnStatement?:(node?:ReturnStatement, ref?:T)=>(Node|void|null)
+    ReturnStatementEnd?:(node?:ReturnStatement, ref?:T)=>(Node|void|null)
+    LabeledStatement?:(node?:LabeledStatement, ref?:T)=>(Node|void|null)
+    LabeledStatementEnd?:(node?:LabeledStatement, ref?:T)=>(Node|void|null)
+    BreakStatement?:(node?:BreakStatement, ref?:T)=>(Node|void|null)
+    BreakStatementEnd?:(node?:BreakStatement, ref?:T)=>(Node|void|null)
+    ContinueStatement?:(node?:ContinueStatement, ref?:T)=>(Node|void|null)
+    ContinueStatementEnd?:(node?:ContinueStatement, ref?:T)=>(Node|void|null)
+    IfStatement?:(node?:IfStatement, ref?:T)=>(Node|void|null)
+    IfStatementEnd?:(node?:IfStatement, ref?:T)=>(Node|void|null)
+    SwitchStatement?:(node?:SwitchStatement, ref?:T)=>(Node|void|null)
+    SwitchStatementEnd?:(node?:SwitchStatement, ref?:T)=>(Node|void|null)
+    SwitchCase?:(node?:SwitchCase, ref?:T)=>(Node|void|null)
+    SwitchCaseEnd?:(node?:SwitchCase, ref?:T)=>(Node|void|null)
+    ThrowStatement?:(node?:ThrowStatement, ref?:T)=>(Node|void|null)
+    ThrowStatementEnd?:(node?:ThrowStatement, ref?:T)=>(Node|void|null)
+    TryStatement?:(node?:TryStatement, ref?:T)=>(Node|void|null)
+    TryStatementEnd?:(node?:TryStatement, ref?:T)=>(Node|void|null)
+    CatchClause?:(node?:CatchClause, ref?:T)=>(Node|void|null)
+    CatchClauseEnd?:(node?:CatchClause, ref?:T)=>(Node|void|null)
+    WhileStatement?:(node?:WhileStatement, ref?:T)=>(Node|void|null)
+    WhileStatementEnd?:(node?:WhileStatement, ref?:T)=>(Node|void|null)
+    DoWhileStatement?:(node?:DoWhileStatement, ref?:T)=>(Node|void|null)
+    DoWhileStatementEnd?:(node?:DoWhileStatement, ref?:T)=>(Node|void|null)
+    ForStatement?:(node?:ForStatement, ref?:T)=>(Node|void|null)
+    ForStatementEnd?:(node?:ForStatement, ref?:T)=>(Node|void|null)
+    ForInStatement?:(node?:ForInStatement, ref?:T)=>(Node|void|null)
+    ForInStatementEnd?:(node?:ForInStatement, ref?:T)=>(Node|void|null)
+    FunctionDeclaration?:(node?:FunctionDeclaration, ref?:T)=>(Node|void|null)
+    FunctionDeclarationEnd?:(node?:FunctionDeclaration, ref?:T)=>(Node|void|null)
+    VariableDeclaration?:(node?:VariableDeclaration, ref?:T)=>(Node|void|null)
+    VariableDeclarationEnd?:(node?:VariableDeclaration, ref?:T)=>(Node|void|null)
+    VariableDeclarator?:(node?:VariableDeclarator, ref?:T)=>(Node|void|null)
+    VariableDeclaratorEnd?:(node?:VariableDeclarator, ref?:T)=>(Node|void|null)
+    ThisExpression?:(node?:ThisExpression, ref?:T)=>(Node|void|null)
+    ThisExpressionEnd?:(node?:ThisExpression, ref?:T)=>(Node|void|null)
+    ArrayExpression?:(node?:ArrayExpression, ref?:T)=>(Node|void|null)
+    ArrayExpressionEnd?:(node?:ArrayExpression, ref?:T)=>(Node|void|null)
+    ObjectExpression?:(node?:ObjectExpression, ref?:T)=>(Node|void|null)
+    ObjectExpressionEnd?:(node?:ObjectExpression, ref?:T)=>(Node|void|null)
+    Property?:(node?:Property, ref?:T)=>(Node|void|null)
+    PropertyEnd?:(node?:Property, ref?:T)=>(Node|void|null)
+    FunctionExpression?:(node?:FunctionExpression, ref?:T)=>(Node|void|null)
+    FunctionExpressionEnd?:(node?:FunctionExpression, ref?:T)=>(Node|void|null)
+    UnaryExpression?:(node?:UnaryExpression, ref?:T)=>(Node|void|null)
+    UnaryExpressionEnd?:(node?:UnaryExpression, ref?:T)=>(Node|void|null)
+    UpdateExpression?:(node?:UpdateExpression, ref?:T)=>(Node|void|null)
+    UpdateExpressionEnd?:(node?:UpdateExpression, ref?:T)=>(Node|void|null)
+    BinaryExpression?:(node?:BinaryExpression, ref?:T)=>(Node|void|null)
+    BinaryExpressionEnd?:(node?:BinaryExpression, ref?:T)=>(Node|void|null)
+    AssignmentExpression?:(node?:AssignmentExpression, ref?:T)=>(Node|void|null)
+    AssignmentExpressionEnd?:(node?:AssignmentExpression, ref?:T)=>(Node|void|null)
+    LogicalExpression?:(node?:LogicalExpression, ref?:T)=>(Node|void|null)
+    LogicalExpressionEnd?:(node?:LogicalExpression, ref?:T)=>(Node|void|null)
+    MemberExpression?:(node?:MemberExpression, ref?:T)=>(Node|void|null)
+    MemberExpressionEnd?:(node?:MemberExpression, ref?:T)=>(Node|void|null)
+    ConditionalExpression?:(node?:ConditionalExpression, ref?:T)=>(Node|void|null)
+    ConditionalExpressionEnd?:(node?:ConditionalExpression, ref?:T)=>(Node|void|null)
+    CallExpression?:(node?:CallExpression, ref?:T)=>(Node|void|null)
+    CallExpressionEnd?:(node?:CallExpression, ref?:T)=>(Node|void|null)
+    NewExpression?:(node?:NewExpression, ref?:T)=>(Node|void|null)
+    NewExpressionEnd?:(node?:NewExpression, ref?:T)=>(Node|void|null)
+    SequenceExpression?:(node?:SequenceExpression, ref?:T)=>(Node|void|null)
+    SequenceExpressionEnd?:(node?:SequenceExpression, ref?:T)=>(Node|void|null)
+    ForOfStatement?:(node?:ForOfStatement, ref?:T)=>(Node|void|null)
+    ForOfStatementEnd?:(node?:ForOfStatement, ref?:T)=>(Node|void|null)
+    Super?:(node?:Super, ref?:T)=>(Node|void|null)
+    SuperEnd?:(node?:Super, ref?:T)=>(Node|void|null)
+    SpreadElement?:(node?:SpreadElement, ref?:T)=>(Node|void|null)
+    SpreadElementEnd?:(node?:SpreadElement, ref?:T)=>(Node|void|null)
+    ArrowFunctionExpression?:(node?:ArrowFunctionExpression, ref?:T)=>(Node|void|null)
+    ArrowFunctionExpressionEnd?:(node?:ArrowFunctionExpression, ref?:T)=>(Node|void|null)
+    YieldExpression?:(node?:YieldExpression, ref?:T)=>(Node|void|null)
+    YieldExpressionEnd?:(node?:YieldExpression, ref?:T)=>(Node|void|null)
+    TemplateLiteral?:(node?:TemplateLiteral, ref?:T)=>(Node|void|null)
+    TemplateLiteralEnd?:(node?:TemplateLiteral, ref?:T)=>(Node|void|null)
+    TaggedTemplateExpression?:(node?:TaggedTemplateExpression, ref?:T)=>(Node|void|null)
+    TaggedTemplateExpressionEnd?:(node?:TaggedTemplateExpression, ref?:T)=>(Node|void|null)
+    TemplateElement?:(node?:TemplateElement, ref?:T)=>(Node|void|null)
+    TemplateElementEnd?:(node?:TemplateElement, ref?:T)=>(Node|void|null)
+    AssignmentProperty?:(node?:AssignmentProperty, ref?:T)=>(Node|void|null)
+    AssignmentPropertyEnd?:(node?:AssignmentProperty, ref?:T)=>(Node|void|null)
+    ObjectPattern?:(node?:ObjectPattern, ref?:T)=>(Node|void|null)
+    ObjectPatternEnd?:(node?:ObjectPattern, ref?:T)=>(Node|void|null)
+    ArrayPattern?:(node?:ArrayPattern, ref?:T)=>(Node|void|null)
+    ArrayPatternEnd?:(node?:ArrayPattern, ref?:T)=>(Node|void|null)
+    RestElement?:(node?:RestElement, ref?:T)=>(Node|void|null)
+    RestElementEnd?:(node?:RestElement, ref?:T)=>(Node|void|null)
+    AssignmentPattern?:(node?:AssignmentPattern, ref?:T)=>(Node|void|null)
+    AssignmentPatternEnd?:(node?:AssignmentPattern, ref?:T)=>(Node|void|null)
+    ClassBody?:(node?:ClassBody, ref?:T)=>(Node|void|null)
+    ClassBodyEnd?:(node?:ClassBody, ref?:T)=>(Node|void|null)
+    MethodDefinition?:(node?:MethodDefinition, ref?:T)=>(Node|void|null)
+    MethodDefinitionEnd?:(node?:MethodDefinition, ref?:T)=>(Node|void|null)
+    ClassDeclaration?:(node?:ClassDeclaration, ref?:T)=>(Node|void|null)
+    ClassDeclarationEnd?:(node?:ClassDeclaration, ref?:T)=>(Node|void|null)
+    ClassExpression?:(node?:ClassExpression, ref?:T)=>(Node|void|null)
+    ClassExpressionEnd?:(node?:ClassExpression, ref?:T)=>(Node|void|null)
+    MetaProperty?:(node?:MetaProperty, ref?:T)=>(Node|void|null)
+    MetaPropertyEnd?:(node?:MetaProperty, ref?:T)=>(Node|void|null)
+    ImportDeclaration?:(node?:ImportDeclaration, ref?:T)=>(Node|void|null)
+    ImportDeclarationEnd?:(node?:ImportDeclaration, ref?:T)=>(Node|void|null)
+    ImportSpecifier?:(node?:ImportSpecifier, ref?:T)=>(Node|void|null)
+    ImportSpecifierEnd?:(node?:ImportSpecifier, ref?:T)=>(Node|void|null)
+    ImportDefaultSpecifier?:(node?:ImportDefaultSpecifier, ref?:T)=>(Node|void|null)
+    ImportDefaultSpecifierEnd?:(node?:ImportDefaultSpecifier, ref?:T)=>(Node|void|null)
+    ImportNamespaceSpecifier?:(node?:ImportNamespaceSpecifier, ref?:T)=>(Node|void|null)
+    ImportNamespaceSpecifierEnd?:(node?:ImportNamespaceSpecifier, ref?:T)=>(Node|void|null)
+    ExportNamedDeclaration?:(node?:ExportNamedDeclaration, ref?:T)=>(Node|void|null)
+    ExportNamedDeclarationEnd?:(node?:ExportNamedDeclaration, ref?:T)=>(Node|void|null)
+    ExportSpecifier?:(node?:ExportSpecifier, ref?:T)=>(Node|void|null)
+    ExportSpecifierEnd?:(node?:ExportSpecifier, ref?:T)=>(Node|void|null)
+    ExportDefaultDeclaration?:(node?:ExportDefaultDeclaration, ref?:T)=>(Node|void|null)
+    ExportDefaultDeclarationEnd?:(node?:ExportDefaultDeclaration, ref?:T)=>(Node|void|null)
+    ExportAllDeclaration?:(node?:ExportAllDeclaration, ref?:T)=>(Node|void|null)
+    ExportAllDeclarationEnd?:(node?:ExportAllDeclaration, ref?:T)=>(Node|void|null)
+    Function?:(node?:BaseFunction, ref?:T)=>(Node|void|null)
+    FunctionEnd?:(node?:BaseFunction, ref?:T)=>(Node|void|null)
+    ForLoop?:(node?:ForStatement|ForInStatement|ForOfStatement, ref?:T)=>(Node|void|null)
+    ForLoopEnd?:(node?:ForStatement|ForInStatement|ForOfStatement, ref?:T)=>(Node|void|null)
 
   }
 }

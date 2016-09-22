@@ -172,14 +172,14 @@ def get_all_fields(k):
     return obj['fields'] if 'fields' in obj else None
 
 HANDLER_METHODS = \
-  '    %(type)s?:(node?:%(type)s, ref?:T)=>(Node|void)\n' + \
-  '    %(type)sEnd?:(node?:%(type)s, ref?:T)=>(Node|void)'
+  '    %(type)s?:(node?:%(type)s, ref?:T)=>(Node|void|null)\n' + \
+  '    %(type)sEnd?:(node?:%(type)s, ref?:T)=>(Node|void|null)'
 
 MULTI_HANDLER_METHODS = \
-  '    %(name)s?:(node?:%(type)s, ref?:T)=>(Node|void)\n' + \
-  '    %(name)sEnd?:(node?:%(type)s, ref?:T)=>(Node|void)'
+  '    %(name)s?:(node?:%(type)s, ref?:T)=>(Node|void|null)\n' + \
+  '    %(name)sEnd?:(node?:%(type)s, ref?:T)=>(Node|void|null)'
 
-GUARD_METHOD = '  export function is%(name)s(n?:Node|null):n is %(name)s { return n && n.type === "%(type)s"; }'
+GUARD_METHOD = '  export function is%(name)s(n?:Node|null):n is %(name)s { return n ? n.type === "%(type)s" : false; }'
 MULTI_GUARD_METHOD = '  export function is%s(n:Node):n is %s { return %s }';
 INTERFACE_DEF = '  export interface %(name)s %(extends)s {\n    %(fields)s\n  }'
 ENUM_DEF = '  export type %(name)s = %(values)s';
