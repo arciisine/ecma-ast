@@ -15,7 +15,7 @@ export class Macro {
   static Id(name?:string, prefix:boolean = false):AST.Identifier { 
     return AST.Identifier({name: (name && !prefix) ? name : Macro.genSymbol(name)}); 
   }
-  static Literal(value:string|boolean|number|RegExp):AST.Literal { return AST.Literal({value}); }
+  static Literal(value:string|boolean|number|RegExp|null|undefined):AST.Literal { return AST.Literal({value}); }
 	static Block(...body:(AST.Statement|null)[]):AST.BlockStatement {  
     return AST.BlockStatement({body:body.filter(x => !!x) as AST.BlockStatement[]});
   }
