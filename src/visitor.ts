@@ -70,21 +70,21 @@ export class Visitor {
 
   private finish(result:AST.Node):AST.Node {
     let parent = this.parent;
-    if (result === Visitor.DELETE_FLAG) {
+    if (result === Visitor.PREVENT_DESCENT) {
+      return result;
+    } else if (result === Visitor.DELETE_FLAG) {
       if (Array.isArray(parent.container)) {  //Array
         (parent.container as AST.Node[]).splice(parent.key as number, 1);
       } else { //Object
         delete parent.container[parent.key];            
       }
-    } else if (result === Visitor.PREVENT_DESCENT) {
-      return result;
     } else if (parent && result) { //Aassign if returned      
       parent.container[parent.key] = result;
     } 
     return result;
   }
 
-  private visit(node:AST.Node):void {
+  private visit(node:AST.Node):AST.Node|undefined {
     if (node === null) return;
 
     let alias = Visitor.TYPE_ALIASES[node.type];
@@ -93,44 +93,47 @@ export class Visitor {
     for (let key of keys) {
       node = this.onStart(node, key);
       if (node === Visitor.PREVENT_DESCENT || node === Visitor.DELETE_FLAG) {
-        this.finish(node);
-        return;
+        return this.finish(node);
       }
     }
     let sub = AST.NESTED[node.type];
 
     if (sub) {
-      sub.forEach(p => { 
+      sub.forEach(p => {
         let x = node[p];
         if (Array.isArray(x)) {
-          x.slice(0).forEach((y, i) => {
+          let len = x.length;
+          for (let i = 0; i < len; i++) {
+            let y = x[i];
             this._parents.unshift({container:x, key:i, node})
-            this.visit(y);
+            let res = this.visit(y);
+            if (res === Visitor.DELETE_FLAG) {
+              i--;
+              len--;
+            }
             this._parents.shift(); 
-          })
+          }
         } else {
           this._parents.unshift({container:node, key:p, node})
           this.visit(x);
           this._parents.shift();
         }
-      });
+      })
     }
 
     for (let key of keys) {
       node = this.onEnd(node, key);
       if (node === Visitor.DELETE_FLAG) {
-        this.finish(node);
-        return;
+        return this.finish(node);
       }
     }
 
-    this.finish(node);
-    return;
+    return this.finish(node);
   }
 
   exec<T extends AST.Node>(node:T):T {
     this._parents = [];
-    this.visit(node);
-    return node;
+    let res = this.visit(node);
+    return res as T;
   }
 }
