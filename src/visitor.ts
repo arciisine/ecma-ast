@@ -11,10 +11,20 @@ export interface Handler {
   <T extends AST.Node>(node:T, visitor?:Visitor):T
 }
 
+type Flag = (AST.Identifier & {flag?:boolean});
+function getToken():Flag {
+  let m:Flag = Macro.Id();
+  m.flag = true;
+  return m;
+}
+function isFlag(flag?:any):flag is Flag {
+  return flag && !!flag['flag'];
+}
+
 export class Visitor {
 
-  static PREVENT_DESCENT = Macro.Id();
-  static DELETE_FLAG = Macro.Id();
+  static PREVENT_DESCENT = getToken();
+  static DELETE_FLAG = getToken();
 
   static TYPE_ALIASES =  {
     FunctionExpression      : 'Function', 
@@ -62,20 +72,38 @@ export class Visitor {
     return this.execHandler(this.handlers[`${key || node.type}End`], node);
   }
 
-  private finish(result:AST.Node):AST.Node {
-    let parent = this.parent;
-    if (result === Visitor.PREVENT_DESCENT) {
-      return result;
-    } else if (result === Visitor.DELETE_FLAG) {
-      if (Array.isArray(parent.container)) {  //Array
-        (parent.container as AST.Node[]).splice(parent.key as number, 1);
-      } else { //Object
-        delete parent.container[parent.key];            
+  private visitArrayProperty(parent:AST.Node, prop:string) {
+    let arr = parent[prop] as AST.Node[];
+    let len = arr.length;
+    for (let i = 0; i < len; i++) {
+      let y = arr[i];
+      this._parents.unshift({container:arr, key:i, node:parent})
+      let res = this.visit(y);
+      if (isFlag(res)) {
+        if (res === Visitor.DELETE_FLAG) {
+          arr.splice(i, 1);
+          i--;
+          len--;
+        }
+      } else if (res) {
+        arr[i] = res;
       }
-    } else if (parent && result) { //Aassign if returned      
-      parent.container[parent.key] = result;
-    } 
-    return result;
+      this._parents.shift(); 
+    }
+  }
+
+  private visitSingleProperty(parent:AST.Node, prop:string) {
+    this._parents.unshift({container:parent, key:prop, node:parent})
+    let node = parent[prop];
+    let res = this.visit(node);
+    if (isFlag(parent)) {
+      if (res === Visitor.DELETE_FLAG) {
+        delete parent[prop];
+      } 
+    } else if (res) {
+      parent[prop] = res;
+    }
+    this._parents.shift();
   }
 
   private visit(node:AST.Node):AST.Node|undefined {
@@ -83,46 +111,25 @@ export class Visitor {
 
     let alias = Visitor.TYPE_ALIASES[node.type];
     let keys = alias ? [node.type, alias] : [node.type];
-
+    
     for (let key of keys) {
-      node = this.onStart(node, key);
-      if (node === Visitor.PREVENT_DESCENT || node === Visitor.DELETE_FLAG) {
-        return this.finish(node);
-      }
+      if (isFlag(node = this.onStart(node, key))) return node;
     }
-    let sub = AST.NESTED[node.type];
-
-    if (sub) {
-      sub.forEach(p => {
-        let x = node[p];
-        if (Array.isArray(x)) {
-          let len = x.length;
-          for (let i = 0; i < len; i++) {
-            let y = x[i];
-            this._parents.unshift({container:x, key:i, node})
-            let res = this.visit(y);
-            if (res === Visitor.DELETE_FLAG) {
-              i--;
-              len--;
-            }
-            this._parents.shift(); 
-          }
-        } else {
-          this._parents.unshift({container:node, key:p, node})
-          this.visit(x);
-          this._parents.shift();
-        }
-      })
-    }
-
-    for (let key of keys) {
-      node = this.onEnd(node, key);
-      if (node === Visitor.DELETE_FLAG) {
-        return this.finish(node);
+    
+    //Descend
+    for (let prop of AST.NESTED[node.type]||[]) {
+      if (Array.isArray(node[prop])) {
+        this.visitArrayProperty(node, prop);
+      } else {
+        this.visitSingleProperty(node, prop);
       }
     }
 
-    return this.finish(node);
+    for (let key of keys) {
+      if (isFlag(node = this.onEnd(node, key))) return node;
+    }
+
+    return node;
   }
 
   exec<T extends AST.Node>(node:T):T {
