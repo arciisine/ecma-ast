@@ -25,12 +25,6 @@ export class Visitor {
     ForInStatement          : 'ForLoop'
   }
 
-  static PRIMITIVE_TYPES = [
-    'string', 
-    'boolean', 
-    'number'
-  ].reduce((acc, t) => (acc[t] = true) && acc, {});
-
   static exec(handlers:AST.NodeHandler<Visitor>, node:AST.Node) {
     return new Visitor(handlers).exec(node);
   }
